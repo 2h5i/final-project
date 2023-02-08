@@ -2,6 +2,7 @@ package com.sparta.finalproject.post.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.dto.PostDto;
+import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.user.entity.User;
@@ -37,5 +38,18 @@ public class PostServiceImpl implements PostService {
         );
 
         return PostDto.ResponsePost.of(post);
+    }
+
+    @Override
+    public Long updatePost(Long postId, UpdatePost updatePost, User user) {
+        Post post = postRepository.findById(postId).orElseThrow(
+            () -> new BadRequestException("해당하는 게시물이 없습니다.")
+        );
+
+        post.validateUser(user);
+        post.updatePost(updatePost.getTitle(), updatePost.getContent());
+        postRepository.save(post);
+
+        return post.getId();
     }
 }
