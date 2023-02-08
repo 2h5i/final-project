@@ -4,8 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sparta.finalproject.post.dto.PostDto;
 import com.sparta.finalproject.post.dto.PostDto.CreatePost;
-import com.sparta.finalproject.user.dto.UserDto.ResponseUserWithPost;
+import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
+import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
 import com.sparta.finalproject.user.entity.User;
+import com.sparta.finalproject.user.entity.UserRole;
 import com.sparta.finalproject.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +24,7 @@ class PostServiceImplTest {
     @Autowired
     UserRepository userRepository;
 
-    @DisplayName("게시물 생성 & 단건 조회 테스트")
-    @Transactional
+    @DisplayName("1. 게시물 생성 & 단건 조회 테스트")
     @Test
     void createPostTest() {
         // Given
@@ -33,23 +34,66 @@ class PostServiceImplTest {
             .userId("userId")
             .password("password")
             .email("email@email.com")
+            .role(UserRole.USER)
             .build();
+
+        User savedUser = userRepository.save(user);
+
         PostDto.CreatePost createPost = CreatePost.builder()
             .title(title)
             .content(content)
             .build();
-        ResponseUserWithPost userInfo = ResponseUserWithPost.of(user);
 
         // When
-        Long postId = postService.createPost(createPost, user);
+        Long postId = postService.createPost(createPost, savedUser);
         PostDto.ResponsePost postById = postService.getPostById(postId);
 
         // Then
         assertThat(postById.getId()).isEqualTo(postId);
         assertThat(postById.getTitle()).isEqualTo(title);
         assertThat(postById.getContent()).isEqualTo(content);
-        assertThat(postById.getUserInfo().getId()).isEqualTo(userInfo.getId());
-        assertThat(postById.getUserInfo().getUserId()).isEqualTo(userInfo.getUserId());
+        assertThat(postById.getUserInfo().getId()).isEqualTo(savedUser.getId());
+        assertThat(postById.getUserInfo().getUserId()).isEqualTo(savedUser.getUserId());
     }
-    
+
+    @DisplayName("2. 게시물 수정 테스트")
+    @Test
+    @Transactional
+    void updatePostTest() {
+        // Given
+        User user = User.builder()
+            .userId("userId")
+            .password("password")
+            .email("email@email.com")
+            .role(UserRole.USER)
+            .build();
+
+        User savedUser = userRepository.save(user);
+
+        PostDto.CreatePost createPost = CreatePost.builder()
+            .title("title")
+            .content("content")
+            .build();
+
+        String updateTitle = "update title";
+        String updateContent = "update content";
+
+        PostDto.UpdatePost updatePost = UpdatePost.builder()
+            .title(updateTitle)
+            .content(updateContent)
+            .build();
+
+        Long postId = postService.createPost(createPost, savedUser);
+
+        // When
+        postService.updatePost(postId, updatePost, savedUser);
+
+        // Then
+        ResponsePost updatedPost = postService.getPostById(postId);
+
+        assertThat(updatedPost.getId()).isEqualTo(postId);
+        assertThat(updatedPost.getTitle()).isEqualTo(updateTitle);
+        assertThat(updatedPost.getContent()).isEqualTo(updateContent);
+    }
+
 }
