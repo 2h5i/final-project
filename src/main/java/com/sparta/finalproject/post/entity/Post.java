@@ -1,6 +1,7 @@
 package com.sparta.finalproject.post.entity;
 
 import com.sparta.finalproject.common.entity.BaseEntity;
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.user.entity.User;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,8 +44,14 @@ public class Post extends BaseEntity {
         this.user = user;
     }
 
-    public void editPost(String title, String content) {
+    public void updatePost(String title, String content) {
         this.title = title;
         this.content = content;
+    }
+
+    public void validateUser(User user) {
+        if (!this.user.equals(user)) {
+            throw new BadRequestException("해당 게시물에 권한이 있는 사용자가 아닙니다.");
+        }
     }
 }
