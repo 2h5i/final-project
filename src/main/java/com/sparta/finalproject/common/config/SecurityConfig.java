@@ -24,39 +24,36 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
-  private final JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-  @Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
-    return (web -> web.ignoring()
-        .requestMatchers(PathRequest.toH2Console()));
-  }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web -> web.ignoring()
+            .requestMatchers(PathRequest.toH2Console()));
+    }
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .httpBasic().disable()
-        .cors()
-        .and()
-        .csrf().disable()
-        .formLogin().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authorizeHttpRequests()
-        .antMatchers("/api/auth/**").permitAll()
-        .anyRequest().authenticated()
-        .and()
-        .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-        .and()
-        .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
-        .and()
-        .addFilterBefore(new JwtAuthFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .httpBasic().disable()
+            .cors()
+            .and()
+            .csrf().disable()
+            .formLogin().disable()
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+            .and()
+            .exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler())
+            .and()
+            .addFilterBefore(new JwtAuthFilter(jwtUtil),
+                UsernamePasswordAuthenticationFilter.class);
 
-    return http.build();
-  }
+        return http.build();
+    }
 }
