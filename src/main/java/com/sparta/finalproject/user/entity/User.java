@@ -27,6 +27,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String userId;
 
+    private Long kakaoId;
     @Column(nullable = false)
     private String password;
 
@@ -38,13 +39,19 @@ public class User {
     private UserRole role;
 
     @Builder
-    public User(String userId, String password, String email, UserRole role) {
+    public User(String userId, Long kakaoId, String password, String email, UserRole role) {
         this.userId = userId;
+        this.kakaoId = this.kakaoId;
         this.password = password;
         this.email = email;
         this.role = role;
     }
 
+    public User kakaoIdUpdate(Long kakaoId) {
+        this.kakaoId = kakaoId;
+        return this;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -61,4 +68,6 @@ public class User {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+
 }

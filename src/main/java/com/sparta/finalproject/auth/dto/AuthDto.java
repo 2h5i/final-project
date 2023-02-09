@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class AuthDto {
 
@@ -34,5 +35,20 @@ public class AuthDto {
 
     private String userId;
     private String password;
+  }
+
+  @Getter
+  @NoArgsConstructor
+  public static class KakaoUserInfoDto {
+
+    private Long id;
+    private String email;
+    private String nicknmae;
+
+    public KakaoUserInfoDto(Long id, String nicknmae, String email) {
+      this.id = id;
+      this.nicknmae = nicknmae;
+      this.email = email;
+    }
   }
 }
