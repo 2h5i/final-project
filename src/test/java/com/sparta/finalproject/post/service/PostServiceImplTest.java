@@ -1,7 +1,9 @@
 package com.sparta.finalproject.post.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.dto.PostDto;
 import com.sparta.finalproject.post.dto.PostDto.CreatePost;
 import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
@@ -94,6 +96,36 @@ class PostServiceImplTest {
         assertThat(updatedPost.getId()).isEqualTo(postId);
         assertThat(updatedPost.getTitle()).isEqualTo(updateTitle);
         assertThat(updatedPost.getContent()).isEqualTo(updateContent);
+    }
+
+    @DisplayName("3. 게시물 삭제 테스트")
+    @Test
+    @Transactional
+    void deletePostTest() {
+        // Given
+        User user = User.builder()
+            .userId("userId")
+            .password("password")
+            .email("email@email.com")
+            .role(UserRole.USER)
+            .build();
+
+        User savedUser = userRepository.save(user);
+
+        PostDto.CreatePost createPost = CreatePost.builder()
+            .title("title")
+            .content("content")
+            .build();
+
+        Long postId = postService.createPost(createPost, savedUser);
+
+        // When
+        postService.deletePost(postId, savedUser);
+
+        // Then
+        assertThatThrownBy(() -> postService.getPostById(postId)).isInstanceOf(
+                BadRequestException.class)
+            .hasMessageContaining("해당하는 게시물이 없습니다.");
     }
 
 }
