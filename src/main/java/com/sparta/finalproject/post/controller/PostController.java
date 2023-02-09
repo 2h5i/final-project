@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,7 @@ public class PostController {
     @GetMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
     public PostDto.ResponsePost getPostById(@PathVariable Long postId) {
+
         return postService.getPostById(postId);
     }
 
@@ -44,7 +46,18 @@ public class PostController {
     public Long updatePost(@PathVariable Long postId,
         @RequestBody @Valid PostDto.UpdatePost updatePost,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return postService.updatePost(postId, updatePost, userDetails.getUser());
     }
+
+    @DeleteMapping("/{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public void deletePost(@PathVariable Long postId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        postService.deletePost(postId, userDetails.getUser());
+    }
+
 
 }
