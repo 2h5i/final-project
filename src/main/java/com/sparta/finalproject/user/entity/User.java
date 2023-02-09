@@ -47,6 +47,11 @@ public class User {
         this.role = role;
     }
 
+    public User kakaoIdUpdate(Long kakaoId) {
+        this.kakaoId = kakaoId;
+        return this;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -64,8 +69,5 @@ public class User {
         return getClass().hashCode();
     }
 
-    public User kakaoIdUpdate(Long kakaoId) {
-        this.kakaoId = kakaoId;
-        return this;
-    }
+
 }
