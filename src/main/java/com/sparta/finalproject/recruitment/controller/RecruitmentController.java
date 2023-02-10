@@ -40,7 +40,7 @@ public class RecruitmentController {
 
         WebDriver driver = new ChromeDriver(options);
 
-        for (int i = 1; i < 10; i++) {
+        for (int i = 1; i < 2; i++) {
             String url = "https://www.rocketpunch.com/jobs?page=" + i;
             driver.get(url);
             new WebDriverWait(driver, Duration.ofSeconds(10)).until(
