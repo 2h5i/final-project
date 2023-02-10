@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,12 @@ public class LikeController {
     public void createLike(@PathVariable Long postId,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         likeService.createLike(postId, userDetails.getUser());
+    }
+
+    @GetMapping("/{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Long selectLikeCount(@PathVariable Long postId) {
+        return likeService.selectLikeCount(postId);
     }
 
 }

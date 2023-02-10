@@ -32,6 +32,11 @@ public class LikeServiceImpl implements LikeService {
         likeRepository.save(like);
     }
 
+    @Override
+    public Long selectLikeCount(Long postId) {
+        return likeRepository.countByPostId(postId);
+    }
+
     private void validateLike(Long postId, User user) {
         if (likeRepository.existsByPostIdAndUserId(postId, user.getId())) {
             throw new BadRequestException("이미 좋아요를 눌렀습니다.");
