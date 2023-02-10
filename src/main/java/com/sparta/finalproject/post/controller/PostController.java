@@ -1,10 +1,14 @@
 package com.sparta.finalproject.post.controller;
 
+import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.post.dto.PostDto;
+import com.sparta.finalproject.post.dto.PostDto.SearchPost;
 import com.sparta.finalproject.post.service.PostService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,6 +44,13 @@ public class PostController {
         return postService.getPostById(postId);
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public PageWrapper getPosts(SearchPost searchPost,
+        @PageableDefault() Pageable pageable) {
+        return PageWrapper.of(postService.getPosts(pageable, searchPost));
+    }
+
     @PutMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -58,6 +69,5 @@ public class PostController {
 
         postService.deletePost(postId, userDetails.getUser());
     }
-
 
 }
