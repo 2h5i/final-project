@@ -45,6 +45,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public Long updatePost(Long postId, UpdatePost updatePost, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("해당하는 게시물이 없습니다.")
@@ -58,6 +59,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public void deletePost(Long postId, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("해당하는 게시물이 없습니다.")
@@ -68,6 +70,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ResponsePost> getPosts(Pageable pageable, SearchPost searchPost) {
         return postRepository.getPostsBySearchCondition(pageable, searchPost);
     }
