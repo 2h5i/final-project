@@ -15,8 +15,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -128,39 +126,6 @@ class PostServiceImplTest {
         assertThatThrownBy(() -> postService.getPostById(postId)).isInstanceOf(
                 BadRequestException.class)
             .hasMessageContaining("해당하는 게시물이 없습니다.");
-    }
-
-    @DisplayName("4. 게시물 검색 페이징 조회 테스트")
-    @Transactional
-    @Test
-    void getPostsBySearchCondition() {
-        // Given
-        User user = User.builder()
-            .userId("userId")
-            .password("password")
-            .email("email@email.com")
-            .role(UserRole.USER)
-            .build();
-
-        User savedUser = userRepository.save(user);
-
-        PostDto.CreatePost createPost = CreatePost.builder()
-            .title("title")
-            .content("content")
-            .build();
-
-        postService.createPost(createPost, savedUser);
-
-        PostDto.SearchPost searchPost = PostDto.SearchPost.builder()
-            .title("ti")
-            .content("con")
-            .build();
-
-        // When
-        Page<ResponsePost> findPosts = postService.getPosts(PageRequest.of(0, 10), searchPost);
-
-        // Then
-        assertThat(findPosts.getTotalElements()).isEqualTo(1);
     }
 
 }

@@ -2,15 +2,11 @@ package com.sparta.finalproject.post.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.dto.PostDto;
-import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
-import com.sparta.finalproject.post.dto.PostDto.SearchPost;
 import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,10 +61,5 @@ public class PostServiceImpl implements PostService {
 
         post.validateUser(user);
         postRepository.delete(post);
-    }
-
-    @Override
-    public Page<ResponsePost> getPosts(Pageable pageable, SearchPost searchPost) {
-        return postRepository.getPostsBySearchCondition(pageable, searchPost);
     }
 }
