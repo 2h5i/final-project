@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/recruitments")
+@Slf4j
 public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
@@ -71,7 +73,7 @@ public class RecruitmentController {
                 }
             }
         }
-        System.out.println("크롤링 완료");
+        log.info("크롤링 완료");
     }
 }
 
