@@ -31,7 +31,7 @@ public class PostController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Long createPost(@RequestBody @Valid PostDto.CreatePost createPost,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.createPost(createPost, userDetails.getUser());

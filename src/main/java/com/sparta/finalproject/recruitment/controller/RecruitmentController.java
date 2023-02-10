@@ -32,7 +32,7 @@ public class RecruitmentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void createRecruitment() throws IOException, InterruptedException {
         ChromeOptions options = new ChromeOptions();
 
