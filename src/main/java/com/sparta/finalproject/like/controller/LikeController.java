@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/likes")
 public class LikeController {
 
     private final LikeService likeService;
 
-    @PostMapping("/posts/like/{postId}")
+    @PostMapping("/{postId}/like")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void createLike(@PathVariable Long postId,
