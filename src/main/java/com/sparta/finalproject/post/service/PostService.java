@@ -1,8 +1,9 @@
 package com.sparta.finalproject.post.service;
 
 import com.sparta.finalproject.post.dto.PostDto;
-import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
 import com.sparta.finalproject.user.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface PostService {
 
@@ -10,7 +11,9 @@ public interface PostService {
 
     PostDto.ResponsePost getPostById(Long postId);
 
-    Long updatePost(Long postId, UpdatePost updatePost, User user);
+    Long updatePost(Long postId, PostDto.UpdatePost updatePost, User user);
 
     void deletePost(Long postId, User user);
+
+    Page<PostDto.ResponsePost> getPosts(Pageable pageable, PostDto.SearchPost searchPost);
 }
