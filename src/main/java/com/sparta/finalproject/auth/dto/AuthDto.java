@@ -26,7 +26,7 @@ public class AuthDto {
     @NotBlank
     private String email;
 
-    private boolean isAdmin = false;
+    private boolean admin = false;
     private String adminKey = "";
   }
 
