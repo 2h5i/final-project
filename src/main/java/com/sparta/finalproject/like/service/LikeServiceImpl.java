@@ -8,6 +8,7 @@ import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +31,16 @@ public class LikeServiceImpl implements LikeService {
             .build();
 
         likeRepository.save(like);
+    }
+
+    @Override
+    @Transactional
+    public void deleteLike(Long postId, User user) {
+        Like like = likeRepository.findByPostIdAndUserId(postId, user.getId()).orElseThrow(
+            () -> new BadRequestException("해당 게시글에 좋아요를 누르지 않았습니다.")
+        );
+
+        likeRepository.delete(like);
     }
 
     private void validateLike(Long postId, User user) {
