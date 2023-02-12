@@ -1,6 +1,7 @@
 package com.sparta.finalproject.recruitment.controller;
 
-import com.sparta.finalproject.recruitment.service.RecruitmentService;
+import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
+import com.sparta.finalproject.recruitment.RecruitmentService;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -19,6 +20,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -35,7 +38,7 @@ public class RecruitmentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void createRecruitment() throws IOException, InterruptedException {
+    public void createRecruitment() throws IOException {
         ChromeOptions options = new ChromeOptions();
 
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
@@ -75,5 +78,18 @@ public class RecruitmentController {
         }
         log.info("크롤링 완료");
     }
+
+    @GetMapping("/{recruitmentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(@PathVariable Long recruitmentId){
+
+        return recruitmentService.selectRecruitmentById(recruitmentId);
+    }
+
+
+
+
+
+
 }
 
