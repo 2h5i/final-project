@@ -1,5 +1,6 @@
 package com.sparta.finalproject.recruitment.service;
 
+import com.sparta.finalproject.recruitment.dto.RecruitmentDto.ResponseRecruitment;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import org.junit.jupiter.api.Assertions;
@@ -20,7 +21,7 @@ class RecruitmentServiceImplTest {
     @DisplayName("1. 채용공고생성 및 단건조회")
     @Test
     @Transactional
-    void selectRecruitmentById () {
+    void selectRecruitmentById() {
         // Given
         Recruitment recruitment = Recruitment.builder()
             .title("title")
@@ -32,10 +33,14 @@ class RecruitmentServiceImplTest {
         String testTitle = "title";
 
         // When
-        recruitmentRepository.save(recruitment);
+        recruitmentService.createRecruitment(recruitment.getTitle(), recruitment.getSubTitle(),
+            recruitment.getContent(), recruitment.getHref());
+        recruitmentRepository.flush();
+
+        ResponseRecruitment responseRecruitment = recruitmentService.selectRecruitmentById(1L);
 
         // then
-        Assertions.assertEquals(recruitment.getTitle(),testTitle);
-        Assertions.assertEquals(recruitment.getId(),1);
+        Assertions.assertEquals(responseRecruitment.getTitle(), testTitle);
+        Assertions.assertEquals(responseRecruitment.getId(), 1);
     }
 }

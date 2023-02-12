@@ -28,7 +28,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             .href(href)
             .build();
 
-        recruitmentRepository.save(recruitment);
+        recruitmentRepository.saveAndFlush(recruitment);
     }
 
     @Override
