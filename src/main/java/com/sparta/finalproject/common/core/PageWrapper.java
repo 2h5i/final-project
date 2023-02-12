@@ -15,7 +15,7 @@ public class PageWrapper<T> {
     private boolean first;
     private boolean last;
 
-    private PageWrapper(final Page<T> page) {
+    private PageWrapper(Page<T> page) {
         this.content = page.getContent();
         this.page = page.getNumber();
         this.size = page.getSize();
