@@ -1,6 +1,5 @@
 package com.sparta.finalproject.recruitment.service;
 
-import com.sparta.finalproject.recruitment.RecruitmentService;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import org.junit.jupiter.api.Assertions;

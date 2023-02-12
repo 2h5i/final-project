@@ -1,4 +1,4 @@
-package com.sparta.finalproject.recruitment;
+package com.sparta.finalproject.recruitment.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto;

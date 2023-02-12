@@ -1,7 +1,7 @@
 package com.sparta.finalproject.recruitment.controller;
 
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
-import com.sparta.finalproject.recruitment.RecruitmentService;
+import com.sparta.finalproject.recruitment.service.RecruitmentService;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
@@ -85,11 +85,5 @@ public class RecruitmentController {
 
         return recruitmentService.selectRecruitmentById(recruitmentId);
     }
-
-
-
-
-
-
 }
 

@@ -1,4 +1,4 @@
-package com.sparta.finalproject.recruitment;
+package com.sparta.finalproject.recruitment.service;
 
 
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
