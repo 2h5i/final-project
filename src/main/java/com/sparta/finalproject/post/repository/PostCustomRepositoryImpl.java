@@ -1,13 +1,16 @@
 package com.sparta.finalproject.post.repository;
 
+import static com.sparta.finalproject.like.entity.QLike.like;
 import static com.sparta.finalproject.post.entity.QPost.post;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.finalproject.post.dto.PostDto;
-import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
 import com.sparta.finalproject.post.entity.Post;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.data.domain.Page;
@@ -36,9 +39,14 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
     }
 
     @Override
-    public Page<ResponsePost> getPostsBySearchCondition(Pageable pageable,
+    public Page<PostDto.ResponsePostList> getPostsBySearchCondition(Pageable pageable,
         PostDto.SearchPost searchPost) {
-        List<Post> posts = jpaQueryFactory.selectFrom(post)
+        List<Tuple> posts = jpaQueryFactory.select(post,
+                JPAExpressions.select(Wildcard.count).from(like)
+                    .where(post.id.eq(like.post.id))
+                    .groupBy(like.post.id)
+            )
+            .from(post)
             .where(
                 searchByTitle(searchPost.getTitle()),
                 searchByContent(searchPost.getContent())
@@ -54,6 +62,13 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
                 searchByContent(searchPost.getContent())
             ).fetch().get(0);
 
-        return new PageImpl<>(ResponsePost.of(posts), pageable, postCount);
+        List<PostDto.ResponsePostList> testDtos = new ArrayList<>();
+        for (Tuple tuple : posts) {
+            testDtos.add(
+                PostDto.ResponsePostList.of(Objects.requireNonNull(tuple.get(0, Post.class)),
+                    Objects.nonNull(tuple.get(1, Long.class)) ? tuple.get(1, Long.class) : 0));
+        }
+
+        return new PageImpl<>(testDtos, pageable, postCount);
     }
 }

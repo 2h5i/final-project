@@ -2,7 +2,6 @@ package com.sparta.finalproject.post.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.dto.PostDto;
-import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
 import com.sparta.finalproject.post.dto.PostDto.SearchPost;
 import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
 import com.sparta.finalproject.post.entity.Post;
@@ -45,6 +44,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public Long updatePost(Long postId, UpdatePost updatePost, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("해당하는 게시물이 없습니다.")
@@ -58,6 +58,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @Transactional
     public void deletePost(Long postId, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("해당하는 게시물이 없습니다.")
@@ -68,7 +69,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<ResponsePost> getPosts(Pageable pageable, SearchPost searchPost) {
+    @Transactional(readOnly = true)
+    public Page<PostDto.ResponsePostList> getPosts(Pageable pageable, SearchPost searchPost) {
         return postRepository.getPostsBySearchCondition(pageable, searchPost);
     }
 }
