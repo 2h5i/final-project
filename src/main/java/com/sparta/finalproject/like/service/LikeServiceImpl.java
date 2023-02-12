@@ -18,6 +18,7 @@ public class LikeServiceImpl implements LikeService {
     private final PostRepository postRepository;
 
     @Override
+    @Transactional
     public void createLike(Long postId, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("게시물이 존재하지 않습니다.")
@@ -41,6 +42,12 @@ public class LikeServiceImpl implements LikeService {
         );
 
         likeRepository.delete(like);
+    }
+
+    @Transactional(readOnly = true)
+    public Long selectLikeCount(Long postId) {
+        return likeRepository.countByPostId(postId);
+
     }
 
     private void validateLike(Long postId, User user) {

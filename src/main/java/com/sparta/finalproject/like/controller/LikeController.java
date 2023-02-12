@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +29,12 @@ public class LikeController {
         likeService.createLike(postId, userDetails.getUser());
     }
 
+    @GetMapping("/{postId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Long selectLikeCount(@PathVariable Long postId) {
+        return likeService.selectLikeCount(postId);
+    }
+
     @DeleteMapping("/{postId}/unlike")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -35,6 +42,4 @@ public class LikeController {
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         likeService.deleteLike(postId, userDetails.getUser());
     }
-
-
 }

@@ -1,5 +1,7 @@
 package com.sparta.finalproject.like.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.user.entity.User;
@@ -23,7 +25,38 @@ class LikeServiceImplTest {
     @Autowired
     PostRepository postRepository;
 
-    @DisplayName("2. 좋아요 취소하기")
+    @DisplayName("1. 좋아요 누르기 & 갯수 조회 테스트")
+    @Transactional
+    @Test
+    void createLikeTest() {
+        // Given
+        User user = User.builder()
+            .userId("userId")
+            .password("password")
+            .email("email@email.com")
+            .role(UserRole.USER)
+            .build();
+
+        User savedUser = userRepository.save(user);
+
+        Post post = Post.builder()
+            .title("title")
+            .content("content")
+            .user(savedUser)
+            .build();
+
+        Post savedPost = postRepository.save(post);
+
+        // When
+        likeService.createLike(savedPost.getId(), savedUser);
+
+        // Then
+        Long likeCount = likeService.selectLikeCount(savedPost.getId());
+
+        assertThat(likeCount).isEqualTo(1);
+    }
+
+    @DisplayName("2. 좋아요 취소 테스트")
     @Transactional
     @Test
     void deleteLikeTest() {
@@ -44,15 +77,15 @@ class LikeServiceImplTest {
             .build();
 
         Post savedPost = postRepository.save(post);
-
         likeService.createLike(savedPost.getId(), savedUser);
-        // TODO : 좋아요 조회
 
         // When
-        // TODO : 좋아요 삭제
+        likeService.deleteLike(savedPost.getId(), savedUser);
 
         // Then
-        // TODO : 좋아요 삭제 됐는지 알아보기
+        Long likeCount = likeService.selectLikeCount(savedPost.getId());
+
+        assertThat(likeCount).isEqualTo(0);
     }
 
 }
