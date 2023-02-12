@@ -1,0 +1,121 @@
+package com.sparta.finalproject.postComment.service;
+
+import com.sparta.finalproject.post.entity.Post;
+import com.sparta.finalproject.post.repository.PostRepository;
+import com.sparta.finalproject.postComment.dto.PostCommentDto;
+import com.sparta.finalproject.postComment.entity.PostComment;
+import com.sparta.finalproject.postComment.repository.PostCommentRepository;
+import com.sparta.finalproject.user.entity.User;
+import com.sparta.finalproject.user.entity.UserRole;
+import com.sparta.finalproject.user.repository.UserRepository;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+@SpringBootTest
+class PostCommentServiceImplTest {
+
+    @Autowired
+    PostCommentService postCommentService;
+
+    @Autowired
+    PostCommentRepository postCommentRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    PostRepository postRepository;
+
+    @DisplayName("1. 게시물 댓글 생성 테스트")
+    @Transactional
+    @Test
+    void createPostCommentTest() {
+        // Given
+        User user = User.builder()
+            .userId("userId")
+            .password("password")
+            .email("email@email.com")
+            .role(UserRole.USER)
+            .build();
+
+        User savedUser = userRepository.save(user);
+
+        Post post = Post.builder()
+            .title("title")
+            .content("content")
+            .user(savedUser)
+            .build();
+
+        Post savedPost = postRepository.save(post);
+
+        String postCommentContent = "post comment";
+
+        PostCommentDto.CreatePostComment createPostComment = PostCommentDto.CreatePostComment.builder()
+            .content(postCommentContent)
+            .build();
+
+        // When
+        Long postCommentId = postCommentService.createPostComment(savedPost.getId(),
+            createPostComment, savedUser);
+
+        // Then
+        PostComment findPostComment = postCommentRepository.findById(postCommentId).get();
+
+        Assertions.assertThat(findPostComment.getContent()).isEqualTo(postCommentContent);
+        Assertions.assertThat(findPostComment.getUser().getUserId()).isEqualTo("userId");
+        Assertions.assertThat(findPostComment.getPost().getTitle()).isEqualTo("title");
+    }
+
+    @DisplayName("2. 게시물 댓글 수정 테스트")
+    @Transactional
+    @Test
+    void updatePostCommentTest() {
+        // Given
+        User user = User.builder()
+            .userId("userId")
+            .password("password")
+            .email("email@email.com")
+            .role(UserRole.USER)
+            .build();
+
+        User savedUser = userRepository.save(user);
+
+        Post post = Post.builder()
+            .title("title")
+            .content("content")
+            .user(savedUser)
+            .build();
+
+        Post savedPost = postRepository.save(post);
+
+        String postCommentContent = "post comment";
+
+        PostCommentDto.CreatePostComment createPostComment = PostCommentDto.CreatePostComment.builder()
+            .content(postCommentContent)
+            .build();
+
+        PostCommentDto.UpdatePostComment updatePostComment = PostCommentDto.UpdatePostComment.builder()
+            .content(postCommentContent)
+            .build();
+
+        Long postCommentId = postCommentService.createPostComment(savedPost.getId(),
+            createPostComment, savedUser);
+
+        // When
+        postCommentService.updatePostByPostCommentId(postCommentId, updatePostComment, user);
+
+        // Then
+        PostComment findPostComment = postCommentRepository.findById(postCommentId).get();
+
+        Assertions.assertThat(findPostComment.getContent())
+            .isEqualTo(updatePostComment.getContent());
+        Assertions.assertThat(findPostComment.getUser().getUserId()).isEqualTo("userId");
+        Assertions.assertThat(findPostComment.getPost().getTitle()).isEqualTo("title");
+
+    }
+
+}
