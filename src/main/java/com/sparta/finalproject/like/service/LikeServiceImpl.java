@@ -8,6 +8,7 @@ import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class LikeServiceImpl implements LikeService {
     private final PostRepository postRepository;
 
     @Override
+    @Transactional
     public void createLike(Long postId, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("게시물이 존재하지 않습니다.")
@@ -30,6 +32,12 @@ public class LikeServiceImpl implements LikeService {
             .build();
 
         likeRepository.save(like);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Long selectLikeCount(Long postId) {
+        return likeRepository.countByPostId(postId);
     }
 
     private void validateLike(Long postId, User user) {
