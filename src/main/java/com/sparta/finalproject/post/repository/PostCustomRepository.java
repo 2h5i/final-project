@@ -6,6 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface PostCustomRepository {
 
-    Page<PostDto.ResponsePost> getPostsBySearchCondition(Pageable pageable,
+    Page<PostDto.ResponsePostList> getPostsBySearchCondition(Pageable pageable,
         PostDto.SearchPost searchPost);
 }
