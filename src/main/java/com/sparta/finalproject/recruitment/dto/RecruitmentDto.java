@@ -3,6 +3,8 @@ package com.sparta.finalproject.recruitment.dto;
 
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -31,6 +33,10 @@ public class RecruitmentDto {
 
         public static ResponseRecruitment of (Recruitment recruitment) {
             return new ResponseRecruitment(recruitment);
+        }
+
+        public static List<ResponseRecruitment> of(List<Recruitment> recruitments) {
+            return recruitments.stream().map(ResponseRecruitment::of).collect(Collectors.toList());
         }
     }
 

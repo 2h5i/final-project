@@ -42,7 +42,7 @@ public class RecruitmentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public void createRecruitment() throws IOException {
+    public void createRecruitment () throws IOException {
         ChromeOptions options = new ChromeOptions();
 
         options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
@@ -76,7 +76,8 @@ public class RecruitmentController {
                     String title = titleData.text();
                     String info = infoData.text();
 
-                    recruitmentService.createRecruitment(title,info,contentData.toString(),hrefText);
+                    recruitmentService.createRecruitment(title, info, contentData.toString(),
+                        hrefText);
                 }
             }
         }
@@ -85,18 +86,17 @@ public class RecruitmentController {
 
     @GetMapping("/{recruitmentId}")
     @ResponseStatus(HttpStatus.OK)
-    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(@PathVariable Long
-        recruitmentId){
+    public RecruitmentDto.ResponseRecruitment selectRecruitmentById (@PathVariable Long
+        recruitmentId) {
 
         return recruitmentService.selectRecruitmentById(recruitmentId);
     }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public PageWrapper selectRecruitments(SearchRecruitment searchRecruitment,
-        @PageableDefault() Pageable pageable){
+    public PageWrapper selectRecruitments (SearchRecruitment searchRecruitment,
+        @PageableDefault() Pageable pageable) {
         return PageWrapper.of(recruitmentService.selectRecruitments(pageable, searchRecruitment));
     }
-
 }
 

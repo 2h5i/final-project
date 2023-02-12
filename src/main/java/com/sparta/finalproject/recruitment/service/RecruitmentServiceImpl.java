@@ -20,7 +20,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     @Transactional
-    public void createRecruitment(String title, String subTitle, String content, String href){
+    public void createRecruitment (String title, String subTitle, String content, String href) {
         Recruitment recruitment = Recruitment.builder()
             .title(title)
             .subTitle(subTitle)
@@ -33,7 +33,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(Long recruitmentId){
+    public RecruitmentDto.ResponseRecruitment selectRecruitmentById (Long recruitmentId) {
         Recruitment recruitment = recruitmentRepository.findById(recruitmentId).orElseThrow(
             () -> new BadRequestException("해당하는 게시물이 없습니다.")
         );
@@ -42,8 +42,10 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<ResponseRecruitment> selectRecruitments (Pageable pageable,
         SearchRecruitment searchRecruitment) {
-        return recruitmentRepository.getRecruitmentsBySearchConditin(pageable, searchRecruitment);
+        return recruitmentRepository.selectRecruitmentsBySearchCondition(pageable,
+            searchRecruitment);
     }
 }
