@@ -14,7 +14,6 @@ class RecruitmentServiceImplTest {
 
     @Autowired
     RecruitmentService recruitmentService;
-
     @Autowired
     RecruitmentRepository recruitmentRepository;
 
@@ -22,23 +21,20 @@ class RecruitmentServiceImplTest {
     @Test
     void selectRecruitmentById () {
         // Given
-        String title = "title";
-        String subTitle = "subtitle";
-        String content = "content";
-        String href = "href";
-
         Recruitment recruitment = Recruitment.builder()
-            .title(title)
-            .subTitle(subTitle)
-            .content(content)
-            .href(href)
+            .title("title")
+            .subTitle("subtitle")
+            .content("content")
+            .href("href")
             .build();
+
+        String testTitle = "title";
 
         // When
         recruitmentRepository.save(recruitment);
 
         // then
-        Assertions.assertEquals(recruitment.getTitle(),title);
+        Assertions.assertEquals(recruitment.getTitle(),testTitle);
         Assertions.assertEquals(recruitment.getId(),1);
     }
 }
