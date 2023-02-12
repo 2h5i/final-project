@@ -32,7 +32,7 @@ public class PostDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
-        private ResponsePost (Post post) {
+        private ResponsePost(Post post) {
             this.id = post.getId();
             this.title = post.getTitle();
             this.content = post.getContent();
@@ -41,11 +41,11 @@ public class PostDto {
             this.modifiedAt = post.getModifiedAt();
         }
 
-        public static ResponsePost of (Post post) {
+        public static ResponsePost of(Post post) {
             return new ResponsePost(post);
         }
 
-        public static List<ResponsePost> of (List<Post> posts) {
+        public static List<ResponsePost> of(List<Post> posts) {
             return posts.stream().map(ResponsePost::of).collect(Collectors.toList());
         }
     }

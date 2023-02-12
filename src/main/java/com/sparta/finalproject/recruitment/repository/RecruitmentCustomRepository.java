@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface RecruitmentCustomRepository {
 
-    Page<ResponseRecruitment> selectRecruitmentsBySearchCondition (Pageable pageable,
+    Page<ResponseRecruitment> selectRecruitmentsBySearchCondition(Pageable pageable,
         SearchRecruitment searchRecruitment);
 
 }

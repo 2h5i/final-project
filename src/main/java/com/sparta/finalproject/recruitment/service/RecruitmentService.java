@@ -12,7 +12,7 @@ public interface RecruitmentService {
 
     RecruitmentDto.ResponseRecruitment selectRecruitmentById(Long recruitmentId);
 
-    Page<RecruitmentDto.ResponseRecruitment> selectRecruitments (Pageable pageable,
+    Page<RecruitmentDto.ResponseRecruitment> selectRecruitments(Pageable pageable,
         SearchRecruitment searchRecruitment);
 
 }

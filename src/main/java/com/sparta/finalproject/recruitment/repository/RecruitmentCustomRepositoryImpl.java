@@ -22,21 +22,21 @@ public class RecruitmentCustomRepositoryImpl extends QuerydslRepositorySupport i
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public RecruitmentCustomRepositoryImpl (JPAQueryFactory jpaQueryFactory) {
+    public RecruitmentCustomRepositoryImpl(JPAQueryFactory jpaQueryFactory) {
         super(Recruitment.class);
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    private BooleanExpression searchByTitle (String title) {
+    private BooleanExpression searchByTitle(String title) {
         return Objects.nonNull(title) ? recruitment.title.contains(title) : null;
     }
 
-    private BooleanExpression searchByContent (String content) {
+    private BooleanExpression searchByContent(String content) {
         return Objects.nonNull(content) ? recruitment.content.contains(content) : null;
     }
 
     @Override
-    public Page<ResponseRecruitment> selectRecruitmentsBySearchCondition (Pageable pageable,
+    public Page<ResponseRecruitment> selectRecruitmentsBySearchCondition(Pageable pageable,
         SearchRecruitment searchRecruitment) {
         List<Recruitment> recruitments = jpaQueryFactory.selectFrom(recruitment)
             .where(
