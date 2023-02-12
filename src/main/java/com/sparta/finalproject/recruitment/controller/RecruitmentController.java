@@ -1,6 +1,8 @@
 package com.sparta.finalproject.recruitment.controller;
 
+import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
+import com.sparta.finalproject.recruitment.dto.RecruitmentDto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.service.RecruitmentService;
 import java.io.IOException;
 import java.time.Duration;
@@ -18,6 +20,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,7 +76,8 @@ public class RecruitmentController {
                     String title = titleData.text();
                     String info = infoData.text();
 
-                    recruitmentService.createRecruitment(title,info,contentData.toString(),hrefText);
+                    recruitmentService.createRecruitment(title, info, contentData.toString(),
+                        hrefText);
                 }
             }
         }
@@ -81,9 +86,17 @@ public class RecruitmentController {
 
     @GetMapping("/{recruitmentId}")
     @ResponseStatus(HttpStatus.OK)
-    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(@PathVariable Long recruitmentId){
+    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(@PathVariable Long
+        recruitmentId) {
 
         return recruitmentService.selectRecruitmentById(recruitmentId);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public PageWrapper selectRecruitments(SearchRecruitment searchRecruitment,
+        @PageableDefault() Pageable pageable) {
+        return PageWrapper.of(recruitmentService.selectRecruitments(pageable, searchRecruitment));
     }
 }
 
