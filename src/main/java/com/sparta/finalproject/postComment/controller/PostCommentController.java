@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,7 +29,19 @@ public class PostCommentController {
     public Long createPostComment(@PathVariable Long postId,
         @RequestBody @Valid PostCommentDto.CreatePostComment createPostComment,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return postCommentService.createPostComment(postId, createPostComment,
+            userDetails.getUser());
+    }
+
+    @PutMapping("/{postCommentId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public void updatePostByPostCommentId(@PathVariable Long postCommentId,
+        @RequestBody @Valid PostCommentDto.UpdatePostComment updatePostComment,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        postCommentService.updatePostByPostCommentId(postCommentId, updatePostComment,
             userDetails.getUser());
     }
 }

@@ -12,4 +12,11 @@ public class PostCommentDto {
         private String content;
     }
 
+    @Getter
+    public static class UpdatePostComment {
+
+        @NotBlank
+        private String content;
+    }
+
 }

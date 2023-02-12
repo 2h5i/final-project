@@ -15,9 +15,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostComment extends BaseEntity {
 
@@ -41,5 +43,9 @@ public class PostComment extends BaseEntity {
         this.content = content;
         this.user = user;
         this.post = post;
+    }
+
+    public void editComment(String content) {
+        this.content = content;
     }
 }
