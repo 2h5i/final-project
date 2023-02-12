@@ -1,10 +1,14 @@
-package com.sparta.finalproject.recruitment;
+package com.sparta.finalproject.recruitment.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
+import com.sparta.finalproject.recruitment.dto.RecruitmentDto.ResponseRecruitment;
+import com.sparta.finalproject.recruitment.dto.RecruitmentDto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,5 +39,11 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         );
 
         return RecruitmentDto.ResponseRecruitment.of(recruitment);
+    }
+
+    @Override
+    public Page<ResponseRecruitment> selectRecruitments (Pageable pageable,
+        SearchRecruitment searchRecruitment) {
+        return recruitmentRepository.getRecruitmentsBySearchConditin(pageable, searchRecruitment);
     }
 }
