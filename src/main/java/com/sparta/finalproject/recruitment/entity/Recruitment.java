@@ -34,7 +34,7 @@ public class Recruitment extends BaseEntity {
     private String href;
 
     @Builder
-    public Recruitment(String title, String subTitle, String content, String href){
+    public Recruitment (String title, String subTitle, String content, String href) {
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
