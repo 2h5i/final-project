@@ -1,5 +1,7 @@
-package com.sparta.finalproject.recruitment.service;
+package com.sparta.finalproject.recruitment;
 
+import com.sparta.finalproject.common.exception.BadRequestException;
+import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +25,15 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             .build();
 
         recruitmentRepository.save(recruitment);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(Long recruitmentId){
+        Recruitment recruitment = recruitmentRepository.findById(recruitmentId).orElseThrow(
+            () -> new BadRequestException("해당하는 게시물이 없습니다.")
+        );
+
+        return RecruitmentDto.ResponseRecruitment.of(recruitment);
     }
 }
