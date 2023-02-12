@@ -1,7 +1,7 @@
-package com.sparta.finalproject.postComment.service;
+package com.sparta.finalproject.postcomment.service;
 
-import com.sparta.finalproject.postComment.dto.PostCommentDto.CreatePostComment;
-import com.sparta.finalproject.postComment.dto.PostCommentDto.UpdatePostComment;
+import com.sparta.finalproject.postcomment.dto.PostCommentDto.CreatePostComment;
+import com.sparta.finalproject.postcomment.dto.PostCommentDto.UpdatePostComment;
 import com.sparta.finalproject.user.entity.User;
 
 public interface PostCommentService {

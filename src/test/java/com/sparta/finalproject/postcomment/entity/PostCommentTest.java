@@ -1,4 +1,4 @@
-package com.sparta.finalproject.postComment.entity;
+package com.sparta.finalproject.postcomment.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

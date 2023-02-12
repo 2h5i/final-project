@@ -1,4 +1,4 @@
-package com.sparta.finalproject.postComment.entity;
+package com.sparta.finalproject.postcomment.entity;
 
 import com.sparta.finalproject.common.entity.BaseEntity;
 import com.sparta.finalproject.common.exception.BadRequestException;

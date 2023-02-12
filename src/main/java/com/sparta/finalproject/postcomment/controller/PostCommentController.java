@@ -1,8 +1,8 @@
-package com.sparta.finalproject.postComment.controller;
+package com.sparta.finalproject.postcomment.controller;
 
 import com.sparta.finalproject.common.security.UserDetailsImpl;
-import com.sparta.finalproject.postComment.dto.PostCommentDto;
-import com.sparta.finalproject.postComment.service.PostCommentService;
+import com.sparta.finalproject.postcomment.dto.PostCommentDto;
+import com.sparta.finalproject.postcomment.service.PostCommentService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

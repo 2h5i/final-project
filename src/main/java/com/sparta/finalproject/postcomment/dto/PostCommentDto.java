@@ -1,4 +1,4 @@
-package com.sparta.finalproject.postComment.dto;
+package com.sparta.finalproject.postcomment.dto;
 
 import javax.validation.constraints.NotBlank;
 import lombok.Builder;

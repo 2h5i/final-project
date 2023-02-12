@@ -1,10 +1,10 @@
-package com.sparta.finalproject.postComment.service;
+package com.sparta.finalproject.postcomment.service;
 
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
-import com.sparta.finalproject.postComment.dto.PostCommentDto;
-import com.sparta.finalproject.postComment.entity.PostComment;
-import com.sparta.finalproject.postComment.repository.PostCommentRepository;
+import com.sparta.finalproject.postcomment.dto.PostCommentDto;
+import com.sparta.finalproject.postcomment.entity.PostComment;
+import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.entity.UserRole;
 import com.sparta.finalproject.user.repository.UserRepository;
