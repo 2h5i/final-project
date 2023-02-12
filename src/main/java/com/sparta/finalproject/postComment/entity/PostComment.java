@@ -1,6 +1,7 @@
 package com.sparta.finalproject.postComment.entity;
 
 import com.sparta.finalproject.common.entity.BaseEntity;
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.user.entity.User;
 import javax.persistence.Column;
@@ -47,5 +48,11 @@ public class PostComment extends BaseEntity {
 
     public void editComment(String content) {
         this.content = content;
+    }
+
+    public void validateUser(User user) {
+        if (!this.user.equals(user)) {
+            throw new BadRequestException("해당 댓글에 권한이 있는 사용자가 아닙니다.");
+        }
     }
 }

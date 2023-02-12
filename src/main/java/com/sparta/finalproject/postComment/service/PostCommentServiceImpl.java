@@ -40,6 +40,7 @@ public class PostCommentServiceImpl implements PostCommentService {
             () -> new BadRequestException("수정 할 댓글이 존재하지 않습니다.")
         );
 
+        foundPostComment.validateUser(user);
         foundPostComment.editComment(updatePostComment.getContent());
 
         postCommentRepository.save(foundPostComment);

@@ -1,11 +1,13 @@
 package com.sparta.finalproject.postComment.dto;
 
 import javax.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Getter;
 
 public class PostCommentDto {
 
     @Getter
+    @Builder
     public static class CreatePostComment {
 
         @NotBlank
@@ -13,6 +15,7 @@ public class PostCommentDto {
     }
 
     @Getter
+    @Builder
     public static class UpdatePostComment {
 
         @NotBlank
