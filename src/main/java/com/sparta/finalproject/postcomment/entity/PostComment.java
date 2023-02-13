@@ -1,6 +1,7 @@
-package com.sparta.finalproject.postComment.entity;
+package com.sparta.finalproject.postcomment.entity;
 
 import com.sparta.finalproject.common.entity.BaseEntity;
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.user.entity.User;
 import javax.persistence.Column;
@@ -15,9 +16,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostComment extends BaseEntity {
 
@@ -41,5 +44,15 @@ public class PostComment extends BaseEntity {
         this.content = content;
         this.user = user;
         this.post = post;
+    }
+
+    public void editComment(String content) {
+        this.content = content;
+    }
+
+    public void validateUser(User user) {
+        if (!this.user.equals(user)) {
+            throw new BadRequestException("해당 댓글에 권한이 있는 사용자가 아닙니다.");
+        }
     }
 }
