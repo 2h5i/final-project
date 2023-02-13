@@ -4,13 +4,15 @@ import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserWithPost;
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class PostDto {
 
     @Getter
-    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class CreatePost {
 
         @NotBlank
@@ -18,6 +20,12 @@ public class PostDto {
 
         @NotBlank
         private String content;
+
+        @Builder
+        public CreatePost(String title, String content) {
+            this.title = title;
+            this.content = content;
+        }
     }
 
     @Getter
@@ -71,7 +79,7 @@ public class PostDto {
     }
 
     @Getter
-    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class UpdatePost {
 
         @NotBlank
@@ -79,13 +87,25 @@ public class PostDto {
 
         @NotBlank
         private String content;
+
+        @Builder
+        public UpdatePost(String title, String content) {
+            this.title = title;
+            this.content = content;
+        }
     }
 
     @Getter
-    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class SearchPost {
 
         private String title;
         private String content;
+
+        @Builder
+        public SearchPost(String title, String content) {
+            this.title = title;
+            this.content = content;
+        }
     }
 }
