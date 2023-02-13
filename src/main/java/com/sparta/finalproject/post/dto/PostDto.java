@@ -18,6 +18,12 @@ public class PostDto {
 
         @NotBlank
         private String content;
+
+//        @Builder
+//        public CreatePost(String title, String content) {
+//            this.title = title;
+//            this.content = content;
+//        }
     }
 
     @Getter

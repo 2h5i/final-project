@@ -11,9 +11,11 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Getter
+@DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Recruitment extends BaseEntity {
 
@@ -34,7 +36,7 @@ public class Recruitment extends BaseEntity {
     private String href;
 
     @Builder
-    public Recruitment (String title, String subTitle, String content, String href) {
+    public Recruitment(String title, String subTitle, String content, String href) {
         this.title = title;
         this.subTitle = subTitle;
         this.content = content;
