@@ -35,9 +35,19 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
+    @Transactional
+    public void deleteLike(Long postId, User user) {
+        Like like = likeRepository.findByPostIdAndUserId(postId, user.getId()).orElseThrow(
+            () -> new BadRequestException("해당 게시글에 좋아요를 누르지 않았습니다.")
+        );
+
+        likeRepository.delete(like);
+    }
+
     @Transactional(readOnly = true)
     public Long selectLikeCount(Long postId) {
         return likeRepository.countByPostId(postId);
+
     }
 
     private void validateLike(Long postId, User user) {
