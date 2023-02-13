@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -30,5 +31,15 @@ public class RecruitmentCommentController {
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return recruitmentCommentService.createRecruitmentComment(recruitmentId, createComment,
             userDetails.getUser());
+    }
+
+    @PutMapping("/{recruitmentCommentId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public void updateRecruitmentComment(@PathVariable Long recruitmentCommentId,
+        @RequestBody @Valid RecruitmentCommentDto.CreateRecruitmentComment createComment,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        recruitmentCommentService.updateRecruitmentComment(recruitmentCommentId, createComment,
+            userDetails);
     }
 }

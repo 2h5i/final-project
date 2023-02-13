@@ -1,6 +1,7 @@
 package com.sparta.finalproject.recruitmentcomment.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
+import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.CreateRecruitmentComment;
@@ -9,6 +10,7 @@ import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentR
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,10 +20,11 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
     private final RecruitmentRepository recruitmentRepository;
 
     @Override
+    @Transactional
     public Long createRecruitmentComment(Long recruitmentId, CreateRecruitmentComment createComment,
         User user) {
         Recruitment recruitment = recruitmentRepository.findById(recruitmentId).orElseThrow(
-            () -> new BadRequestException("게시물이 존재하지 않습니다.")
+            () -> new BadRequestException("댓글을 작성할 게시물이 존재하지 않습니다.")
         );
 
         RecruitmentComment recruitmentComment = RecruitmentComment.builder()
@@ -31,5 +34,22 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
             .build();
 
         return recruitmentCommentRepository.save(recruitmentComment).getId();
+    }
+
+    @Override
+    @Transactional
+    public Long updateRecruitmentComment(Long recruitmentCommentId,
+        CreateRecruitmentComment createComment, UserDetailsImpl userDetails) {
+        RecruitmentComment recruitmentComment = recruitmentCommentRepository.findById(
+            recruitmentCommentId).orElseThrow(
+            () -> new BadRequestException("수정 할 댓글이 존재하지 않습니다.")
+        );
+
+        recruitmentComment.validateUser(userDetails.getUser());
+        recruitmentComment.editComment(createComment.getContent());
+
+        recruitmentCommentRepository.saveAndFlush(recruitmentComment);
+
+        return recruitmentCommentId;
     }
 }
