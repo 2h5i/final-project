@@ -10,4 +10,6 @@ public interface PostCommentService {
 
     void updatePostByPostCommentId(Long postCommentId, UpdatePostComment updatePostComment,
         User user);
+
+    void deletePostByCommentId(Long postCommentId, User user);
 }
