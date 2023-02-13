@@ -7,6 +7,7 @@ import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.dto.PostDto;
 import com.sparta.finalproject.post.dto.PostDto.CreatePost;
 import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
+import com.sparta.finalproject.post.dto.PostDto.ResponsePostList;
 import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.entity.UserRole;
@@ -157,7 +158,7 @@ class PostServiceImplTest {
             .build();
 
         // When
-        Page<ResponsePost> findPosts = postService.getPosts(PageRequest.of(0, 10), searchPost);
+        Page<ResponsePostList> findPosts = postService.getPosts(PageRequest.of(0, 10), searchPost);
 
         // Then
         assertThat(findPosts.getTotalElements()).isEqualTo(1);
