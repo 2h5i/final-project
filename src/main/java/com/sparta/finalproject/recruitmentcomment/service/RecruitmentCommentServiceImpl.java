@@ -1,7 +1,6 @@
 package com.sparta.finalproject.recruitmentcomment.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
-import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.CreateRecruitmentComment;
@@ -39,17 +38,30 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
     @Override
     @Transactional
     public Long updateRecruitmentComment(Long recruitmentCommentId,
-        CreateRecruitmentComment createComment, UserDetailsImpl userDetails) {
+        CreateRecruitmentComment createComment, User user) {
         RecruitmentComment recruitmentComment = recruitmentCommentRepository.findById(
             recruitmentCommentId).orElseThrow(
             () -> new BadRequestException("수정 할 댓글이 존재하지 않습니다.")
         );
 
-        recruitmentComment.validateUser(userDetails.getUser());
+        recruitmentComment.validateUser(user);
         recruitmentComment.editComment(createComment.getContent());
 
         recruitmentCommentRepository.saveAndFlush(recruitmentComment);
 
         return recruitmentCommentId;
+    }
+
+    @Override
+    @Transactional
+    public void deleteRecruitmentComment(Long recruitmentCommentId, User user) {
+        RecruitmentComment recruitmentComment = recruitmentCommentRepository.findById(
+            recruitmentCommentId).orElseThrow(
+            () -> new BadRequestException("삭제 할 댓글이 존재하지 않습니다.")
+        );
+
+        recruitmentComment.validateUser(user);
+
+        recruitmentCommentRepository.delete(recruitmentComment);
     }
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -40,6 +41,15 @@ public class RecruitmentCommentController {
         @RequestBody @Valid RecruitmentCommentDto.CreateRecruitmentComment createComment,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         recruitmentCommentService.updateRecruitmentComment(recruitmentCommentId, createComment,
-            userDetails);
+            userDetails.getUser());
+    }
+
+    @DeleteMapping("/{recruitmentCommentId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public void deleteRecruitmentComment(@PathVariable Long recruitmentCommentId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        recruitmentCommentService.deleteRecruitmentComment(recruitmentCommentId,
+            userDetails.getUser());
     }
 }
