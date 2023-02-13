@@ -4,10 +4,13 @@ import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.CreateRecruitmentComment;
+import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.ResponseRecruitmentCommentList;
 import com.sparta.finalproject.recruitmentcomment.entity.RecruitmentComment;
 import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentRepository;
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,5 +66,14 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
         recruitmentComment.validateUser(user);
 
         recruitmentCommentRepository.delete(recruitmentComment);
+    }
+
+    @Override
+    @Transactional
+    public Page<ResponseRecruitmentCommentList> selectRecruitmentCommentListByRecruitmentId(
+        Long recruitmentId, Pageable pageable) {
+
+        return recruitmentCommentRepository.selectRecruitmentCommentListByRecruitmentId(
+            recruitmentId, pageable);
     }
 }

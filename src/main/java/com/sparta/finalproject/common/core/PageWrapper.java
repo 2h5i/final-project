@@ -28,5 +28,4 @@ public class PageWrapper<T> {
     public static <T> PageWrapper of(final Page<T> page) {
         return new PageWrapper<>(page);
     }
-
 }
