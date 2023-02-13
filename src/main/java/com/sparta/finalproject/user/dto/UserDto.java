@@ -21,4 +21,20 @@ public class UserDto {
         }
     }
 
+    @Getter
+    public static class ResponseUserWithPostComment {
+
+        private Long id;
+        private String userId;
+
+        private ResponseUserWithPostComment(User user) {
+            this.id = user.getId();
+            this.userId = user.getUserId();
+        }
+
+        public static ResponseUserWithPostComment of(User user) {
+            return new ResponseUserWithPostComment(user);
+        }
+    }
+
 }

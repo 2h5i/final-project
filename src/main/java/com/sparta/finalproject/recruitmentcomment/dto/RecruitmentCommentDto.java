@@ -8,7 +8,7 @@ public class RecruitmentCommentDto {
 
     @Getter
     @Builder
-    public class CreateRecruitmentComment {
+    public static class CreateRecruitmentComment {
 
         @NotBlank
         private String content;
