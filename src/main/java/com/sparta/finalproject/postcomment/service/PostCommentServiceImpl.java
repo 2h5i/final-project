@@ -4,11 +4,14 @@ import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.postcomment.dto.PostCommentDto.CreatePostComment;
+import com.sparta.finalproject.postcomment.dto.PostCommentDto.ResponsePostCommentList;
 import com.sparta.finalproject.postcomment.dto.PostCommentDto.UpdatePostComment;
 import com.sparta.finalproject.postcomment.entity.PostComment;
 import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -59,5 +62,13 @@ public class PostCommentServiceImpl implements PostCommentService {
         foundPostComment.validateUser(user);
 
         postCommentRepository.delete(foundPostComment);
+    }
+
+    @Override
+    @Transactional
+    public Page<ResponsePostCommentList> selectPostCommentListByPostId(Long postId,
+        Pageable pageable) {
+
+        return postCommentRepository.selectPostCommentListByPostId(postId, pageable);
     }
 }
