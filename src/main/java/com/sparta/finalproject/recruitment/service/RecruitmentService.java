@@ -15,4 +15,6 @@ public interface RecruitmentService {
 
     Page<RecruitmentDto.ResponseRecruitment> selectRecruitments(Pageable pageable,
         SearchRecruitment searchRecruitment);
+
+    Page<Recruitment> mainRecruitments();
 }
