@@ -11,5 +11,4 @@ public class RecruitmentCommentDto {
         @NotBlank
         private String content;
     }
-
 }
