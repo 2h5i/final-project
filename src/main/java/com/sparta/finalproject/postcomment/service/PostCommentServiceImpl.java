@@ -10,6 +10,7 @@ import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ public class PostCommentServiceImpl implements PostCommentService {
     private final PostRepository postRepository;
 
     @Override
+    @Transactional
     public Long createPostComment(Long postId, CreatePostComment createPostComment, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("댓글을 달 게시물이 존재하지 않습니다.")
@@ -34,6 +36,7 @@ public class PostCommentServiceImpl implements PostCommentService {
     }
 
     @Override
+    @Transactional
     public void updatePostByPostCommentId(Long postCommentId, UpdatePostComment updatePostComment,
         User user) {
         PostComment foundPostComment = postCommentRepository.findById(postCommentId).orElseThrow(
@@ -44,5 +47,17 @@ public class PostCommentServiceImpl implements PostCommentService {
         foundPostComment.editComment(updatePostComment.getContent());
 
         postCommentRepository.save(foundPostComment);
+    }
+
+    @Override
+    @Transactional
+    public void deletePostByCommentId(Long postCommentId, User user) {
+        PostComment foundPostComment = postCommentRepository.findById(postCommentId).orElseThrow(
+            () -> new BadRequestException("삭제 할 댓글이 존재하지 않습니다.")
+        );
+
+        foundPostComment.validateUser(user);
+
+        postCommentRepository.delete(foundPostComment);
     }
 }
