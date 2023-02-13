@@ -20,7 +20,8 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     @Transactional
-    public void createRecruitment(String title, String subTitle, String content, String href) {
+    public Recruitment createRecruitment(String title, String subTitle, String content,
+        String href) {
         Recruitment recruitment = Recruitment.builder()
             .title(title)
             .subTitle(subTitle)
@@ -28,7 +29,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
             .href(href)
             .build();
 
-        recruitmentRepository.saveAndFlush(recruitment);
+        return recruitmentRepository.save(recruitment);
     }
 
     @Override

@@ -28,7 +28,9 @@ public class PostCommentServiceImpl implements PostCommentService {
             .user(user)
             .post(post)
             .build();
-        
-        return postCommentRepository.save(postComment).getId();
+
+        postCommentRepository.save(postComment);
+
+        return postComment.getId();
     }
 }
