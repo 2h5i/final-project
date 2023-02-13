@@ -57,7 +57,7 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
     public void deleteRecruitmentComment(Long recruitmentCommentId, User user) {
         RecruitmentComment recruitmentComment = recruitmentCommentRepository.findById(
             recruitmentCommentId).orElseThrow(
-            () -> new BadRequestException("수정 할 댓글이 존재하지 않습니다.")
+            () -> new BadRequestException("삭제 할 댓글이 존재하지 않습니다.")
         );
 
         recruitmentComment.validateUser(user);
