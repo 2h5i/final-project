@@ -26,8 +26,8 @@ public class Recruitment extends BaseEntity {
 
     @Column(nullable = false)
     private String subTitle;
-
-    @Lob
+    
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Lob

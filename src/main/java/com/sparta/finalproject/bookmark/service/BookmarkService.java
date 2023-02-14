@@ -1,5 +1,8 @@
 package com.sparta.finalproject.bookmark.service;
 
-public class BookmarkService {
+import com.sparta.finalproject.user.entity.User;
 
+public interface BookmarkService {
+
+    void createBookmark(Long recruitmentId, User user);
 }
