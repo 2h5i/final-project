@@ -44,7 +44,6 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
         List<Tuple> posts = jpaQueryFactory.select(post,
                 JPAExpressions.select(Wildcard.count).from(like)
                     .where(post.id.eq(like.post.id))
-                    .groupBy(like.post.id)
             )
             .from(post)
             .where(
@@ -71,4 +70,6 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 
         return new PageImpl<>(testDtos, pageable, postCount);
     }
+
+
 }
