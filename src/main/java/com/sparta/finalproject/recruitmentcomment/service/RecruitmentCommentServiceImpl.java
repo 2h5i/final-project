@@ -5,6 +5,7 @@ import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.CreateRecruitmentComment;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.ResponseRecruitmentCommentList;
+import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
 import com.sparta.finalproject.recruitmentcomment.entity.RecruitmentComment;
 import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentRepository;
 import com.sparta.finalproject.user.entity.User;
@@ -75,6 +76,15 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
 
         return recruitmentCommentRepository.selectRecruitmentCommentListByRecruitmentId(
             recruitmentId, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ResponseRecruitmentCommentList> selectRecruitmentCommentListAdminByRecruitmentId(
+        Pageable pageable, SearchRecruitment searchRecruitment) {
+
+        return recruitmentCommentRepository.selectRecruitmentCommentListAdminByRecruitmentId(
+            pageable, searchRecruitment);
     }
 
     @Override

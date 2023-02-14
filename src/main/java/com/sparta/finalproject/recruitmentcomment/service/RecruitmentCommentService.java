@@ -2,6 +2,7 @@ package com.sparta.finalproject.recruitmentcomment.service;
 
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.CreateRecruitmentComment;
+import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
 import com.sparta.finalproject.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,10 @@ public interface RecruitmentCommentService {
 
     Page<RecruitmentCommentDto.ResponseRecruitmentCommentList>
     selectRecruitmentCommentListByRecruitmentId(Long recruitmentId, Pageable pageable);
+
+    Page<RecruitmentCommentDto.ResponseRecruitmentCommentList>
+    selectRecruitmentCommentListAdminByRecruitmentId(Pageable pageable,
+        SearchRecruitment searchRecruitment);
 
     void deleteRecruitmentCommentAdmin(Long recruitmentId);
 }

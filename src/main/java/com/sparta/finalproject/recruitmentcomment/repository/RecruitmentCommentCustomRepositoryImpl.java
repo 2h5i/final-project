@@ -6,6 +6,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.ResponseRecruitmentCommentList;
+import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
 import com.sparta.finalproject.recruitmentcomment.entity.RecruitmentComment;
 import java.util.List;
 import java.util.Objects;
@@ -31,6 +32,15 @@ public class RecruitmentCommentCustomRepositoryImpl extends QuerydslRepositorySu
             : null;
     }
 
+    private BooleanExpression searchByContent(String content) {
+        return Objects.nonNull(content) ? recruitmentComment.content.contains(content) : null;
+    }
+
+    private BooleanExpression searchByUserId(String userId) {
+        return Objects.nonNull(userId) ? recruitmentComment.user.userId.contains(userId)
+            : null;
+    }
+
     @Override
     public Page<ResponseRecruitmentCommentList> selectRecruitmentCommentListByRecruitmentId(
         Long recruitmentId, Pageable pageable) {
@@ -47,6 +57,30 @@ public class RecruitmentCommentCustomRepositoryImpl extends QuerydslRepositorySu
             .from(recruitmentComment)
             .where(
                 searchByRecruitmentId(recruitmentId)
+            )
+            .fetch().get(0);
+
+        return new PageImpl<>(ResponseRecruitmentCommentList.of(recruitmentComments), pageable,
+            recruitmentCommentsCount);
+    }
+
+    public Page<ResponseRecruitmentCommentList> selectRecruitmentCommentListAdminByRecruitmentId(
+        Pageable pageable, SearchRecruitment searchRecruitment) {
+        List<RecruitmentComment> recruitmentComments = jpaQueryFactory.selectFrom(
+                recruitmentComment)
+            .where(
+                searchByContent(searchRecruitment.getContent()),
+                searchByUserId(searchRecruitment.getUserId())
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long recruitmentCommentsCount = jpaQueryFactory.select(Wildcard.count)
+            .from(recruitmentComment)
+            .where(
+                searchByContent(searchRecruitment.getContent()),
+                searchByUserId(searchRecruitment.getUserId())
             )
             .fetch().get(0);
 
