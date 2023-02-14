@@ -65,10 +65,12 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void deletePost(Long postId, User user) {
         Post post = postRepository.findById(postId).orElseThrow(
-            () -> new BadRequestException("해당하는 게시물이 없습니다.")
+            () -> new BadRequestException("삭제할 게시물이 존재하지 않습니다.")
         );
 
         post.validateUser(user);
+        postCommentRepository.deleteByPostQuery(post);
+        likeRepository.deleteByPostQuery(post);
         postRepository.delete(post);
     }
 
