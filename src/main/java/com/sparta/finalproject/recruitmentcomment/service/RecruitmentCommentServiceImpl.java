@@ -69,7 +69,7 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<ResponseRecruitmentCommentList> selectRecruitmentCommentListByRecruitmentId(
         Long recruitmentId, Pageable pageable) {
 
