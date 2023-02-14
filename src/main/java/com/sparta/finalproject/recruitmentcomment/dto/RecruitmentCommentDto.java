@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +49,20 @@ public class RecruitmentCommentDto {
             List<RecruitmentComment> recruitmentComments) {
             return recruitmentComments.stream().map(ResponseRecruitmentCommentList::of)
                 .collect(Collectors.toList());
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class SearchRecruitment {
+
+        private String userId;
+        private String content;
+
+        @Builder
+        public SearchRecruitment(String userId, String content) {
+            this.userId = userId;
+            this.content = content;
         }
     }
 }
