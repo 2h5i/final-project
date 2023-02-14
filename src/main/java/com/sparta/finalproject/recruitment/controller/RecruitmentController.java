@@ -7,6 +7,7 @@ import com.sparta.finalproject.recruitment.service.RecruitmentService;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -97,6 +98,12 @@ public class RecruitmentController {
     public PageWrapper selectRecruitments(SearchRecruitment searchRecruitment,
         @PageableDefault() Pageable pageable) {
         return PageWrapper.of(recruitmentService.selectRecruitments(pageable, searchRecruitment));
+    }
+
+    @GetMapping("/main")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Map<String, Object>> mainRecruitments() {
+        return recruitmentService.mainRecruitments();
     }
 }
 
