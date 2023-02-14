@@ -3,7 +3,9 @@ package com.sparta.finalproject.post.service;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.like.repository.LikeRepository;
 import com.sparta.finalproject.post.dto.PostDto;
+import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
 import com.sparta.finalproject.post.dto.PostDto.SearchPost;
+import com.sparta.finalproject.post.dto.PostDto.SearchPostAdmin;
 import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
@@ -90,5 +92,11 @@ public class PostServiceImpl implements PostService {
         postCommentRepository.deleteByPostQuery(post);
         likeRepository.deleteByPostQuery(post);
         postRepository.deleteById(postId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ResponsePost> selectPostsAdmin(SearchPostAdmin searchPostAdmin, Pageable pageable) {
+        return postRepository.selectPostsBySearchConditionAdmin(searchPostAdmin, pageable);
     }
 }
