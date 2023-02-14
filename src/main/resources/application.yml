@@ -21,6 +21,13 @@ spring:
           server:
             tomcat:
               connection-timeout: -1
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+
+file:
+  path: C:/Users/zoo56/OneDrive/바탕 화면/final-project/src/main/resources/image/
 
 jwt:
   secret:

@@ -28,6 +28,7 @@ public class User {
     private String userId;
 
     private Long kakaoId;
+    private String profileImage;
     @Column(nullable = false)
     private String password;
 
@@ -41,10 +42,14 @@ public class User {
     @Builder
     public User(String userId, Long kakaoId, String password, String email, UserRole role) {
         this.userId = userId;
-        this.kakaoId = this.kakaoId;
+        this.kakaoId = kakaoId;
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public User kakaoIdUpdate(Long kakaoId) {

@@ -1,7 +1,9 @@
 package com.sparta.finalproject.user.dto;
 
 import com.sparta.finalproject.user.entity.User;
+import lombok.Data;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 public class UserDto {
 
@@ -51,6 +53,11 @@ public class UserDto {
         public static ResponseUserWithRecruitmentComment of(User user) {
             return new ResponseUserWithRecruitmentComment(user);
         }
+    }
+    @Data
+    public static class ImageUploadDto {
+
+        private MultipartFile file;
     }
 
 }
