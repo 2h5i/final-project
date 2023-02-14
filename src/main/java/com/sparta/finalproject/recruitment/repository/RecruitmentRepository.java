@@ -11,10 +11,7 @@ public interface RecruitmentRepository extends JpaRepository<Recruitment, Long>,
 
     @Query(
         nativeQuery = true,
-        value = "SELECT r.title , r.sub_title \n" +
-            "FROM recruitment r \n" +
-            "ORDER BY r.id DESC \n" +
-            "LIMIT 5"
+        value = "SELECT r.title , r.sub_title FROM recruitment r ORDER BY r.id DESC LIMIT 5"
     )
     List<Map<String, Object>> findTop5ByOrderByIdDesc();
 }
