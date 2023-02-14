@@ -76,15 +76,4 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
         return recruitmentCommentRepository.selectRecruitmentCommentListByRecruitmentId(
             recruitmentId, pageable);
     }
-
-    @Override
-    @Transactional
-    public void deleteRecruitmentCommentAdmin(Long recruitmentCommentId) {
-        RecruitmentComment recruitmentComment = recruitmentCommentRepository.findById(
-            recruitmentCommentId).orElseThrow(
-            () -> new BadRequestException("삭제 할 댓글이 존재하지 않습니다.")
-        );
-
-        recruitmentCommentRepository.delete(recruitmentComment);
-    }
 }

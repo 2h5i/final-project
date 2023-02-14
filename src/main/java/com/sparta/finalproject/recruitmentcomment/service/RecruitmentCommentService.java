@@ -18,6 +18,4 @@ public interface RecruitmentCommentService {
 
     Page<RecruitmentCommentDto.ResponseRecruitmentCommentList>
     selectRecruitmentCommentListByRecruitmentId(Long recruitmentId, Pageable pageable);
-
-    void deleteRecruitmentCommentAdmin(Long recruitmentId);
 }
