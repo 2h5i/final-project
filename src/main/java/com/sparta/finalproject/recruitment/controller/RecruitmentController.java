@@ -103,9 +103,9 @@ public class RecruitmentController {
 
     @GetMapping("/main")
     @ResponseStatus(HttpStatus.OK)
-    public Page<Recruitment> mainRecruitments() {
+    public List<Recruitment> mainRecruitments() {
         Page<Recruitment> mainPage = recruitmentService.mainRecruitments();
-        return mainPage;
+        return mainPage.toList();
     }
 }
 
