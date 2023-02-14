@@ -37,4 +37,20 @@ public class UserDto {
         }
     }
 
+    @Getter
+    public static class ResponseUserWithRecruitmentComment {
+
+        private Long id;
+        private String userId;
+
+        private ResponseUserWithRecruitmentComment(User user) {
+            this.id = user.getId();
+            this.userId = user.getUserId();
+        }
+
+        public static ResponseUserWithRecruitmentComment of(User user) {
+            return new ResponseUserWithRecruitmentComment(user);
+        }
+    }
+
 }
