@@ -3,11 +3,11 @@ package com.sparta.finalproject.recruitment.controller;
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto.SearchRecruitment;
-import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.service.RecruitmentService;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -21,7 +21,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -103,9 +102,8 @@ public class RecruitmentController {
 
     @GetMapping("/main")
     @ResponseStatus(HttpStatus.OK)
-    public List<Recruitment> mainRecruitments() {
-        Page<Recruitment> mainPage = recruitmentService.mainRecruitments();
-        return mainPage.toList();
+    public List<Map<String, Object>> mainRecruitments() {
+        return recruitmentService.mainRecruitments();
     }
 }
 

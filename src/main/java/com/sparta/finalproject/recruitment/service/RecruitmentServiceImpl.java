@@ -6,12 +6,11 @@ import com.sparta.finalproject.recruitment.dto.RecruitmentDto.ResponseRecruitmen
 import com.sparta.finalproject.recruitment.dto.RecruitmentDto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,8 +54,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<Recruitment> mainRecruitments() {
-        return recruitmentRepository.findAll(PageRequest.of(0, 5, Sort.by(Direction.DESC,
-            "id")));
+    public List<Map<String, Object>> mainRecruitments() {
+        return recruitmentRepository.findTop5ByOrderByIdDesc();
     }
 }
