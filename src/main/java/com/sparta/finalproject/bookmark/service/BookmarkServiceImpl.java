@@ -21,9 +21,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     @Transactional
     public void createBookmark(Long recruitmentId, User user) {
-        Recruitment recruitment = recruitmentRepository.findById(recruitmentId).orElseThrow(
-            () -> new BadRequestException("해당 채용공고가 존재하지 않습니다.")
-        );
+        Recruitment recruitment = validateRecruitment(recruitmentId);
 
         validateBookmark(recruitmentId, user.getId());
 
@@ -35,9 +33,26 @@ public class BookmarkServiceImpl implements BookmarkService {
         bookmarkRepository.save(bookmark);
     }
 
+    @Override
+    @Transactional
+    public void deleteBookmark(Long recruitmentId, User user) {
+        validateRecruitment(recruitmentId);
+
+        Bookmark bookmark = bookmarkRepository.findByRecruitmentIdAndUserId(recruitmentId,
+            user.getId()).orElseThrow(() -> new BadRequestException("북마크를 누르지 않았습니다."));
+
+        bookmarkRepository.delete(bookmark);
+    }
+
     private void validateBookmark(Long recruitmentId, Long userId) {
         if (bookmarkRepository.existsByRecruitmentIdAndUserId(recruitmentId, userId)) {
             throw new BadRequestException("이미 북마크 하였습니다.");
         }
+    }
+
+    private Recruitment validateRecruitment(Long recruitmentId) {
+        return recruitmentRepository.findById(recruitmentId).orElseThrow(
+            () -> new BadRequestException("해당 채용공고가 존재하지 않습니다.")
+        );
     }
 }

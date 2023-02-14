@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,4 +28,11 @@ public class BookmarkController {
         bookmarkService.createBookmark(recruitmentId, userDetails.getUser());
     }
 
+    @DeleteMapping("/{recruitmentId}/bookmark")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public void deleteBookmark(@PathVariable Long recruitmentId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        bookmarkService.deleteBookmark(recruitmentId, userDetails.getUser());
+    }
 }
