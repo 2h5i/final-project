@@ -1,14 +1,18 @@
 package com.sparta.finalproject.recruitmentcomment.controller;
 
+import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto;
 import com.sparta.finalproject.recruitmentcomment.service.RecruitmentCommentService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -51,5 +55,14 @@ public class RecruitmentCommentController {
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         recruitmentCommentService.deleteRecruitmentComment(recruitmentCommentId,
             userDetails.getUser());
+    }
+
+    @GetMapping("/{recruitmentId}")
+    @ResponseStatus(HttpStatus.OK)
+    public PageWrapper selectRecruitmentCommentListByRecruitmentId(
+        @PathVariable Long recruitmentId, @PageableDefault Pageable pageable) {
+
+        return PageWrapper.of(recruitmentCommentService.selectRecruitmentCommentListByRecruitmentId
+            (recruitmentId, pageable));
     }
 }
