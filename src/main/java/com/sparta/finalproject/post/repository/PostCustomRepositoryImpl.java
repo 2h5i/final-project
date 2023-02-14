@@ -61,14 +61,14 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
                 searchByContent(searchPost.getContent())
             ).fetch().get(0);
 
-        List<PostDto.ResponsePostList> testDtos = new ArrayList<>();
+        List<PostDto.ResponsePostList> responsePostList = new ArrayList<>();
         for (Tuple tuple : posts) {
-            testDtos.add(
+            responsePostList.add(
                 PostDto.ResponsePostList.of(Objects.requireNonNull(tuple.get(0, Post.class)),
                     Objects.nonNull(tuple.get(1, Long.class)) ? tuple.get(1, Long.class) : 0));
         }
 
-        return new PageImpl<>(testDtos, pageable, postCount);
+        return new PageImpl<>(responsePostList, pageable, postCount);
     }
 
 
