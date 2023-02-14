@@ -44,6 +44,7 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
         List<Tuple> posts = jpaQueryFactory.select(post,
                 JPAExpressions.select(Wildcard.count).from(like)
                     .where(post.id.eq(like.post.id))
+                    .groupBy(like.post.id)
             )
             .from(post)
             .where(
@@ -61,15 +62,13 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
                 searchByContent(searchPost.getContent())
             ).fetch().get(0);
 
-        List<PostDto.ResponsePostList> responsePostList = new ArrayList<>();
+        List<PostDto.ResponsePostList> testDtos = new ArrayList<>();
         for (Tuple tuple : posts) {
-            responsePostList.add(
+            testDtos.add(
                 PostDto.ResponsePostList.of(Objects.requireNonNull(tuple.get(0, Post.class)),
                     Objects.nonNull(tuple.get(1, Long.class)) ? tuple.get(1, Long.class) : 0));
         }
 
-        return new PageImpl<>(responsePostList, pageable, postCount);
+        return new PageImpl<>(testDtos, pageable, postCount);
     }
-
-
 }
