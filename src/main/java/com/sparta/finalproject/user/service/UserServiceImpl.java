@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
     private final S3Upload s3Upload;
 
     @Override
+    @Transactional
     public String updateProfileImage(MultipartFile profileImage, User user) throws IOException {
         if (Objects.nonNull(user.getProfileImage())) {
             s3Upload.deleteFile(user.getProfileImage());
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService {
         user.updateProfileImage(profileImageUrl);
 
         userRepository.save(user);
-        
+
         return profileImageUrl;
     }
 }
