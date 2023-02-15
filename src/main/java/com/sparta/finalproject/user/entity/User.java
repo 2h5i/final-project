@@ -1,5 +1,6 @@
 package com.sparta.finalproject.user.entity;
 
+import com.sparta.finalproject.common.exception.BadRequestException;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,6 +62,16 @@ public class User {
     public User kakaoIdUpdate(Long kakaoId) {
         this.kakaoId = kakaoId;
         return this;
+    }
+
+    public void deleteProfileImage() {
+        this.profileImage = null;
+    }
+
+    public void validateUser(User user) {
+        if (!this.equals(user)) {
+            throw new BadRequestException("정보 수정에 대한 권한이 없습니다.");
+        }
     }
 
     @Override
