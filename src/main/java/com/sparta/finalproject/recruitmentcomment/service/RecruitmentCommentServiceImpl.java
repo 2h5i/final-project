@@ -6,6 +6,7 @@ import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.CreateRecruitmentComment;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.ResponseRecruitmentCommentList;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentsDto;
 import com.sparta.finalproject.recruitmentcomment.entity.RecruitmentComment;
 import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentRepository;
 import com.sparta.finalproject.user.entity.User;
@@ -96,5 +97,10 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
         );
 
         recruitmentCommentRepository.delete(recruitmentComment);
+    }
+
+    @Override
+    public Page<RecruitmentCommentsDto> selectMyCommentLists(Pageable pageable, Long userId) {
+        return recruitmentCommentRepository.findMyPageRecruitmentComments(pageable, userId);
     }
 }
