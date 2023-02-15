@@ -9,7 +9,10 @@ import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sparta.finalproject.post.dto.PostDto;
+import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
+import com.sparta.finalproject.post.dto.PostDto.SearchPostAdmin;
 import com.sparta.finalproject.post.entity.Post;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +39,18 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 
     private BooleanExpression searchByContent(String content) {
         return Objects.nonNull(content) ? post.content.contains(content) : null;
+    }
+
+    private BooleanExpression searchByUserId(String userId) {
+        return Objects.nonNull(userId) ? post.user.userId.contains(userId) : null;
+    }
+
+    private BooleanExpression searchByCreated(LocalDateTime createdStarted,
+        LocalDateTime createdEnded) {
+        if (Objects.nonNull(createdStarted) && Objects.nonNull(createdEnded)) {
+            return post.createdAt.between(createdStarted, createdEnded);
+        }
+        return null;
     }
 
     @Override
@@ -71,5 +86,34 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
         return new PageImpl<>(responsePostList, pageable, postCount);
     }
 
+    @Override
+    public Page<ResponsePost> selectPostsBySearchConditionAdmin(SearchPostAdmin searchPostAdmin,
+        Pageable pageable) {
 
+        List<Post> posts = jpaQueryFactory.selectFrom(post)
+            .where(
+                searchByTitle(searchPostAdmin.getTitle()),
+                searchByContent(searchPostAdmin.getContent()),
+                searchByUserId(searchPostAdmin.getUserId()),
+                searchByCreated(searchPostAdmin.getCreatedStarted(),
+                    searchPostAdmin.getCreatedEnded())
+            )
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long postCounts = jpaQueryFactory.select(Wildcard.count)
+            .from(post)
+            .where(
+                searchByTitle(searchPostAdmin.getTitle()),
+                searchByContent(searchPostAdmin.getContent()),
+                searchByUserId(searchPostAdmin.getUserId()),
+                searchByCreated(searchPostAdmin.getCreatedStarted(),
+                    searchPostAdmin.getCreatedEnded())
+            )
+            .fetch().get(0);
+
+        return new PageImpl<>(ResponsePost.of(posts), pageable, postCounts);
+    }
+    
 }
