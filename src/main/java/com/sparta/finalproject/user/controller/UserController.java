@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,12 +23,21 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/image")
+    @PostMapping("/{userId}/image")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public String updateUserProfileImage(@RequestParam("profileImage") MultipartFile multipartFile,
+    public String updateUserProfileImage(@PathVariable Long userId,
+        @RequestParam("profileImage") MultipartFile multipartFile,
         @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
 
-        return userService.updateProfileImage(multipartFile, userDetails.getUser());
+        return userService.updateProfileImage(userId, multipartFile, userDetails.getUser());
+    }
+
+    @DeleteMapping("/{userId}/image")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public void deleteUserProfileImage(@PathVariable Long userId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+        userService.deleteProfileImage(userId, userDetails.getUser());
     }
 }
