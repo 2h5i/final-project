@@ -7,8 +7,8 @@ import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.user.entity.User;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +48,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BookmarkDto> selectMyBookmarks(Pageable pageable, Long userId) {
+    public Page<BookmarkDto> selectMyBookmarks(Pageable pageable, Long userId) {
         return bookmarkRepository.findByRecruitmentId(pageable, userId);
     }
 

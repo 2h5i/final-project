@@ -3,8 +3,8 @@ package com.sparta.finalproject.bookmark.repository;
 import com.sparta.finalproject.bookmark.dto.BookmarkDto;
 import com.sparta.finalproject.bookmark.entity.Bookmark;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
-import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -28,5 +28,5 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
         value = "select b.recruitment_id AS recruitmentId, b.user_id AS userId"
             + " from bookmark b where b.user_id = :userId"
     )
-    List<BookmarkDto> findByRecruitmentId(Pageable pageable, @Param("userId") Long userId);
+    Page<BookmarkDto> findByRecruitmentId(Pageable pageable, @Param("userId") Long userId);
 }
