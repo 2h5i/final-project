@@ -42,6 +42,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteProfileImage(Long userId, User user) throws IOException {
         User findUser = userRepository.findById(userId).orElseThrow(
             () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
