@@ -364,3 +364,5 @@ gradle-app.setting
 
 chromedriver
 chromedriver.*
+
+/src/main/resources/application.yml
