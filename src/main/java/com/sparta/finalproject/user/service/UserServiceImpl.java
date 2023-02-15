@@ -24,16 +24,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String updateProfileImage(MultipartFile profileImage, User user) throws IOException {
+    public String updateProfileImage(Long userId, MultipartFile profileImage, User user)
+        throws IOException {
+        User findUser = userRepository.findById(userId).orElseThrow(
+            () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
+        );
+
+        findUser.validateUser(user);
+
         if (Objects.nonNull(user.getProfileImage())) {
             s3Upload.deleteFile(user.getProfileImage());
         }
 
         String profileImageUrl = s3Upload.upload(profileImage);
 
-        user.updateProfileImage(profileImageUrl);
+        findUser.updateProfileImage(profileImageUrl);
 
-        userRepository.save(user);
+        userRepository.save(findUser);
 
         return profileImageUrl;
     }
@@ -47,5 +54,20 @@ public class UserServiceImpl implements UserService {
         String password = passwordEncoder.encode(updateUser.getPassword());
         user.updateUser(updateUser.getUserId(), password, updateUser.getEmail());
         userRepository.saveAndFlush(user);
+    }
+
+    @Override
+    @Transactional
+    public void deleteProfileImage(Long userId, User user) throws IOException {
+        User findUser = userRepository.findById(userId).orElseThrow(
+            () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
+        );
+
+        findUser.validateUser(user);
+
+        s3Upload.deleteFile(findUser.getProfileImage());
+        findUser.deleteProfileImage();
+
+        userRepository.save(findUser);
     }
 }

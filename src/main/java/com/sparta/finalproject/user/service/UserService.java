@@ -7,7 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
-    String updateProfileImage(MultipartFile multipartFile, User user) throws IOException;
+    String updateProfileImage(Long userId, MultipartFile multipartFile, User user)
+        throws IOException;
 
     void updateUser(UserDto.UpdateUser updateUser, Long userId);
+
+    void deleteProfileImage(Long userId, User user) throws IOException;
+
 }
