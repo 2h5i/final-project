@@ -26,7 +26,8 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
     @Query(
         nativeQuery = true,
         value = "select r.title AS title, r.id AS recruitmentId "
-            + "from bookmark b JOIN recruitment r on r.id = b.recruitment_id where b.user_id = :userId"
+            + "from bookmark b JOIN recruitment r on r.id = b.recruitment_id "
+            + "where b.user_id = :userId"
     )
-    Page<BookmarkDto> findByUserId(Pageable pageable, @Param("userId") Long userId);
+    Page<BookmarkDto> findByMyPageBookmark(Pageable pageable, @Param("userId") Long userId);
 }

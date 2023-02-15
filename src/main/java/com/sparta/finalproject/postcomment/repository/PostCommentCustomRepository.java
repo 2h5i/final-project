@@ -7,4 +7,5 @@ import org.springframework.data.domain.Pageable;
 public interface PostCommentCustomRepository {
 
     Page<ResponsePostCommentList> selectPostCommentListByPostId(Long postId, Pageable pageable);
+
 }

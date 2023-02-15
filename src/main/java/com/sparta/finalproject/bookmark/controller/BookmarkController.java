@@ -44,7 +44,7 @@ public class BookmarkController {
 
     @GetMapping("/{userId}/my-page")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public PageWrapper<BookmarkDto> selectMyBookmarks(@PathVariable Long userId,
         @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {

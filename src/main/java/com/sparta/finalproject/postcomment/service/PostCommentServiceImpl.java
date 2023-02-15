@@ -6,6 +6,7 @@ import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.postcomment.dto.PostCommentDto.CreatePostComment;
 import com.sparta.finalproject.postcomment.dto.PostCommentDto.ResponsePostCommentList;
 import com.sparta.finalproject.postcomment.dto.PostCommentDto.UpdatePostComment;
+import com.sparta.finalproject.postcomment.dto.PostCommentsDto;
 import com.sparta.finalproject.postcomment.entity.PostComment;
 import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
 import com.sparta.finalproject.user.entity.User;
@@ -70,5 +71,11 @@ public class PostCommentServiceImpl implements PostCommentService {
         Pageable pageable) {
 
         return postCommentRepository.selectPostCommentListByPostId(postId, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PostCommentsDto> selectMyCommentLists(Pageable pageable, Long userId) {
+        return postCommentRepository.findByMyPageComment(pageable, userId);
     }
 }
