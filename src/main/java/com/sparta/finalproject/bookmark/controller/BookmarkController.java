@@ -42,7 +42,7 @@ public class BookmarkController {
         bookmarkService.deleteBookmark(recruitmentId, userDetails.getUser());
     }
 
-    @GetMapping("/{userId}/mypage")
+    @GetMapping("/{userId}/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER')")
     public PageWrapper<BookmarkDto> selectMyBookmarks(@PathVariable Long userId,
