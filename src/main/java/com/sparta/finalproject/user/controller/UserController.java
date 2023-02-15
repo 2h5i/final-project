@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -48,13 +49,25 @@ public class UserController {
 
     @PutMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public Long updateUser(@PathVariable Long userId, @RequestBody @Valid UserDto.UpdateUser
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public Long updateUser(@PathVariable Long userId, @RequestBody @Valid UserDto.RequestUpdateUser
         updateUser, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (!userDetails.getUser().getId().equals(userId)) {
-            throw new BadRequestException("회원 아이디가 일치하지 않습니다.");
+            throw new BadRequestException("정보 수정에 대한 권한이 없습니다.");
         }
         userService.updateUser(updateUser, userId);
         return userId;
     }
+
+    @GetMapping("/{userId}/my-page")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public UserDto.ResponseMyPage selectMyPage(@PathVariable Long userId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (!userDetails.getUser().getId().equals(userId)) {
+            throw new BadRequestException("정보 수정에 대한 권한이 없습니다.");
+        }
+        return userService.selectMyPage(userId, userDetails.getUser());
+    }
+
 }

@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(UserDto.UpdateUser updateUser, Long userId) {
+    public void updateUser(UserDto.RequestUpdateUser updateUser, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
             () -> new BadRequestException("회원 정보가 존재하지 않습니다.")
         );
@@ -63,11 +63,22 @@ public class UserServiceImpl implements UserService {
             () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
         );
 
-        findUser.validateUser(user);
+        findUser.validateUser(user);  // 검증을 controller에서 미리하면 어떨까요?
 
         s3Upload.deleteFile(findUser.getProfileImage());
         findUser.deleteProfileImage();
 
         userRepository.save(findUser);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDto.ResponseMyPage selectMyPage(Long userId, User user) {
+        User findUser = userRepository.findById(userId).orElseThrow(
+            () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
+        );
+        UserDto.ResponseMyPage myPage = new UserDto.ResponseMyPage(findUser.getUserId(),
+            findUser.getProfileImage(), findUser.getEmail());
+        return myPage;
     }
 }

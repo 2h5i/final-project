@@ -10,8 +10,9 @@ public interface UserService {
     String updateProfileImage(Long userId, MultipartFile multipartFile, User user)
         throws IOException;
 
-    void updateUser(UserDto.UpdateUser updateUser, Long userId);
+    void updateUser(UserDto.RequestUpdateUser updateUser, Long userId);
 
     void deleteProfileImage(Long userId, User user) throws IOException;
 
+    UserDto.ResponseMyPage selectMyPage(Long userId, User user);
 }
