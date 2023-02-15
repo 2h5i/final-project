@@ -19,4 +19,6 @@ public interface RecruitmentService {
         SearchRecruitment searchRecruitment);
 
     List<Map<String, Object>> mainRecruitments();
+
+    void deleteRecruitmentAdmin(Long recruitmentId);
 }
