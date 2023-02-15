@@ -2,10 +2,10 @@ package com.sparta.finalproject.bookmark.controller;
 
 import com.sparta.finalproject.bookmark.dto.BookmarkDto;
 import com.sparta.finalproject.bookmark.service.BookmarkService;
+import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -45,12 +45,12 @@ public class BookmarkController {
     @GetMapping("/{userId}/mypage")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER')")
-    public Page<BookmarkDto> selectMyBookmarks(@PathVariable Long userId,
+    public PageWrapper<BookmarkDto> selectMyBookmarks(@PathVariable Long userId,
         @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (!userDetails.getUser().getId().equals(userId)) {
             throw new BadRequestException("본인 계정의 정보만 확인할 수 있습니다.");
         }
-        return bookmarkService.selectMyBookmarks(pageable, userId);
+        return PageWrapper.of(bookmarkService.selectMyBookmarks(pageable, userId));
     }
 }
