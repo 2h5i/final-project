@@ -4,5 +4,5 @@ public interface BookmarkDto {
 
     Long getRecruitmentId();
 
-    Long getUserId();
+    String getTitle();
 }
