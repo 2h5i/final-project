@@ -39,14 +39,13 @@ public class S3Upload {
 
     public void deleteFile(String fileUrl) throws IOException {
         try {
-//            String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
-            String[] file = fileUrl.split("/");
-            String fileName = dir + "/" + file[file.length - 1];
+            String fileName = dir.substring(1) + "/" + fileUrl.substring(
+                fileUrl.lastIndexOf("/") + 1);
 
             DeleteObjectRequest deleteObjectRequest = new DeleteObjectRequest(bucket, fileName);
 
             log.info(
-                "DELETE URL : " + deleteObjectRequest.getBucketName()
+                "DELETE URL : " + deleteObjectRequest.getBucketName() + "/"
                     + deleteObjectRequest.getKey());
 
             amazonS3.deleteObject(deleteObjectRequest);

@@ -42,6 +42,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
+    @Column(columnDefinition = "TEXT")
     private String profileImage;
 
     @Builder

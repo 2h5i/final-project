@@ -1,6 +1,5 @@
 package com.sparta.finalproject.user.controller;
 
-import com.sparta.finalproject.common.s3.S3Upload;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.user.service.UserService;
 import java.io.IOException;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
 
     private final UserService userService;
-    private final S3Upload s3Upload;
 
     @PostMapping("/image")
     @ResponseStatus(HttpStatus.OK)
@@ -29,10 +27,6 @@ public class UserController {
     public String updateUserProfileImage(@RequestParam("profileImage") MultipartFile multipartFile,
         @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
 
-        String imageUrl = s3Upload.upload(multipartFile);
-
-        userService.updateProfileImage(imageUrl, userDetails.getUser());
-
-        return imageUrl;
+        return userService.updateProfileImage(multipartFile, userDetails.getUser());
     }
 }
