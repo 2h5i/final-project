@@ -1,9 +1,11 @@
 package com.sparta.finalproject.post.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.post.dto.PostDto;
 import com.sparta.finalproject.post.dto.PostDto.SearchPost;
+import com.sparta.finalproject.post.dto.PostsDto;
 import com.sparta.finalproject.post.service.PostService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -68,5 +70,17 @@ public class PostController {
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         postService.deletePost(postId, userDetails.getUser());
+    }
+
+    @GetMapping("/{userId}/my-page")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public PageWrapper<PostsDto> selectMyPostLists(@PathVariable Long userId,
+        @PageableDefault() Pageable pageable,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (!userDetails.getUser().getId().equals(userId)) {
+            throw new BadRequestException("본인 계정의 정보만 확인할 수 있습니다.");
+        }
+        return PageWrapper.of(postService.selectMyPostLists(pageable, userId));
     }
 }
