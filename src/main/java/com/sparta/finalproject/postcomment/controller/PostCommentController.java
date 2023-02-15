@@ -70,7 +70,7 @@ public class PostCommentController {
 
     @GetMapping("/{userId}/my-page")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public PageWrapper<PostCommentsDto> selectMyCommentLists(@PathVariable Long userId,
         @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
