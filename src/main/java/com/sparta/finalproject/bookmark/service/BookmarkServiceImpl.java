@@ -1,5 +1,6 @@
 package com.sparta.finalproject.bookmark.service;
 
+import com.sparta.finalproject.bookmark.dto.BookmarkDto;
 import com.sparta.finalproject.bookmark.entity.Bookmark;
 import com.sparta.finalproject.bookmark.repository.BookmarkRepository;
 import com.sparta.finalproject.common.exception.BadRequestException;
@@ -7,6 +8,8 @@ import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.user.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class BookmarkServiceImpl implements BookmarkService {
 
     private final BookmarkRepository bookmarkRepository;
-
     private final RecruitmentRepository recruitmentRepository;
 
     @Override
@@ -42,6 +44,12 @@ public class BookmarkServiceImpl implements BookmarkService {
             user.getId()).orElseThrow(() -> new BadRequestException("북마크를 누르지 않았습니다."));
 
         bookmarkRepository.delete(bookmark);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<BookmarkDto> selectMyBookmarks(Pageable pageable, Long userId) {
+        return bookmarkRepository.findByUserId(pageable, userId);
     }
 
     private void validateBookmark(Long recruitmentId, Long userId) {
