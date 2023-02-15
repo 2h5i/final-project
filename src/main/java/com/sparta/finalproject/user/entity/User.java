@@ -13,10 +13,14 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "users")
 public class User {
 
@@ -38,20 +42,26 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
+    private String profileImage;
+
     @Builder
     public User(String userId, Long kakaoId, String password, String email, UserRole role) {
         this.userId = userId;
-        this.kakaoId = this.kakaoId;
+        this.kakaoId = kakaoId;
         this.password = password;
         this.email = email;
         this.role = role;
+    }
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public User kakaoIdUpdate(Long kakaoId) {
         this.kakaoId = kakaoId;
         return this;
     }
-    
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
