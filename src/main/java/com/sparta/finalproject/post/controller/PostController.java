@@ -69,5 +69,4 @@ public class PostController {
 
         postService.deletePost(postId, userDetails.getUser());
     }
-
 }
