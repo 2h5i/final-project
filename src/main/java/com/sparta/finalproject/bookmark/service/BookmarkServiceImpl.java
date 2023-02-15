@@ -49,7 +49,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     @Transactional(readOnly = true)
     public Page<BookmarkDto> selectMyBookmarks(Pageable pageable, Long userId) {
-        return bookmarkRepository.findByRecruitmentId(pageable, userId);
+        return bookmarkRepository.findByUserId(pageable, userId);
     }
 
     private void validateBookmark(Long recruitmentId, Long userId) {
