@@ -1,11 +1,14 @@
 package com.sparta.finalproject.user.service;
 
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.s3.S3Upload;
+import com.sparta.finalproject.user.dto.UserDto;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.repository.UserRepository;
 import java.io.IOException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +19,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final S3Upload s3Upload;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -31,5 +36,16 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return profileImageUrl;
+    }
+
+    @Override
+    @Transactional
+    public void updateUser(UserDto.UpdateUser updateUser, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+            () -> new BadRequestException("회원 정보가 존재하지 않습니다.")
+        );
+        String password = passwordEncoder.encode(updateUser.getPassword());
+        user.updateUser(updateUser.getUserId(), password, updateUser.getEmail());
+        userRepository.saveAndFlush(user);
     }
 }

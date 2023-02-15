@@ -1,7 +1,11 @@
 package com.sparta.finalproject.user.dto;
 
 import com.sparta.finalproject.user.entity.User;
+import javax.validation.constraints.NotBlank;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 public class UserDto {
 
@@ -53,4 +57,24 @@ public class UserDto {
         }
     }
 
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class UpdateUser {
+
+        @NotBlank
+        private String userId;
+
+        @NotBlank
+        private String password;
+
+        @NotBlank
+        private String email;
+
+        @Builder
+        public UpdateUser(String userId, String password, String email) {
+            this.userId = userId;
+            this.password = password;
+            this.email = email;
+        }
+    }
 }
