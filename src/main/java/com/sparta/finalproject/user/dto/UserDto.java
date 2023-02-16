@@ -1,6 +1,8 @@
 package com.sparta.finalproject.user.dto;
 
 import com.sparta.finalproject.user.entity.User;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -113,6 +115,47 @@ public class UserDto {
             this.kakaoId = kakaoId;
             this.email = email;
             this.profileImage = profileImage;
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ResponseUserListAdmin {
+
+        private Long id;
+        private String userId;
+        private Long kakaoId;
+        private String email;
+
+        private ResponseUserListAdmin(User user) {
+            this.id = user.getId();
+            this.userId = user.getUserId();
+            this.kakaoId = user.getKakaoId();
+            this.email = user.getEmail();
+        }
+
+        public static ResponseUserListAdmin of(User user) {
+            return new ResponseUserListAdmin(user);
+        }
+
+        public static List<ResponseUserListAdmin> of(List<User> users) {
+            return users.stream().map(ResponseUserListAdmin::of).collect(Collectors.toList());
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class SearchUserAdmin {
+
+        private String userId;
+        private Long kakaoId;
+        private String email;
+
+        @Builder
+        public SearchUserAdmin(String userId, Long kakoId, String email) {
+            this.userId = userId;
+            this.kakaoId = kakoId;
+            this.email = email;
         }
     }
 }
