@@ -1,6 +1,7 @@
 package com.sparta.finalproject.user.service;
 
 import com.sparta.finalproject.user.dto.UserDto;
+import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
 import com.sparta.finalproject.user.entity.User;
 import java.io.IOException;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,5 +15,7 @@ public interface UserService {
 
     void deleteProfileImage(Long userId, User user) throws IOException;
 
-    UserDto.ResponseMyPage selectMyPage(Long userId, User user);
+    UserDto.ResponseUser selectMyPage(Long userId, User user);
+
+    ResponseUserAdmin selectUserAdmin(Long userId);
 }

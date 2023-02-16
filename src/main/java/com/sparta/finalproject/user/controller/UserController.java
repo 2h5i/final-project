@@ -62,7 +62,7 @@ public class UserController {
     @GetMapping("/{userId}/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER')")
-    public UserDto.ResponseMyPage selectMyPage(@PathVariable Long userId,
+    public UserDto.ResponseUser selectMyPage(@PathVariable Long userId,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         if (!userDetails.getUser().getId().equals(userId)) {
             throw new BadRequestException("정보 수정에 대한 권한이 없습니다.");
