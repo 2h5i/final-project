@@ -78,7 +78,7 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class ResponseMyPage {
+    public static class ResponseUser {
 
         @NotBlank
         private String userId;
@@ -88,10 +88,31 @@ public class UserDto {
         private String email;
 
         @Builder
-        public ResponseMyPage(String userId, String profileImage, String email) {
+        public ResponseUser(String userId, String profileImage, String email) {
             this.userId = userId;
             this.profileImage = profileImage;
             this.email = email;
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ResponseUserAdmin {
+
+        private Long id;
+        private String userId;
+        private Long kakaoId;
+        private String email;
+        private String profileImage;
+
+        @Builder
+        public ResponseUserAdmin(Long id, String userId, Long kakaoId, String email,
+            String profileImage) {
+            this.id = id;
+            this.userId = userId;
+            this.kakaoId = kakaoId;
+            this.email = email;
+            this.profileImage = profileImage;
         }
     }
 }

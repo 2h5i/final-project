@@ -3,6 +3,7 @@ package com.sparta.finalproject.user.service;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.s3.S3Upload;
 import com.sparta.finalproject.user.dto.UserDto;
+import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.repository.UserRepository;
 import java.io.IOException;
@@ -73,16 +74,31 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDto.ResponseMyPage selectMyPage(Long userId, User user) {
+    public UserDto.ResponseUser selectMyPage(Long userId, User user) {
         User findUser = userRepository.findById(userId).orElseThrow(
             () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
         );
-        UserDto.ResponseMyPage myPage = UserDto.ResponseMyPage.builder()
+        UserDto.ResponseUser myPage = UserDto.ResponseUser.builder()
             .userId(user.getUserId())
             .email(user.getEmail())
             .profileImage(user.getProfileImage())
             .build();
-        
+
+        return myPage;
+    }
+
+    @Override
+    public ResponseUserAdmin selectUserAdmin(Long userId) {
+        User findUser = userRepository.findById(userId).orElseThrow(
+            () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
+        );
+        ResponseUserAdmin myPage = ResponseUserAdmin.builder()
+            .id(findUser.getId())
+            .userId(findUser.getUserId())
+            .kakaoId(findUser.getKakaoId())
+            .email(findUser.getEmail())
+            .profileImage(findUser.getProfileImage())
+            .build();
         return myPage;
     }
 }
