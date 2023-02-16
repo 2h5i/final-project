@@ -77,8 +77,12 @@ public class UserServiceImpl implements UserService {
         User findUser = userRepository.findById(userId).orElseThrow(
             () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
         );
-        UserDto.ResponseMyPage myPage = new UserDto.ResponseMyPage(findUser.getUserId(),
-            findUser.getProfileImage(), findUser.getEmail());
+        UserDto.ResponseMyPage myPage = UserDto.ResponseMyPage.builder()
+            .userId(user.getUserId())
+            .email(user.getEmail())
+            .profileImage(user.getProfileImage())
+            .build();
+        
         return myPage;
     }
 }
