@@ -59,21 +59,38 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class UpdateUser {
+    public static class RequestUpdateUser {
 
         @NotBlank
         private String userId;
-
         @NotBlank
         private String password;
-
         @NotBlank
         private String email;
 
         @Builder
-        public UpdateUser(String userId, String password, String email) {
+        public RequestUpdateUser(String userId, String password, String email) {
             this.userId = userId;
             this.password = password;
+            this.email = email;
+        }
+    }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class ResponseMyPage {
+
+        @NotBlank
+        private String userId;
+        @NotBlank
+        private String profileImage;
+        @NotBlank
+        private String email;
+
+        @Builder
+        public ResponseMyPage(String userId, String profileImage, String email) {
+            this.userId = userId;
+            this.profileImage = profileImage;
             this.email = email;
         }
     }
