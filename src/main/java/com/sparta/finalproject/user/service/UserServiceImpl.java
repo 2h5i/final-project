@@ -4,11 +4,15 @@ import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.s3.S3Upload;
 import com.sparta.finalproject.user.dto.UserDto;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
+import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
+import com.sparta.finalproject.user.dto.UserDto.SearchUserAdmin;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.repository.UserRepository;
 import java.io.IOException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -101,4 +105,12 @@ public class UserServiceImpl implements UserService {
             .build();
         return myPage;
     }
+
+    @Override
+    public Page<ResponseUserListAdmin> selectUsersAdmin(SearchUserAdmin searchUserAdmin,
+        Pageable pageable) {
+
+        return userRepository.findUsersBySearchConditionAdmin(searchUserAdmin, pageable);
+    }
+
 }

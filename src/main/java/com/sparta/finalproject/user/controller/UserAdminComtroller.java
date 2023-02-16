@@ -1,8 +1,13 @@
 package com.sparta.finalproject.user.controller;
 
+import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.user.dto.UserDto;
+import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
+import com.sparta.finalproject.user.dto.UserDto.SearchUserAdmin;
 import com.sparta.finalproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,5 +28,13 @@ public class UserAdminComtroller {
     @ResponseStatus(HttpStatus.OK)
     public UserDto.ResponseUserAdmin selectUserAdmin(@PathVariable Long userId) {
         return userservice.selectUserAdmin(userId);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public PageWrapper<ResponseUserListAdmin> selectUsersAdmin(SearchUserAdmin searchUserAdmin,
+        @PageableDefault Pageable pageable) {
+        
+        return PageWrapper.of(userservice.selectUsersAdmin(searchUserAdmin, pageable));
     }
 }
