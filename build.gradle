@@ -40,6 +40,7 @@ dependencies {
     // s3
     implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.1000')
     implementation 'com.amazonaws:aws-java-sdk-s3'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.3.1.RELEASE'
 
     compileOnly 'org.projectlombok:lombok'
     compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
