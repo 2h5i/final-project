@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
             () -> new BadRequestException("회원 정보가 존재하지 않습니다.")
         );
         String password = passwordEncoder.encode(updateUser.getPassword());
-        user.updateUser(updateUser.getUserId(), password, updateUser.getEmail());
+        user.updateUser(password);
         userRepository.saveAndFlush(user);
     }
 
