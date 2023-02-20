@@ -29,9 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String updateProfileImage(Long userId, MultipartFile profileImage, User user)
+    public String updateProfileImage(MultipartFile profileImage, User user)
         throws IOException {
-        User findUser = userRepository.findById(userId).orElseThrow(
+        User findUser = userRepository.findById(user.getId()).orElseThrow(
             () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
         );
 
@@ -52,19 +52,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(UserDto.RequestUpdateUser updateUser, Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(
+    public void updateUser(UserDto.RequestUpdateUser updateUser, User user) {
+        User findUser = userRepository.findById(user.getId()).orElseThrow(
             () -> new BadRequestException("회원 정보가 존재하지 않습니다.")
         );
         String password = passwordEncoder.encode(updateUser.getPassword());
         user.updateUser(password);
-        userRepository.saveAndFlush(user);
+        userRepository.saveAndFlush(findUser);
     }
 
     @Override
     @Transactional
-    public void deleteProfileImage(Long userId, User user) throws IOException {
-        User findUser = userRepository.findById(userId).orElseThrow(
+    public void deleteProfileImage(User user) throws IOException {
+        User findUser = userRepository.findById(user.getId()).orElseThrow(
             () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
         );
 
@@ -78,10 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDto.ResponseUser selectMyPage(Long userId, User user) {
-        User findUser = userRepository.findById(userId).orElseThrow(
-            () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
-        );
+    public UserDto.ResponseUser selectMyPage(User user) {
         UserDto.ResponseUser myPage = UserDto.ResponseUser.builder()
             .userId(user.getUserId())
             .email(user.getEmail())
