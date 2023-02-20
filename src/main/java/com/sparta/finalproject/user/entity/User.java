@@ -95,9 +95,7 @@ public class User {
         return getClass().hashCode();
     }
 
-    public void updateUser(String userId, String password, String email) {
-        this.userId = userId;
+    public void updateUser(String password) {
         this.password = password;
-        this.email = email;
     }
 }

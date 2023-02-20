@@ -4,6 +4,8 @@ import com.sparta.finalproject.user.entity.User;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -64,17 +66,13 @@ public class UserDto {
     public static class RequestUpdateUser {
 
         @NotBlank
-        private String userId;
-        @NotBlank
+        @Size(min = 8, max = 15)
+        @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "최소 8자 이상, 15자 이하이며 a-z, A-Z, 0-9 만 입력하세요.")
         private String password;
-        @NotBlank
-        private String email;
 
         @Builder
-        public RequestUpdateUser(String userId, String password, String email) {
-            this.userId = userId;
+        public RequestUpdateUser(String password) {
             this.password = password;
-            this.email = email;
         }
     }
 
