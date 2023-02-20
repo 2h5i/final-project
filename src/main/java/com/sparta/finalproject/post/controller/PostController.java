@@ -55,7 +55,7 @@ public class PostController {
 
     @PutMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Long updatePost(@PathVariable Long postId,
         @RequestBody @Valid PostDto.UpdatePost updatePost,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
@@ -65,7 +65,7 @@ public class PostController {
 
     @DeleteMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void deletePost(@PathVariable Long postId,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
