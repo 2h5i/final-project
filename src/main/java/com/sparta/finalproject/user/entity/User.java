@@ -46,6 +46,8 @@ public class User {
     @Column(columnDefinition = "TEXT")
     private String profileImage;
 
+    private String refreshToken;
+
     @Builder
     public User(String userId, Long kakaoId, String password, String email, UserRole role) {
         this.userId = userId;
@@ -54,7 +56,9 @@ public class User {
         this.email = email;
         this.role = role;
     }
-
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
     public void updateProfileImage(String profileImage) {
         this.profileImage = profileImage;
     }

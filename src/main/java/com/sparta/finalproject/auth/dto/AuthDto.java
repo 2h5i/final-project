@@ -39,6 +39,13 @@ public class AuthDto {
 
   @Getter
   @NoArgsConstructor
+  public static class DeleteRequestDto {
+    private String userId;
+    private String password;
+  }
+
+  @Getter
+  @NoArgsConstructor
   public static class KakaoUserInfoDto {
 
     private Long id;
@@ -50,5 +57,13 @@ public class AuthDto {
       this.nicknmae = nicknmae;
       this.email = email;
     }
+  }
+
+  @Getter
+  @NoArgsConstructor
+  public static class TokenDto {
+    private String accessToken;
+    private String refreshToken;
+
   }
 }

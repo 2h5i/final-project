@@ -5,10 +5,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sparta.finalproject.auth.dto.AuthDto;
 import com.sparta.finalproject.auth.dto.AuthDto.KakaoUserInfoDto;
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.jwt.JwtUtil;
+
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.entity.UserRole;
 import com.sparta.finalproject.user.repository.UserRepository;
+import io.jsonwebtoken.Claims;
 import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
@@ -20,6 +23,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -35,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
   private static final String ADMIN_KEY = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
   @Override
+  @Transactional
   public void signup(AuthDto.SignupDto signupDto) {
     String userId = signupDto.getUserId();
     String password = passwordEncoder.encode(signupDto.getPassword());
@@ -63,6 +68,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
+  @Transactional
   public void login(AuthDto.LoginDto loginDto, HttpServletResponse response) {
     String userId = loginDto.getUserId();
     String password = loginDto.getPassword();
@@ -75,12 +81,54 @@ public class AuthServiceImpl implements AuthService {
       throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
     }
 
+    user.updateRefreshToken(jwtUtil.createRefreshToken());
+    userRepository.saveAndFlush(user);
     addTokenToHeader(response, user);
   }
 
-  private void addTokenToHeader(HttpServletResponse response, User user) {
-    response.addHeader(JwtUtil.AUTHORIZATION_HEADER,
-        jwtUtil.createToken(user.getUserId(), user.getRole()));
+  @Override
+  @Transactional
+  public void delete(AuthDto.DeleteRequestDto deleteRequestDto, User user) {
+    user = userRepository.findByUserId(deleteRequestDto.getUserId()).orElseThrow(
+        () -> new BadRequestException("해당하는 사용자가 없습니다")
+    );
+
+    user.getUserId();
+    userRepository.delete(user);
+  }
+
+  @Transactional
+  public void reIssue(AuthDto.TokenDto tokenDto, HttpServletResponse response) {
+    if(!jwtUtil.validateTokenExceptExpiration(tokenDto.getRefreshToken())){
+      throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
+    }
+
+    User user = findUserByToken(tokenDto);
+
+    if(!user.getRefreshToken().equals(tokenDto.getRefreshToken())){
+      throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
+    }
+
+
+    String refreshToken = jwtUtil.createRefreshToken();
+
+    user.updateRefreshToken(refreshToken);
+    userRepository.saveAndFlush(user);
+
+    addTokenToHeader(response, user);
+  }
+
+  public void addTokenToHeader(HttpServletResponse response, User user) {
+    response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole()));
+    response.addHeader(JwtUtil.REFRESH_HEADER, jwtUtil.createRefreshToken());
+  }
+
+  private User findUserByToken(AuthDto.TokenDto tokenDto) {
+    Claims claims = jwtUtil.getUserInfoFromToken(tokenDto.getAccessToken().substring(7));
+    String userId = claims.getSubject();
+    return userRepository.findByUserId(userId).orElseThrow(
+        () -> new IllegalArgumentException("존재하지 않는 사용자입니다.")
+    );
   }
 
   public String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {

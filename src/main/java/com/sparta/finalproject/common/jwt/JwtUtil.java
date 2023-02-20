@@ -104,8 +104,8 @@ public class JwtUtil {
     return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
   }
 
-  public Authentication createAuthentication(String username) {
-    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+  public Authentication createAuthentication(String userId) {
+    UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
     return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
   }
 
