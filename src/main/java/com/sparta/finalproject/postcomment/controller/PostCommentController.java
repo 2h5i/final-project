@@ -1,7 +1,6 @@
 package com.sparta.finalproject.postcomment.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
-import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.postcomment.dto.PostCommentDto;
 import com.sparta.finalproject.postcomment.dto.PostCommentsDto;
@@ -68,15 +67,12 @@ public class PostCommentController {
         postCommentService.deletePostByCommentId(postCommentId, userDetails.getUser());
     }
 
-    @GetMapping("/{userId}/my-page")
+    @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public PageWrapper<PostCommentsDto> selectMyCommentLists(@PathVariable Long userId,
-        @PageableDefault() Pageable pageable,
+    public PageWrapper<PostCommentsDto> selectMyCommentLists(@PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        if (!userDetails.getUser().getId().equals(userId)) {
-            throw new BadRequestException("본인 계정의 정보만 확인할 수 있습니다.");
-        }
-        return PageWrapper.of(postCommentService.selectMyCommentLists(pageable, userId));
+        return PageWrapper.of(
+            postCommentService.selectMyCommentLists(pageable, userDetails.getUser().getId()));
     }
 }
