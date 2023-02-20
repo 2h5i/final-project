@@ -1,6 +1,7 @@
 package com.sparta.finalproject.recruitmentcomment.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
+import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentsDto;
@@ -67,14 +68,15 @@ public class RecruitmentCommentController {
             (recruitmentId, pageable));
     }
 
-    @GetMapping("/my-page")
+    @GetMapping("/{userId}/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public PageWrapper<RecruitmentCommentsDto> selectMyCommentLists(
+    public PageWrapper<RecruitmentCommentsDto> selectMyCommentLists(@PathVariable Long userId,
         @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
-        return PageWrapper.of(
-            recruitmentCommentService.selectMyCommentLists(pageable, userDetails.getUser()
-                .getId()));
+        if (!userDetails.getUser().getId().equals(userId)) {
+            throw new BadRequestException("본인 계정의 정보만 확인할 수 있습니다.");
+        }
+        return PageWrapper.of(recruitmentCommentService.selectMyCommentLists(pageable, userId));
     }
 }
