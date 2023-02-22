@@ -42,12 +42,14 @@ public class PostCommentDto {
     public static class ResponsePostCommentList {
 
         private String content;
+        private Long postCommentId;
         private ResponseUserWithPostComment user;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
         private ResponsePostCommentList(PostComment postComment) {
             this.content = postComment.getContent();
+            this.postCommentId = postComment.getId();
             this.user = ResponseUserWithPostComment.of(postComment.getUser());
             this.createdAt = postComment.getCreatedAt();
             this.modifiedAt = postComment.getModifiedAt();
