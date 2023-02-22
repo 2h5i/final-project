@@ -30,12 +30,14 @@ public class RecruitmentCommentDto {
     public static class ResponseRecruitmentCommentList {
 
         private String content;
+        private Long recruitmentCommentId;
         private ResponseUserWithRecruitmentComment user;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
 
         public ResponseRecruitmentCommentList(RecruitmentComment recruitmentComment) {
             this.content = recruitmentComment.getContent();
+            this.recruitmentCommentId = recruitmentComment.getId();
             this.user = ResponseUserWithRecruitmentComment.of(recruitmentComment.getUser());
             this.createdAt = recruitmentComment.getCreatedAt();
             this.modifiedAt = recruitmentComment.getModifiedAt();

@@ -14,14 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
-    String updateProfileImage(Long userId, MultipartFile multipartFile, User user)
+    String updateProfileImage(MultipartFile multipartFile, User user)
         throws IOException;
 
-    void updateUser(UserDto.RequestUpdateUser updateUser, Long userId);
+    void updateUser(UserDto.RequestUpdateUser updateUser, User user);
 
-    void deleteProfileImage(Long userId, User user) throws IOException;
+    void deleteProfileImage(User user) throws IOException;
 
-    UserDto.ResponseUser selectMyPage(Long userId, User user);
+    UserDto.ResponseUser selectMyPage(User user);
 
     ResponseUserAdmin selectUserAdmin(Long userId);
 
