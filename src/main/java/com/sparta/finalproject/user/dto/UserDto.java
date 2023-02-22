@@ -156,4 +156,10 @@ public class UserDto {
             this.email = email;
         }
     }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class DeleteRequestDto {
+        private String userId;
+    }
 }

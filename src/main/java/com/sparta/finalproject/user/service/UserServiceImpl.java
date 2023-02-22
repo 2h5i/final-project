@@ -1,5 +1,6 @@
 package com.sparta.finalproject.user.service;
 
+import com.sparta.finalproject.auth.dto.AuthDto;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.s3.S3Upload;
 import com.sparta.finalproject.user.dto.UserDto;
@@ -11,6 +12,7 @@ import com.sparta.finalproject.user.repository.UserRepository;
 import java.io.IOException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
+import org.openqa.selenium.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -111,6 +113,15 @@ public class UserServiceImpl implements UserService {
         Pageable pageable) {
 
         return userRepository.findUsersBySearchConditionAdmin(searchUserAdmin, pageable);
+    }
+
+    @Override
+    @Transactional
+    public void deleteUserAdmin(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(
+            () -> new NotFoundException("사용자를 찾을 수 없습니다."));
+        userRepository.delete(user);
+
     }
 
 }

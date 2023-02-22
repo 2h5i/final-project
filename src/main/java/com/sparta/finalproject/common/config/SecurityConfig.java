@@ -45,8 +45,6 @@ public class SecurityConfig {
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests().antMatchers("api/auth/**").permitAll()
-//            .antMatchers("api/posts/**").hasRole(String.valueOf(UserRole.USER))
-//            .anyRequest().authenticated()
             .and()
             .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint())
             .and()

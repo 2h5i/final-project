@@ -1,5 +1,7 @@
 package com.sparta.finalproject.user.service;
 
+import com.sparta.finalproject.auth.dto.AuthDto;
+import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.user.dto.UserDto;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
@@ -23,6 +25,7 @@ public interface UserService {
 
     ResponseUserAdmin selectUserAdmin(Long userId);
 
+    void deleteUserAdmin(Long userId);
     Page<ResponseUserListAdmin> selectUsersAdmin(SearchUserAdmin searchUserAdmin,
         Pageable pageable);
 }

@@ -1,5 +1,11 @@
 package com.sparta.finalproject.auth.service;
 
+
+
+import static com.sparta.finalproject.common.jwt.JwtUtil.AUTHORIZATION_HEADER;
+import static com.sparta.finalproject.common.jwt.JwtUtil.BEARER_PREFIX;
+import static com.sparta.finalproject.common.jwt.JwtUtil.REFRESH_TOKEN_VALID_TIME;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +14,7 @@ import com.sparta.finalproject.auth.dto.AuthDto.KakaoUserInfoDto;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.jwt.JwtUtil;
 
+import com.sparta.finalproject.common.redis.RedisUtil;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.entity.UserRole;
 import com.sparta.finalproject.user.repository.UserRepository;
@@ -36,6 +43,7 @@ public class AuthServiceImpl implements AuthService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
   private final JwtUtil jwtUtil;
+  private final RedisUtil redisUtil;
   private static final String ADMIN_KEY = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
 
   @Override
@@ -81,10 +89,34 @@ public class AuthServiceImpl implements AuthService {
       throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
     }
 
-    user.updateRefreshToken(jwtUtil.createRefreshToken());
+
+
+    String refreshToken = jwtUtil.createRefreshToken();
+    user.updateRefreshToken(refreshToken);
+
     userRepository.saveAndFlush(user);
+    redisUtil.setDataExpire(user.getUserId(), refreshToken, REFRESH_TOKEN_VALID_TIME);
     addTokenToHeader(response, user);
+
   }
+
+  @Override
+  @Transactional
+  public void logout(AuthDto.TokenDto tokenDto) {
+
+    String accessToken = tokenDto.getAccessToken().substring(7);
+    if (!jwtUtil.validateToken(accessToken)) {
+      throw new IllegalArgumentException("유효하지 않은 access token");
+    }
+
+    Claims claim = jwtUtil.getUserInfoFromToken(accessToken);
+    String userId = claim.getSubject();
+    redisUtil.deleteData(userId);
+
+    redisUtil.setDataExpire("JWT:BLACK_LIST:" + accessToken, "TRUE", 30);
+  }
+
+
 
   @Override
   @Transactional
@@ -119,7 +151,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   public void addTokenToHeader(HttpServletResponse response, User user) {
-    response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole()));
+    response.addHeader(AUTHORIZATION_HEADER, jwtUtil.createToken(user.getUserId(), user.getRole()));
     response.addHeader(JwtUtil.REFRESH_HEADER, jwtUtil.createRefreshToken());
   }
 
@@ -143,7 +175,7 @@ public class AuthServiceImpl implements AuthService {
 
     // 4. JWT 토큰 반환
     String createToken =  jwtUtil.createToken(kakaoUser.getUserId(), kakaoUser.getRole());
-//        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
 
     return createToken;
   }

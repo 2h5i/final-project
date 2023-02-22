@@ -12,6 +12,7 @@ public interface AuthService {
 
   void login(AuthDto.LoginDto loginDto, HttpServletResponse response);
 
+  void logout(AuthDto.TokenDto tokenDto);
   void delete(DeleteRequestDto deleteRequestDto, User user);
 
   void reIssue(AuthDto.TokenDto tokenDto, HttpServletResponse response);
