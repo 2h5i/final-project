@@ -97,8 +97,7 @@ public class AuthServiceImpl implements AuthService {
 
         // 4. JWT 토큰 반환
         String createToken = jwtUtil.createToken(kakaoUser.getUserId(), kakaoUser.getRole());
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
-        System.out.println("createToken  -" + createToken);
+//        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
 
         return createToken;
     }
