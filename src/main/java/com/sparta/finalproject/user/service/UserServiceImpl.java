@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
             () -> new BadRequestException("사용자의 정보가 존재하지 않습니다.")
         );
 
-        findUser.validateUser(user);  // 검증을 controller에서 미리하면 어떨까요?
+        findUser.validateUser(user);
 
         s3Upload.deleteFile(findUser.getProfileImage());
         findUser.deleteProfileImage();
