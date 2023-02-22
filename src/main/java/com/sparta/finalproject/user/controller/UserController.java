@@ -46,7 +46,7 @@ public class UserController {
 
     @PutMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void updateUser(@RequestBody @Valid UserDto.RequestUpdateUser
         updateUser, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         userService.updateUser(updateUser, userDetails.getUser());
@@ -54,7 +54,7 @@ public class UserController {
 
     @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public UserDto.ResponseUser selectMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.selectMyPage(userDetails.getUser());
     }
