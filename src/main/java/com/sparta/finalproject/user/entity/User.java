@@ -1,5 +1,6 @@
 package com.sparta.finalproject.user.entity;
 
+import com.sparta.finalproject.common.entity.BaseEntity;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -23,7 +24,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
