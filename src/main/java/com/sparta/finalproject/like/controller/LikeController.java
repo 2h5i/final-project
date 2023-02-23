@@ -35,6 +35,12 @@ public class LikeController {
         return likeService.selectLikeCount(postId);
     }
 
+    @GetMapping("/{postId}/check")
+    public boolean selectLikeCheck(@PathVariable Long postId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return likeService.selectLikeCheck(postId, userDetails.getUser());
+    }
+
     @DeleteMapping("/{postId}/unlike")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")

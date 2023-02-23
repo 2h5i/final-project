@@ -2,6 +2,7 @@ package com.sparta.finalproject.like.repository;
 
 import com.sparta.finalproject.like.entity.Like;
 import com.sparta.finalproject.post.entity.Post;
+import com.sparta.finalproject.user.entity.User;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,6 +17,8 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     Optional<Like> findByPostIdAndUserId(Long postId, Long userId);
 
     Long countByPostId(Long postId);
+
+    boolean existsByPostIdAndUser(Long postId, User user);
 
     @Transactional
     @Modifying
