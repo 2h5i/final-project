@@ -1,6 +1,5 @@
 package com.sparta.finalproject.user.service;
 
-import com.sparta.finalproject.auth.dto.AuthDto;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.s3.S3Upload;
 import com.sparta.finalproject.user.dto.UserDto;

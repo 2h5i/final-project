@@ -163,6 +163,8 @@ public class UserDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class DeleteRequestDto {
+
         private String userId;
     }
+
 }

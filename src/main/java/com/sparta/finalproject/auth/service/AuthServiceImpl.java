@@ -171,7 +171,7 @@ public class AuthServiceImpl implements AuthService {
 
         // 4. JWT 토큰 반환
         String createToken = jwtUtil.createToken(kakaoUser.getUserId(), kakaoUser.getRole());
-        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
+//        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, createToken);
 
         return createToken;
     }
@@ -186,7 +186,7 @@ public class AuthServiceImpl implements AuthService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "b8054d0d502a7f824aa2ca329d139607");
-        body.add("redirect_uri", "http://localhost:5500/index.html");
+        body.add("redirect_uri", "http://localhost:5500/login.html");
         body.add("code", code);
 
         // HTTP 요청 보내기
@@ -230,9 +230,10 @@ public class AuthServiceImpl implements AuthService {
         Long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties")
             .get("nickname").asText();
+        System.out.println(nickname);
         String email = jsonNode.get("kakao_account")
             .get("email").asText();
-
+        System.out.println(email);
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
         return new KakaoUserInfoDto(id, nickname, email);
     }
