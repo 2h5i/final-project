@@ -31,8 +31,8 @@ public class S3Upload {
     public String upload(MultipartFile multipartFile) throws IOException {
 
         checkFile(multipartFile);
-        
-        String s3FileName = UUID.randomUUID() + "-" + multipartFile.getOriginalFilename();
+
+        String s3FileName = UUID.randomUUID() + "-" + multipartFile.getName();
 
         ObjectMetadata objMeta = new ObjectMetadata();
         objMeta.setContentLength(multipartFile.getInputStream().available());

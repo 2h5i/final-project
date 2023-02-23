@@ -9,7 +9,6 @@ import com.sparta.finalproject.user.dto.UserDto.SearchUserAdmin;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.repository.UserRepository;
 import java.io.IOException;
-import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
         findUser.validateUser(user);
 
-        if (Objects.nonNull(user.getProfileImage())) {
+        if (!isEmptyImage(user.getProfileImage())) {
             s3Upload.deleteFile(user.getProfileImage());
         }
 
@@ -108,6 +107,10 @@ public class UserServiceImpl implements UserService {
         Pageable pageable) {
 
         return userRepository.findUsersBySearchConditionAdmin(searchUserAdmin, pageable);
+    }
+
+    private boolean isEmptyImage(String image) {
+        return image == null || image.isEmpty();
     }
 
 }
