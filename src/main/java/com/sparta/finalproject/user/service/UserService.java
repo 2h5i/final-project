@@ -25,6 +25,8 @@ public interface UserService {
 
     void deleteUserAdmin(Long userId);
 
+    boolean checkUserIdDuplicate(String userId);
+
     Page<ResponseUserListAdmin> selectUsersAdmin(SearchUserAdmin searchUserAdmin,
         Pageable pageable);
 }

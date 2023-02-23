@@ -58,6 +58,7 @@ public class AuthController {
     }
 
 
+    //카카오 로그인
     @GetMapping("/kakao-login")
     public String kakaoLogin(@RequestParam String code, HttpServletResponse response)
         throws JsonProcessingException {
@@ -66,4 +67,5 @@ public class AuthController {
 
         return createToken;
     }
+
 }

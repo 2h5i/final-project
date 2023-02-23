@@ -118,8 +118,16 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
+
     private boolean isEmptyImage(String image) {
         return image == null || image.isEmpty();
 
     }
+
+    @Override
+    public boolean checkUserIdDuplicate(String userId) {
+        return userRepository.existsByUserId(userId); // 중복이면 true, 중복되지 않으면 false
+    }
+
+
 }
