@@ -12,4 +12,6 @@ public interface BookmarkService {
     void deleteBookmark(Long recruitmentId, User user);
 
     Page<BookmarkDto> selectMyBookmarks(Pageable pageable, Long userId);
+
+    boolean selectCheckBookmark(Long recruitmentId, Long userId);
 }

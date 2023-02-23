@@ -63,4 +63,10 @@ public class BookmarkServiceImpl implements BookmarkService {
             () -> new BadRequestException("해당 채용공고가 존재하지 않습니다.")
         );
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean selectCheckBookmark(Long recruitmentId, Long userId) {
+        return bookmarkRepository.existsByRecruitmentIdAndUserId(recruitmentId, userId);
+    }
 }
