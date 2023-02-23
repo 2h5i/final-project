@@ -49,4 +49,12 @@ public class BookmarkController {
         return PageWrapper.of(
             bookmarkService.selectMyBookmarks(pageable, userDetails.getUser().getId()));
     }
+
+    @GetMapping("/{recruitmentId}/check")
+    @ResponseStatus(HttpStatus.OK)
+    public boolean selectCheckBookmark(@PathVariable Long recruitmentId,
+        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return bookmarkService.selectCheckBookmark(recruitmentId, userDetails.getUser().getId());
+    }
+
 }
