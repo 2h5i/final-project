@@ -9,7 +9,11 @@ import com.sparta.finalproject.common.jwt.JwtUtil;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.entity.UserRole;
 import com.sparta.finalproject.user.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -186,7 +190,20 @@ public class AuthServiceImpl implements AuthService {
                 // email: kakao email
                 String email = kakaoUserInfo.getEmail();
 
-                kakaoUser = new User(kakaoUserInfo.getNickname(), kakaoId, encodedPassword, email,
+                List<String> frontRandom = new ArrayList<>(Arrays.asList
+                    ("똑똑한", "현명한", "바보", "배고픈", "총명한", "아픈"));
+                List<String> backRandom = new ArrayList<>(Arrays.asList("익현", "태이", "준혁", "동현"));
+
+                Random rd = new Random();
+
+                String nickName = frontRandom.get(rd.nextInt(6)) + " "
+                    + backRandom.get((rd.nextInt(4)));
+
+                while (userRepository.existsByUserId(nickName)) {
+                    nickName += "1";
+                }
+
+                kakaoUser = new User(nickName, kakaoId, encodedPassword, email,
                     UserRole.USER);
             }
 
