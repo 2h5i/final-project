@@ -24,10 +24,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,14 +35,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/recruitments")
+@EnableScheduling
 @Slf4j
 public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Scheduled(cron = "0 48 1 * * ?")
     public void createRecruitment() throws IOException {
         ChromeOptions options = new ChromeOptions();
 
@@ -50,7 +49,7 @@ public class RecruitmentController {
 
         WebDriver driver = new ChromeDriver(options);
 
-        for (int i = 10; i > 0; i++) {
+        for (int i = 1; i < 10; i++) {
             String url = "https://www.rocketpunch.com/jobs?page=" + i;
             driver.get(url);
             new WebDriverWait(driver, Duration.ofSeconds(10)).until(
@@ -77,6 +76,12 @@ public class RecruitmentController {
                     String title = titleData.text();
                     String info = infoData.text();
 
+                    if (recruitmentService.checkRecruitment(hrefText)) {
+                        driver.close();
+                        driver.quit();
+                        log.info("크롤링 최신화 완료");
+                        return;
+                    }
                     recruitmentService.createRecruitment(title, info, contentData.toString(),
                         hrefText);
                 }

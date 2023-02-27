@@ -73,4 +73,9 @@ public class RecruitmentServiceImpl implements RecruitmentService {
         bookmarkRepository.deleteByBookmarkQuery(recruitment);
         recruitmentRepository.delete(recruitment);
     }
+
+    @Override
+    public boolean checkRecruitment(String href) {
+        return recruitmentRepository.existsByHref(href);
+    }
 }
