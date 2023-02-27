@@ -230,10 +230,8 @@ public class AuthServiceImpl implements AuthService {
         Long id = jsonNode.get("id").asLong();
         String nickname = jsonNode.get("properties")
             .get("nickname").asText();
-        System.out.println(nickname);
         String email = jsonNode.get("kakao_account")
             .get("email").asText();
-        System.out.println(email);
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
         return new KakaoUserInfoDto(id, nickname, email);
     }
