@@ -23,6 +23,10 @@ public interface UserService {
 
     ResponseUserAdmin selectUserAdmin(Long userId);
 
+    void deleteUserAdmin(Long userId) throws IOException;
+
+    boolean checkUserIdDuplicate(String userId);
+
     Page<ResponseUserListAdmin> selectUsersAdmin(SearchUserAdmin searchUserAdmin,
         Pageable pageable);
 }

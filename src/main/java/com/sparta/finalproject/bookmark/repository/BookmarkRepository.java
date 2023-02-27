@@ -30,4 +30,9 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
             + "where b.user_id = :userId"
     )
     Page<BookmarkDto> findByMyPageBookmark(Pageable pageable, @Param("userId") Long userId);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Bookmark b where b.user.id =:userId ")
+    void deleteByBookmark(@Param("userId") Long userId);
 }

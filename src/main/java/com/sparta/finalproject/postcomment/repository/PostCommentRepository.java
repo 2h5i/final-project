@@ -26,4 +26,10 @@ public interface PostCommentRepository extends JpaRepository<PostComment, Long>,
             + "where pc.user_id = :userId"
     )
     Page<PostCommentsDto> findByMyPageComment(Pageable pageable, @Param("userId") Long userId);
+
+    @Transactional
+    @Modifying
+    @Query("delete from PostComment pc where pc.user.id =:userId ")
+    void deleteByPostComment(@Param("userId") Long userId);
+
 }

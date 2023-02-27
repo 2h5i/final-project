@@ -38,6 +38,7 @@ public class RecruitmentComment extends BaseEntity {
     @JoinColumn(name = "recruitment_id")
     private Recruitment recruitment;
 
+
     @Builder
     public RecruitmentComment(String content, User user, Recruitment recruitment) {
         this.content = content;

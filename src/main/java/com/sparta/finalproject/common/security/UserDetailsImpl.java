@@ -40,9 +40,7 @@ public class UserDetailsImpl implements UserDetails {
   }
 
   @Override
-  public String getUsername() {
-    return userId;
-  }
+  public String getUsername() {return userId;}
 
   @Override
   public boolean isAccountNonExpired() {
