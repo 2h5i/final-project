@@ -3,6 +3,7 @@ package com.sparta.finalproject.auth.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.finalproject.auth.dto.AuthDto;
 import com.sparta.finalproject.auth.service.AuthService;
+import com.sparta.finalproject.auth.service.EmailService;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
+    private final EmailService emailService;
     private final AuthService authService;
 
     @PostMapping("/signup")
@@ -37,5 +39,13 @@ public class AuthController {
         String createToken = authService.kakaoLogin(code, response);
 
         return createToken;
+    }
+
+    @PostMapping("/emailConfirm")
+    public String emailConfirm(@RequestParam String email) throws Exception {
+
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return confirm;
     }
 }

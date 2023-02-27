@@ -2,6 +2,8 @@ package com.sparta.finalproject.user.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.s3.S3Upload;
+import com.sparta.finalproject.post.repository.PostRepository;
+import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
 import com.sparta.finalproject.user.dto.UserDto;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
@@ -23,7 +25,9 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final S3Upload s3Upload;
+    private final PostRepository postRepository;
 
+    private final PostCommentRepository postCommentRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override

@@ -15,4 +15,6 @@ public interface PostRepository extends JpaRepository<Post, Long>, PostCustomRep
         value = "SELECT p.title AS title, p.id AS postId FROM post p WHERE p.user_id = :userId"
     )
     Page<PostsDto> findMyPagePosts(Pageable pageable, @Param("userId") Long userId);
+
+
 }
