@@ -136,11 +136,10 @@ public class UserServiceImpl implements UserService {
         postRepository.deleteByPost(userId);
         bookmarkRepository.deleteByBookmark(userId);
         recruitmentCommentRepository.deleteByRecruitmentComment(userId);
-        userRepository.delete(user);
-
         if (!isEmptyImage(user.getProfileImage())) {
             s3Upload.deleteFile(user.getProfileImage());
         }
+        userRepository.delete(user);
 
     }
 

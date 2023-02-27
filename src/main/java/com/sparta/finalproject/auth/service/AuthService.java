@@ -8,16 +8,15 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface AuthService {
 
-  void signup(AuthDto.SignupDto signupDto);
+    void signup(AuthDto.SignupDto signupDto);
 
-  void login(AuthDto.LoginDto loginDto, HttpServletResponse response);
+    void login(AuthDto.LoginDto loginDto, HttpServletResponse response);
 
-  void logout(AuthDto.TokenDto tokenDto);
-  void delete(DeleteRequestDto deleteRequestDto, User user);
+    void logout(AuthDto.TokenDto tokenDto);
 
-  void reIssue(AuthDto.TokenDto tokenDto, HttpServletResponse response);
+    void delete(DeleteRequestDto deleteRequestDto, User user);
 
-  void addTokenToHeader(HttpServletResponse response, User user);
+    void reIssue(AuthDto.TokenDto tokenDto, HttpServletResponse response);
 
-  String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException;
+    String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException;
 }

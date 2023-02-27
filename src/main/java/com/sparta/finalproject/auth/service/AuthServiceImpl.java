@@ -148,6 +148,7 @@ public class AuthServiceImpl implements AuthService {
         addTokenToHeader(response, user);
     }
 
+    @Transactional
     public void addTokenToHeader(HttpServletResponse response, User user) {
         response.addHeader(AUTHORIZATION_HEADER,
             jwtUtil.createToken(user.getUserId(), user.getRole()));
