@@ -18,5 +18,7 @@ public interface AuthService {
 
     void reIssue(AuthDto.TokenDto tokenDto, HttpServletResponse response);
 
+    void sendSimpleMessage(String to) throws Exception;
+
     String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException;
 }

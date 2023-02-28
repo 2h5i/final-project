@@ -30,17 +30,14 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final S3Upload s3Upload;
-
-    private final RecruitmentCommentRepository recruitmentCommentRepository;
-
     private final PostRepository postRepository;
+
+    private final PostCommentRepository postCommentRepository;
+    private final RecruitmentCommentRepository recruitmentCommentRepository;
 
     private final BookmarkRepository bookmarkRepository;
 
     private final LikeRepository likeRepository;
-
-    private final PostCommentRepository postCommentRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     @Override
