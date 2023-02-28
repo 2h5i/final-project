@@ -69,17 +69,6 @@
 
 <br>
 
-##### [ Front-end ]
-
-<div>
-    <img src = "https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-    <img src = "https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-    <img src = "https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
-
-</div>
-
-<br>
-
 ## 📃 API 명세
 
 <a href="https://www.notion.so/7184e013e92c4574a891ac5013488508?v=782c6ff6279b4bc9a9bae01e2d246a42">Notion API 명세</a>
