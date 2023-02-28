@@ -39,7 +39,7 @@
 
 |                             팀장                             |                             부팀장                             |                             팀원                             |                             팀원                             |                    
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img width="110px" height="100px" src="README.assets/image-20230105192144947.png"> | <img width="110px" src="README.assets/image-20230105193957076.png"> | <img width="110px" src="README.assets/image-20230105193758808.png"> | <img width="110px" height="110px" src="README.assets/image-20230105191743234.png"> | <img width="110px" src="README.assets/image-20230105192529978.png"> |
+| <img width="110px" height="100px" src="https://avatars.githubusercontent.com/u/101814294?v=4"> | <img width="110px" src="https://avatars.githubusercontent.com/u/34127454?v=4"> | <img width="110px" src="https://avatars.githubusercontent.com/u/117060963?v=4"> | <img width="110px" height="110px" src="https://avatars.githubusercontent.com/u/83705371?v=4"> | <img width="110px" src="https://avatars.githubusercontent.com/u/117060963?v=4"> |
 |            [김익현](https://github.com/tae993136)            |           [김태이](https://github.com/kimikhyeon1)           |             [김동현](https://github.com/quipu1)              |            [성준혁](https://github.com/sieun-Woo)            |   
 
 <br>
@@ -80,3 +80,4 @@
 ## 📌 ERD
 
 ![image-20230105174621696](README.assets/image-20230105174621696.png)
+
