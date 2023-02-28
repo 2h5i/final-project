@@ -21,4 +21,6 @@ public interface RecruitmentService {
     List<Map<String, Object>> mainRecruitments();
 
     void deleteRecruitmentAdmin(Long recruitmentId);
+
+    boolean checkRecruitment(String href);
 }
