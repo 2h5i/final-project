@@ -28,4 +28,10 @@ public interface RecruitmentCommentRepository extends JpaRepository<RecruitmentC
     )
     Page<RecruitmentCommentsDto> findMyPageRecruitmentComments(Pageable pageable,
         @Param("userId") Long userId);
+
+    @Transactional
+    @Modifying
+    @Query("delete from RecruitmentComment bc where bc.user.id =:userId ")
+    void deleteByRecruitmentComment(@Param("userId") Long userId);
+
 }

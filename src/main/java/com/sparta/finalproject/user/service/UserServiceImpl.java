@@ -1,9 +1,12 @@
 package com.sparta.finalproject.user.service;
 
+import com.sparta.finalproject.bookmark.repository.BookmarkRepository;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.s3.S3Upload;
+import com.sparta.finalproject.like.repository.LikeRepository;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
+import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentRepository;
 import com.sparta.finalproject.user.dto.UserDto;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
 import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
@@ -12,6 +15,7 @@ import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.repository.UserRepository;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.openqa.selenium.NotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,10 +28,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     private final S3Upload s3Upload;
     private final PostRepository postRepository;
 
     private final PostCommentRepository postCommentRepository;
+    private final RecruitmentCommentRepository recruitmentCommentRepository;
+
+    private final BookmarkRepository bookmarkRepository;
+
+    private final LikeRepository likeRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -113,8 +123,32 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUsersBySearchConditionAdmin(searchUserAdmin, pageable);
     }
 
+    @Override
+    @Transactional
+    public void deleteUserAdmin(Long userId) throws IOException {
+        User user = userRepository.findById(userId).orElseThrow(
+            () -> new NotFoundException("사용자를 찾을 수 없습니다."));
+        likeRepository.deleteByLike(userId);
+        postCommentRepository.deleteByPostComment(userId);
+        postRepository.deleteByPost(userId);
+        bookmarkRepository.deleteByBookmark(userId);
+        recruitmentCommentRepository.deleteByRecruitmentComment(userId);
+        if (!isEmptyImage(user.getProfileImage())) {
+            s3Upload.deleteFile(user.getProfileImage());
+        }
+        userRepository.delete(user);
+
+    }
+
     private boolean isEmptyImage(String image) {
         return image == null || image.isEmpty();
+
     }
+
+    @Override
+    public boolean checkUserIdDuplicate(String userId) {
+        return userRepository.existsByUserId(userId); // 중복이면 true, 중복되지 않으면 false
+    }
+
 
 }

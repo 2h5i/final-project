@@ -1,5 +1,6 @@
 package com.sparta.finalproject.common.jwt;
 
+import com.sparta.finalproject.common.redis.RedisUtil;
 import com.sparta.finalproject.user.entity.UserRole;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -30,13 +31,14 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class JwtUtil {
 
+  private final RedisUtil redisUtil;
   private final UserDetailsService userDetailsService;
   public static final String AUTHORIZATION_HEADER = "Authorization";
   public static final String REFRESH_HEADER = "refresh_token";
   public static final String AUTHORIZATION_KEY = "auth";
-  private static final String BEARER_PREFIX = "Bearer ";
-  private static final long TOKEN_TIME = 60 * 60 * 1000L;
-  private static final long REFRESH_TOKEN_VALID_TIME = 60 * 60 * 24 * 7 * 1000L; // 7 일
+  public static final String BEARER_PREFIX = "Bearer ";
+  public static final long TOKEN_TIME = 60 * 60 * 1000L;
+  public static final long REFRESH_TOKEN_VALID_TIME = 60 * 60 * 24 * 7 * 1000L; // 7 일
 
   @Value("${jwt.secret.key}")
   private String secretKey;
@@ -60,12 +62,12 @@ public class JwtUtil {
   }
 
   // 토큰 생성
-  public String createToken(String username, UserRole userRole) {
+  public String createToken(String userId, UserRole userRole) {
     Date date = new Date();
 
     return BEARER_PREFIX +
         Jwts.builder()
-            .setSubject(username)
+            .setSubject(userId)
             .claim(AUTHORIZATION_KEY, userRole)
             .setExpiration(new Date(date.getTime() + TOKEN_TIME))
             .setIssuedAt(date)
@@ -87,6 +89,9 @@ public class JwtUtil {
   public boolean validateToken(String token) {
     try {
       Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+      if (redisUtil.hasKey("JWT:BLACK_LIST:" + token)) {
+        return false;
+      }
       return true;
     } catch (SecurityException | MalformedJwtException e) {
       log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
@@ -104,8 +109,8 @@ public class JwtUtil {
     return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
   }
 
-  public Authentication createAuthentication(String username) {
-    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+  public Authentication createAuthentication(String userId) {
+    UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
     return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
   }
 
@@ -117,5 +122,6 @@ public class JwtUtil {
       return false;
     }
   }
+
 
 }

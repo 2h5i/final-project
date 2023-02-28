@@ -24,4 +24,9 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     @Modifying
     @Query("delete from Like l where l.post = :post")
     void deleteByPostQuery(@Param("post") Post post);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Like l where l.user.id =:userId ")
+    void deleteByLike(@Param("userId") Long userId);
 }
