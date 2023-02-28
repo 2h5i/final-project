@@ -183,7 +183,9 @@ public class AuthServiceImpl implements AuthService {
         msgg += "<div style='margin:20px;'>";
         msgg += "<h1> 안녕하세요 GRASP입니다. </h1>";
         msgg += "<br>";
-        msgg += "<p>아래의 인증번호를 GRASP에 입력해주세요.인증번호는 5분 후 만료되니, 반드시 5분 내에 입력 하시기 바랍니다.<p>";
+        msgg += "<p>아래의 인증번호를 GRASP에 입력해주세요.<p>";
+        msgg += "<br>";
+        msgg += "<p>인증번호는 5분 후 만료되니, 반드시 5분 내에 입력 하시기 바랍니다.<p>";
         msgg += "<br>";
         msgg += "<p>감사합니다.<p>";
         msgg += "<br>";
