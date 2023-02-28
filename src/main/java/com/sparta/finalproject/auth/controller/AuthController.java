@@ -68,4 +68,12 @@ public class AuthController {
         return createToken;
     }
 
+    //이메일 인증
+    @PostMapping("/emailConfirm")
+    public void emailConfirm(@RequestParam String email) throws Exception {
+
+        authService.sendSimpleMessage(email);
+
+    }
+
 }
