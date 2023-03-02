@@ -1,6 +1,5 @@
 package com.sparta.finalproject.auth.service;
 
-
 import static com.sparta.finalproject.common.jwt.JwtUtil.AUTHORIZATION_HEADER;
 import static com.sparta.finalproject.common.jwt.JwtUtil.REFRESH_TOKEN_VALID_TIME;
 
