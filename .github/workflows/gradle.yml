@@ -19,6 +19,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./
+      APPLICATION: ${{ secrets.APPLICATION }}
     
     steps:
     - uses: actions/checkout@v3
@@ -27,10 +30,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
-      with:
-        arguments: clean build
+    
     - name: Set up PostgreSQL
       uses: Harmon758/postgresql-action@v1.0.0
       with:
@@ -38,3 +38,7 @@ jobs:
         postgresql db: grasp
         postgresql user: ${{ secrets.DB_USER_NAME }}
         postgresql password: ${{ secrets.DB_USER_PWD }}
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      with:
+        arguments: clean build
