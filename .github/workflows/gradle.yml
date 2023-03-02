@@ -19,6 +19,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./
+      APPLICATION: ${{ secrets.APPLICATION }}
     
     steps:
     - uses: actions/checkout@v3
@@ -27,11 +30,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        
-    - uses: actions/checkout@v3
-    - run: touch ./src/main/resources/application.yml
-    - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
-    - run: cat ./src/main/resources/application.yml
     
     - name: Set up PostgreSQL
       uses: Harmon758/postgresql-action@v1.0.0
