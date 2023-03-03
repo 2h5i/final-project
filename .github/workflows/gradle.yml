@@ -36,10 +36,10 @@ jobs:
     - run: touch ./src/main/resources/application.yml
     - run: echo "${{ env.APPLICATION }}" > ./src/main/resources/application.yml
     - run: cat ./src/main/resources/application.yml
-    - uses: actions/upload-artifact@v3
-      with:
-        name: application.yml
-        path: ./src/main/resources/application.yml
+#    - uses: actions/upload-artifact@v3
+#      with:
+#        name: application.yml
+#        path: ./src/main/resources/application.yml
     
     - name: Set up PostgreSQL
       uses: Harmon758/postgresql-action@v1.0.0
