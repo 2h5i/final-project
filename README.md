@@ -61,6 +61,17 @@
 
 ## ⚙ 기술 스택
 
+##### [ Front-end ]
+
+<div>
+    <img src = "https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white">
+    <img src = "https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
+    <img src = "https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=black">
+</div>
+
+<br>
+
+
 ##### [ Back-end ]
 
 <div>
@@ -69,6 +80,10 @@
     <img src = "https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white">
     <img src = "https://img.shields.io/badge/Gradle-02303A.svg?style=for-the-badge&logo=Gradle&logoColor=white">
     <img src = "https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white">
+    <img src="https://img.shields.io/badge/Redis-F05138?style=for-the-badge&logo=Redis&logoColor=white"/>
+    <img src="https://img.shields.io/badge/PostgreSQL-0088CC?style=for-the-badge&logo=PostgreSQL&logoColor=white"/>
+    <img src="https://img.shields.io/badge/Amazon S3-F05138?style=for-the-badge&logo=Amazon S3&logoColor=white"/>
+    
 </div>
 
 <br>
