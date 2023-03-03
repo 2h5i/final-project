@@ -40,7 +40,7 @@
 |                             팀장                             |                             부팀장                             |                             팀원                             |                             팀원                             |                    
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
 | <img width="110px" height="100px" src="https://avatars.githubusercontent.com/u/101814294?v=4"> | <img width="110px" src="https://avatars.githubusercontent.com/u/34127454?v=4"> | <img width="110px" src="https://avatars.githubusercontent.com/u/117060963?v=4"> | <img width="110px" height="110px" src="https://avatars.githubusercontent.com/u/83705371?v=4"> | <img width="110px" src="https://avatars.githubusercontent.com/u/117060963?v=4"> |
-|            [김익현](https://github.com/tae993136)            |           [김태이](https://github.com/kimikhyeon1)           |             [김동현](https://github.com/quipu1)              |            [성준혁](https://github.com/sieun-Woo)            |   
+|            [김익현](https://github.com/kimikhyeon1)            |           [김태이](https://github.com/2h5i)           |             [김동현](https://github.com/dongnobi97)              |            [성준혁](https://github.com/zoo5607)            |   
 
 <br>
 
