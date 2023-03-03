@@ -20,13 +20,13 @@ public class UserDto {
         private Long id;
         private String userId;
 
-        private ResponseUserWithPost(User user) {
-            this.id = user.getId();
-            this.userId = user.getUserId();
+        private ResponseUserWithPost(Long id, String userId) {
+            this.id = id;
+            this.userId = userId;
         }
 
-        public static ResponseUserWithPost of(User user) {
-            return new ResponseUserWithPost(user);
+        public static ResponseUserWithPost of(Long id, String userId) {
+            return new ResponseUserWithPost(id, userId);
         }
     }
 

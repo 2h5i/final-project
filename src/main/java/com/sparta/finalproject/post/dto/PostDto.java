@@ -46,7 +46,8 @@ public class PostDto {
             this.id = post.getId();
             this.title = post.getTitle();
             this.content = post.getContent();
-            this.userInfo = ResponseUserWithPost.of(post.getUser());
+            this.userInfo = ResponseUserWithPost.of(post.getUser().getId(),
+                post.getUser().getUserId());
             this.createdAt = post.getCreatedAt();
             this.modifiedAt = post.getModifiedAt();
         }
@@ -69,20 +70,17 @@ public class PostDto {
         private ResponseUserWithPost userInfo;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
-        private long likeCnt;
+        private Long likeCnt;
 
-        private ResponsePostList(Post post, long likeCnt) {
-            this.id = post.getId();
-            this.title = post.getTitle();
-            this.content = post.getContent();
-            this.userInfo = ResponseUserWithPost.of(post.getUser());
-            this.createdAt = post.getCreatedAt();
-            this.modifiedAt = post.getModifiedAt();
+        public ResponsePostList(Long id, String title, String content, Long userId,
+            String username, LocalDateTime createdAt, LocalDateTime modifiedAt, Long likeCnt) {
+            this.id = id;
+            this.title = title;
+            this.content = content;
+            this.userInfo = ResponseUserWithPost.of(userId, username);
+            this.createdAt = createdAt;
+            this.modifiedAt = modifiedAt;
             this.likeCnt = likeCnt;
-        }
-
-        public static ResponsePostList of(Post post, long likeCnt) {
-            return new ResponsePostList(post, likeCnt);
         }
     }
 
