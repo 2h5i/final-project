@@ -49,7 +49,6 @@
 ##### [ Back-end ]
 
 * java 11
-* jdk 1.7
 * IDE: 인텔리제이,vscode
 * Framework: springboot(2.x)
 * Database: postgreSQL, redis
