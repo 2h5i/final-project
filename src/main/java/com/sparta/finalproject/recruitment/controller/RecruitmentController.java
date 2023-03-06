@@ -14,7 +14,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
-import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -41,11 +40,20 @@ public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
 
-    @Scheduled(cron = "0 48 1 * * ?")
+    @Scheduled(cron = "0 30 8 * * ?")
     public void createRecruitment() throws IOException {
         ChromeOptions options = new ChromeOptions();
 
-        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        System.setProperty("webdriver.chrome.driver", "/home/ubuntu/chromedriver");
+//        options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+
+        options.addArguments("start-maximized");
+        options.addArguments("--headless");
+        options.addArguments("disable-infobars");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
 
         WebDriver driver = new ChromeDriver(options);
 
