@@ -21,19 +21,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
-import javax.mail.Message.RecipientType;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,9 +40,10 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    JavaMailSender emailSender;
-    public static final String ePw = createKey();
+//    @Autowired
+//    JavaMailSender emailSender;
+//    public static final String ePw = createKey();
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
@@ -169,75 +164,6 @@ public class AuthServiceImpl implements AuthService {
         return userRepository.findByUserId(userId).orElseThrow(
             () -> new IllegalArgumentException("존재하지 않는 사용자입니다.")
         );
-    }
-
-    private MimeMessage createMessage(String to) throws Exception {
-
-        MimeMessage message = emailSender.createMimeMessage();
-
-        message.addRecipients(RecipientType.TO, to);//보내는 대상
-        message.setSubject("[GRASP] 인증번호를 안내해드립니다.");//제목
-
-        String msgg = "";
-        msgg += "<div style='margin:20px;'>";
-        msgg += "<h1> 안녕하세요 GRASP입니다. </h1>";
-        msgg += "<br>";
-        msgg += "<p>아래의 인증번호를 GRASP에 입력해주세요.<p>";
-        msgg += "<br>";
-        msgg += "<p>인증번호는 5분 후 만료되니, 반드시 5분 내에 입력 하시기 바랍니다.<p>";
-        msgg += "<br>";
-        msgg += "<p>감사합니다.<p>";
-        msgg += "<br>";
-        msgg += "<div align='center' style='border:1px solid black; font-family:Sans-Serif';>";
-        msgg += "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
-        msgg += "<div style='font-size:130%'>";
-        msgg += "CODE : <strong>";
-        msgg += ePw + "</strong><div><br/> ";
-        msgg += "</div>";
-        message.setText(msgg, "utf-8", "html");//내용
-        message.setFrom(new InternetAddress("sulsa1544@gmail.com", "GRASP"));//보내는 사람
-
-        return message;
-    }
-
-    public static String createKey() {
-        StringBuffer key = new StringBuffer();
-        Random rnd = new Random();
-
-        for (int i = 0; i < 8; i++) { // 인증코드 8자리
-            int index = rnd.nextInt(3); // 0~2 까지 랜덤
-
-            switch (index) {
-                case 0:
-                    key.append((char) ((int) (rnd.nextInt(26)) + 97));
-                    //  a~z  (ex. 1+97=98 => (char)98 = 'b')
-                    break;
-                case 1:
-                    key.append((char) ((int) (rnd.nextInt(26)) + 65));
-                    //  A~Z
-                    break;
-                case 2:
-                    key.append((rnd.nextInt(10)));
-                    // 0~9
-                    break;
-            }
-        }
-        return key.toString();
-    }
-
-    @Override
-    public void sendSimpleMessage(String to) throws Exception {
-        MimeMessage message = createMessage(to);
-
-        try {//예외처리
-            emailSender.send(message);
-        } catch (MailException es) {
-            es.printStackTrace();
-            throw new IllegalArgumentException();
-        }
-        // 유효 시간(5분)동안 저장
-        redisUtil.setDataExpire("email: " + to, "code: " + ePw, 60 * 5L);
-
     }
 
     public String kakaoLogin(String code, HttpServletResponse response)

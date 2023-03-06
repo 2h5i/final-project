@@ -1,8 +1,10 @@
 package com.sparta.finalproject.auth.controller;
 
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.sparta.finalproject.auth.dto.AuthDto;
 import com.sparta.finalproject.auth.service.AuthService;
+import com.sparta.finalproject.auth.service.EmailAuthServiceImpl;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+
+    private final EmailAuthServiceImpl emailAuthService;
 
     //회원가입
     @PostMapping("/signup")
@@ -68,12 +73,15 @@ public class AuthController {
         return createToken;
     }
 
-    //이메일 인증
-    @PostMapping("/emailConfirm")
-    public void emailConfirm(@RequestParam String email) throws Exception {
+    // 이메일 인증
+    @GetMapping(value = "/email")
+    @ResponseBody
+    public String checkEmail(String email) {
+        System.out.println("받은 이메일 : " + email);
 
-        authService.sendSimpleMessage(email);
-
+        String data = emailAuthService.joinEmail(email);
+        return data;
     }
+
 
 }
