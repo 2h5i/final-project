@@ -104,8 +104,7 @@ public class AuthServiceImpl implements AuthService {
 
         userRepository.saveAndFlush(user);
         redisUtil.setDataExpire(user.getUserId(), refreshToken, REFRESH_TOKEN_VALID_TIME);
-        addTokenToHeader(response, user);
-
+        addTokenToHeader(response, user, refreshToken);
     }
 
     @Override
@@ -132,7 +131,6 @@ public class AuthServiceImpl implements AuthService {
             () -> new BadRequestException("해당하는 사용자가 없습니다")
         );
 
-        user.getUserId();
         userRepository.delete(user);
     }
 
@@ -153,14 +151,14 @@ public class AuthServiceImpl implements AuthService {
         user.updateRefreshToken(refreshToken);
         userRepository.saveAndFlush(user);
 
-        addTokenToHeader(response, user);
+        addTokenToHeader(response, user, refreshToken);
     }
 
     @Transactional
-    public void addTokenToHeader(HttpServletResponse response, User user) {
+    public void addTokenToHeader(HttpServletResponse response, User user, String refreshToken) {
         response.addHeader(AUTHORIZATION_HEADER,
             jwtUtil.createToken(user.getUserId(), user.getRole()));
-        response.addHeader(JwtUtil.REFRESH_HEADER, jwtUtil.createRefreshToken());
+        response.addHeader(JwtUtil.REFRESH_HEADER, refreshToken);
     }
 
     private User findUserByToken(AuthDto.TokenDto tokenDto) {
