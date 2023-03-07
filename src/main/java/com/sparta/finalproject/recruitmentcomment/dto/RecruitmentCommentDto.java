@@ -17,7 +17,7 @@ public class RecruitmentCommentDto {
     @NoArgsConstructor
     public static class CreateRecruitmentComment {
 
-        @NotBlank
+        @NotBlank(message = "댓글 내용을 입력해주세요")
         private String content;
 
         @Builder

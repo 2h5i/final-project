@@ -16,7 +16,7 @@ public class PostCommentDto {
     @NoArgsConstructor
     public static class CreatePostComment {
 
-        @NotBlank
+        @NotBlank(message = "댓글 내용을 입력해주세요")
         private String content;
 
         @Builder
@@ -29,7 +29,7 @@ public class PostCommentDto {
     @NoArgsConstructor
     public static class UpdatePostComment {
 
-        @NotBlank
+        @NotBlank(message = "댓글 내용을 입력해주세요")
         private String content;
 
         @Builder
