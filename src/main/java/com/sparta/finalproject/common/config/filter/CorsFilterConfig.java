@@ -18,7 +18,7 @@ public class CorsFilterConfig {
         corsConfiguration.setAllowedMethods(
             Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-type"));
-        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization", "Content-Disposition"));
+        corsConfiguration.setExposedHeaders(Arrays.asList("Authorization", "Refresh"));
         UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
 
