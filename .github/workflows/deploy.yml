@@ -34,11 +34,12 @@ jobs:
         distribution: 'temurin'
         java-version: '11'
         
-    - name: Make Application.yml
+    - name: make application.yml
       run:
           mkdir ./src/main/resources
           touch ./src/main/resources/application.yml
           echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.yml
+      shell: bash
 
     # (3) Gradle build (Test 제외)
     - name: Build with Gradle
