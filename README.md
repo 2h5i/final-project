@@ -51,6 +51,18 @@
 
 <br>
 
+## ⏳ 로드맵
+
+![로드맵](https://user-images.githubusercontent.com/117060963/223597281-e1fcda5a-bc99-4103-b707-c2451363d72e.png)
+
+<br>
+
+## 💭 서비스 아키텍쳐
+
+![서비스 아키텍쳐](https://user-images.githubusercontent.com/117060963/223596988-43a23272-b893-4f85-98ff-9f8db1ce91d6.png)
+
+<br>
+
 ## ⚙ 개발 환경
 
 ##### [ Back-end ]
