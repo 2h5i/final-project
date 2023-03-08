@@ -19,10 +19,10 @@ public class PostDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class CreatePost {
 
-        @NotBlank
+        @NotBlank(message = "제목을 입력해주세요")
         private String title;
 
-        @NotBlank
+        @NotBlank(message = "내용을 입력해주세요")
         private String content;
 
         @Builder
@@ -88,10 +88,10 @@ public class PostDto {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class UpdatePost {
 
-        @NotBlank
+        @NotBlank(message = "제목을 입력해주세요")
         private String title;
 
-        @NotBlank
+        @NotBlank(message = "내용을 입력해주세요")
         private String content;
 
         @Builder
