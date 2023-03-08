@@ -33,6 +33,15 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '11'
+        
+    - name: Make Application.yml
+    - run: mkdir ./src/main/resources
+    - run: touch ./src/main/resources/application.yml
+    - run: echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.yml
+    - uses: actions/upload-artifact@v2
+      with:
+        name: application.yml
+        path: ./src/main/resources/application.yml
 
     # (3) Gradle build (Test 제외)
     - name: Build with Gradle
