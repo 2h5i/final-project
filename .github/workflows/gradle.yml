@@ -33,7 +33,6 @@ jobs:
     - run: mkdir ./src/main/resources
     - run: touch ./src/main/resources/application.yml
     - run: echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.yml
-    - run: cat ./src/main/resources/application.yml
     - uses: actions/upload-artifact@v2
       with:
         name: application.yml
