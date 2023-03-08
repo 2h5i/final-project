@@ -2,7 +2,7 @@ package com.sparta.finalproject.recruitmentcomment.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto;
+import com.sparta.finalproject.recruitmentcomment.dto.CreateRecruitmentComment;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentsDto;
 import com.sparta.finalproject.recruitmentcomment.service.RecruitmentCommentService;
 import javax.validation.Valid;
@@ -33,7 +33,7 @@ public class RecruitmentCommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Long createRecruitmentComment(@PathVariable Long recruitmentId,
-        @RequestBody @Valid RecruitmentCommentDto.CreateRecruitmentComment createComment,
+        @RequestBody @Valid CreateRecruitmentComment createComment,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return recruitmentCommentService.createRecruitmentComment(recruitmentId, createComment,
             userDetails.getUser());
@@ -43,7 +43,7 @@ public class RecruitmentCommentController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void updateRecruitmentComment(@PathVariable Long recruitmentCommentId,
-        @RequestBody @Valid RecruitmentCommentDto.CreateRecruitmentComment createComment,
+        @RequestBody @Valid CreateRecruitmentComment createComment,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         recruitmentCommentService.updateRecruitmentComment(recruitmentCommentId, createComment,
             userDetails.getUser());

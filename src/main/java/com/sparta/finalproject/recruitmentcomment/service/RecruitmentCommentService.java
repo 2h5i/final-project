@@ -1,9 +1,9 @@
 package com.sparta.finalproject.recruitmentcomment.service;
 
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.CreateRecruitmentComment;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitmentcomment.dto.CreateRecruitmentComment;
 import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentsDto;
+import com.sparta.finalproject.recruitmentcomment.dto.ResponseRecruitmentCommentList;
+import com.sparta.finalproject.recruitmentcomment.dto.SearchRecruitment;
 import com.sparta.finalproject.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,10 +18,10 @@ public interface RecruitmentCommentService {
 
     void deleteRecruitmentComment(Long recruitmentCommentId, User user);
 
-    Page<RecruitmentCommentDto.ResponseRecruitmentCommentList>
+    Page<ResponseRecruitmentCommentList>
     selectRecruitmentCommentListByRecruitmentId(Long recruitmentId, Pageable pageable);
 
-    Page<RecruitmentCommentDto.ResponseRecruitmentCommentList>
+    Page<ResponseRecruitmentCommentList>
     selectRecruitmentCommentListAdminByRecruitmentId(Pageable pageable,
         SearchRecruitment searchRecruitment);
 

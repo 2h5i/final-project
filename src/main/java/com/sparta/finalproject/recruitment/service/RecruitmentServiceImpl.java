@@ -2,9 +2,8 @@ package com.sparta.finalproject.recruitment.service;
 
 import com.sparta.finalproject.bookmark.repository.BookmarkRepository;
 import com.sparta.finalproject.common.exception.BadRequestException;
-import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
-import com.sparta.finalproject.recruitment.dto.RecruitmentDto.ResponseRecruitment;
-import com.sparta.finalproject.recruitment.dto.RecruitmentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitment.dto.ResponseRecruitment;
+import com.sparta.finalproject.recruitment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentRepository;
@@ -40,12 +39,12 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(Long recruitmentId) {
+    public ResponseRecruitment selectRecruitmentById(Long recruitmentId) {
         Recruitment recruitment = recruitmentRepository.findById(recruitmentId).orElseThrow(
             () -> new BadRequestException("해당하는 게시물이 없습니다.")
         );
 
-        return RecruitmentDto.ResponseRecruitment.of(recruitment);
+        return ResponseRecruitment.of(recruitment);
     }
 
     @Override

@@ -10,9 +10,10 @@ import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sparta.finalproject.post.dto.PostDto;
-import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
-import com.sparta.finalproject.post.dto.PostDto.SearchPostAdmin;
+import com.sparta.finalproject.post.dto.ResponsePost;
+import com.sparta.finalproject.post.dto.ResponsePostList;
+import com.sparta.finalproject.post.dto.SearchPost;
+import com.sparta.finalproject.post.dto.SearchPostAdmin;
 import com.sparta.finalproject.post.entity.Post;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -55,10 +56,10 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
     }
 
     @Override
-    public Page<PostDto.ResponsePostList> getPostsBySearchCondition(Pageable pageable,
-        PostDto.SearchPost searchPost) {
-        List<PostDto.ResponsePostList> responsePostList = postsQuery(
-            Projections.constructor(PostDto.ResponsePostList.class,
+    public Page<ResponsePostList> getPostsBySearchCondition(Pageable pageable,
+        SearchPost searchPost) {
+        List<ResponsePostList> responsePostList = postsQuery(
+            Projections.constructor(ResponsePostList.class,
                 post.id,
                 post.title,
                 post.content,
@@ -77,7 +78,7 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
         return new PageImpl<>(responsePostList, pageable, postCount);
     }
 
-    private <T> JPAQuery<T> postsQuery(Expression<T> expr, PostDto.SearchPost cond) {
+    private <T> JPAQuery<T> postsQuery(Expression<T> expr, SearchPost cond) {
         return jpaQueryFactory.select(expr)
             .from(post)
             .where(

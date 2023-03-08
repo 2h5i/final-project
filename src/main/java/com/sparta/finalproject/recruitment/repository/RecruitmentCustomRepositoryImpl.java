@@ -5,8 +5,8 @@ import static com.sparta.finalproject.recruitment.entity.QRecruitment.recruitmen
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sparta.finalproject.recruitment.dto.RecruitmentDto.ResponseRecruitment;
-import com.sparta.finalproject.recruitment.dto.RecruitmentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitment.dto.ResponseRecruitment;
+import com.sparta.finalproject.recruitment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import java.util.List;
 import java.util.Objects;
