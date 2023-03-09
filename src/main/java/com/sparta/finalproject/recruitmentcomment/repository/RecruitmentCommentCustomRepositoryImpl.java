@@ -51,6 +51,7 @@ public class RecruitmentCommentCustomRepositoryImpl extends QuerydslRepositorySu
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
+            .orderBy(recruitmentComment.createdAt.asc())
             .fetch();
 
         Long recruitmentCommentsCount = jpaQueryFactory.select(Wildcard.count)

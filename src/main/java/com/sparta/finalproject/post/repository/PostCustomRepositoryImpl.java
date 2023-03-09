@@ -71,6 +71,7 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
                     .where(post.id.eq(like.post.id))
             ), searchPost).offset(pageable.getOffset())
             .limit(pageable.getPageSize())
+            .orderBy(post.createdAt.desc())
             .fetch();
 
         Long postCount = postsQuery(Wildcard.count, searchPost).fetch().get(0);

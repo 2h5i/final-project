@@ -45,6 +45,7 @@ public class RecruitmentCustomRepositoryImpl extends QuerydslRepositorySupport i
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
+            .orderBy(recruitment.createdAt.desc())
             .fetch();
 
         Long recruitmentCount = jpaQueryFactory.select(Wildcard.count)

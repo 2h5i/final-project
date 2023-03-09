@@ -39,6 +39,7 @@ public class PostCommentCustomRepositoryImpl extends QuerydslRepositorySupport i
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
+            .orderBy(postComment.createdAt.asc())
             .fetch();
 
         Long postCommentsCount = jpaQueryFactory.select(Wildcard.count)
