@@ -2,11 +2,14 @@ package com.sparta.finalproject.recruitment.repository;
 
 import static com.sparta.finalproject.recruitment.entity.QRecruitment.recruitment;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sparta.finalproject.recruitment.dto.FindNewRecruitment;
 import com.sparta.finalproject.recruitment.dto.ResponseRecruitment;
 import com.sparta.finalproject.recruitment.dto.SearchRecruitment;
+import com.sparta.finalproject.recruitment.entity.QRecruitment;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import java.util.List;
 import java.util.Objects;
@@ -57,4 +60,21 @@ public class RecruitmentCustomRepositoryImpl extends QuerydslRepositorySupport i
 
         return new PageImpl<>(ResponseRecruitment.of(recruitments), pageable, recruitmentCount);
     }
+
+    @Override
+    public List<FindNewRecruitment> findTop5ByOrderByIdDesc() {
+        QRecruitment r = recruitment;
+
+        List<FindNewRecruitment> results = jpaQueryFactory
+            .select(Projections.fields(FindNewRecruitment.class,
+                r.id,
+                r.title,
+                r.subTitle))
+            .orderBy(r.id.desc())
+            .limit(5)
+            .from(r)
+            .fetch();
+        return results;
+    }
 }
+

@@ -1,13 +1,13 @@
 package com.sparta.finalproject.recruitment.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
+import com.sparta.finalproject.recruitment.dto.FindNewRecruitment;
 import com.sparta.finalproject.recruitment.dto.ResponseRecruitment;
 import com.sparta.finalproject.recruitment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.service.RecruitmentService;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -113,7 +113,7 @@ public class RecruitmentController {
 
     @GetMapping("/main")
     @ResponseStatus(HttpStatus.OK)
-    public List<Map<String, Object>> mainRecruitments() {
+    public List<FindNewRecruitment> mainRecruitments() {
         return recruitmentService.mainRecruitments();
     }
 }
