@@ -22,8 +22,16 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleValidException(MethodArgumentNotValidException exception) {
-        
+
         return ErrorResponse.of(ErrorStatus.BAD_REQUEST_EXCEPTION.getCode(),
             exception.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleIllegalArgumentException(IllegalArgumentException exception) {
+
+        return ErrorResponse.of(ErrorStatus.BAD_REQUEST_EXCEPTION.getCode(),
+            exception.getMessage());
     }
 }
