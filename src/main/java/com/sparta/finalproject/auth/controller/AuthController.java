@@ -1,7 +1,10 @@
 package com.sparta.finalproject.auth.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sparta.finalproject.auth.dto.AuthDto;
+import com.sparta.finalproject.auth.dto.DeleteRequestDto;
+import com.sparta.finalproject.auth.dto.LoginDto;
+import com.sparta.finalproject.auth.dto.SignupDto;
+import com.sparta.finalproject.auth.dto.TokenDto;
 import com.sparta.finalproject.auth.service.AuthService;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import javax.servlet.http.HttpServletResponse;
@@ -26,13 +29,13 @@ public class AuthController {
 
     //회원가입
     @PostMapping("/signup")
-    public void signup(@RequestBody @Valid AuthDto.SignupDto signupDto) {
+    public void signup(@RequestBody @Valid SignupDto signupDto) {
         authService.signup(signupDto);
     }
 
     //로그인
     @PostMapping("/login")
-    public void login(@RequestBody AuthDto.LoginDto loginDto, HttpServletResponse response) {
+    public void login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
         authService.login(loginDto, response);
     }
 
@@ -40,20 +43,20 @@ public class AuthController {
     //로그아웃
     @DeleteMapping("/logout")
     @ResponseStatus(HttpStatus.OK)
-    public void signOut(final @RequestBody AuthDto.TokenDto tokenDto) {
+    public void signOut(final @RequestBody TokenDto tokenDto) {
         authService.logout(tokenDto);
     }
 
     //회원 탈퇴
     @DeleteMapping("/delete")
-    public void delete(@RequestBody AuthDto.DeleteRequestDto deleteRequestDto,
+    public void delete(@RequestBody DeleteRequestDto deleteRequestDto,
         UserDetailsImpl userDetails) {
         authService.delete(deleteRequestDto, userDetails.getUser());
     }
 
     //토큰 재발행
     @PostMapping("/reissue")
-    public void reIssue(@RequestBody AuthDto.TokenDto tokenDto, HttpServletResponse response) {
+    public void reIssue(@RequestBody TokenDto tokenDto, HttpServletResponse response) {
         authService.reIssue(tokenDto, response);
     }
 

@@ -1,7 +1,7 @@
 package com.sparta.finalproject.recruitmentcomment.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitmentcomment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitmentcomment.service.RecruitmentCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

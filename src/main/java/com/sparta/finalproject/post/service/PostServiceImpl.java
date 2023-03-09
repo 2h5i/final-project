@@ -2,12 +2,13 @@ package com.sparta.finalproject.post.service;
 
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.like.repository.LikeRepository;
-import com.sparta.finalproject.post.dto.PostDto;
-import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
-import com.sparta.finalproject.post.dto.PostDto.SearchPost;
-import com.sparta.finalproject.post.dto.PostDto.SearchPostAdmin;
-import com.sparta.finalproject.post.dto.PostDto.UpdatePost;
+import com.sparta.finalproject.post.dto.CreatePost;
 import com.sparta.finalproject.post.dto.PostsDto;
+import com.sparta.finalproject.post.dto.ResponsePost;
+import com.sparta.finalproject.post.dto.ResponsePostList;
+import com.sparta.finalproject.post.dto.SearchPost;
+import com.sparta.finalproject.post.dto.SearchPostAdmin;
+import com.sparta.finalproject.post.dto.UpdatePost;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
@@ -28,7 +29,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public Long createPost(PostDto.CreatePost createPost, User user) {
+    public Long createPost(CreatePost createPost, User user) {
         Post post = Post.builder()
             .title(createPost.getTitle())
             .content(createPost.getContent())
@@ -42,12 +43,12 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional(readOnly = true)
-    public PostDto.ResponsePost getPostById(Long postId) {
+    public ResponsePost getPostById(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(
             () -> new BadRequestException("해당하는 게시물이 없습니다.")
         );
 
-        return PostDto.ResponsePost.of(post);
+        return ResponsePost.of(post);
     }
 
     @Override
@@ -79,7 +80,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PostDto.ResponsePostList> getPosts(Pageable pageable, SearchPost searchPost) {
+    public Page<ResponsePostList> getPosts(Pageable pageable, SearchPost searchPost) {
         return postRepository.getPostsBySearchCondition(pageable, searchPost);
     }
 

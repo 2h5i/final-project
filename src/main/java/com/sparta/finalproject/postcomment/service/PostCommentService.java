@@ -1,9 +1,9 @@
 package com.sparta.finalproject.postcomment.service;
 
-import com.sparta.finalproject.postcomment.dto.PostCommentDto;
-import com.sparta.finalproject.postcomment.dto.PostCommentDto.CreatePostComment;
-import com.sparta.finalproject.postcomment.dto.PostCommentDto.UpdatePostComment;
+import com.sparta.finalproject.postcomment.dto.CreatePostComment;
 import com.sparta.finalproject.postcomment.dto.PostCommentsDto;
+import com.sparta.finalproject.postcomment.dto.ResponsePostCommentList;
+import com.sparta.finalproject.postcomment.dto.UpdatePostComment;
 import com.sparta.finalproject.user.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +17,7 @@ public interface PostCommentService {
 
     void deletePostByCommentId(Long postCommentId, User user);
 
-    Page<PostCommentDto.ResponsePostCommentList> selectPostCommentListByPostId(Long postId,
-        Pageable pageable);
+    Page<ResponsePostCommentList> selectPostCommentListByPostId(Long postId, Pageable pageable);
 
     Page<PostCommentsDto> selectMyCommentLists(Pageable pageable, Long userId);
 }

@@ -5,7 +5,7 @@ import static com.sparta.finalproject.postcomment.entity.QPostComment.postCommen
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sparta.finalproject.postcomment.dto.PostCommentDto.ResponsePostCommentList;
+import com.sparta.finalproject.postcomment.dto.ResponsePostCommentList;
 import com.sparta.finalproject.postcomment.entity.PostComment;
 import java.util.List;
 import java.util.Objects;

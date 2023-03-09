@@ -1,9 +1,9 @@
 package com.sparta.finalproject.user.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
-import com.sparta.finalproject.user.dto.UserDto;
-import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
-import com.sparta.finalproject.user.dto.UserDto.SearchUserAdmin;
+import com.sparta.finalproject.user.dto.ResponseUserAdmin;
+import com.sparta.finalproject.user.dto.ResponseUserListAdmin;
+import com.sparta.finalproject.user.dto.SearchUserAdmin;
 import com.sparta.finalproject.user.service.UserService;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class UserAdminController {
 
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public UserDto.ResponseUserAdmin selectUserAdmin(@PathVariable Long userId) {
+    public ResponseUserAdmin selectUserAdmin(@PathVariable Long userId) {
         return userservice.selectUserAdmin(userId);
     }
 

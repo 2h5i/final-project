@@ -1,8 +1,8 @@
 package com.sparta.finalproject.recruitment.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
-import com.sparta.finalproject.recruitment.dto.RecruitmentDto;
-import com.sparta.finalproject.recruitment.dto.RecruitmentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitment.dto.ResponseRecruitment;
+import com.sparta.finalproject.recruitment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.service.RecruitmentService;
 import java.io.IOException;
 import java.time.Duration;
@@ -100,7 +100,7 @@ public class RecruitmentController {
 
     @GetMapping("/{recruitmentId}")
     @ResponseStatus(HttpStatus.OK)
-    public RecruitmentDto.ResponseRecruitment selectRecruitmentById(@PathVariable Long
+    public ResponseRecruitment selectRecruitmentById(@PathVariable Long
         recruitmentId) {
 
         return recruitmentService.selectRecruitmentById(recruitmentId);

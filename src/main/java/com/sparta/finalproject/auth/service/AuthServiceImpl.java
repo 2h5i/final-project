@@ -6,8 +6,11 @@ import static com.sparta.finalproject.common.jwt.JwtUtil.REFRESH_TOKEN_VALID_TIM
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sparta.finalproject.auth.dto.AuthDto;
-import com.sparta.finalproject.auth.dto.AuthDto.KakaoUserInfoDto;
+import com.sparta.finalproject.auth.dto.DeleteRequestDto;
+import com.sparta.finalproject.auth.dto.KakaoUserInfoDto;
+import com.sparta.finalproject.auth.dto.LoginDto;
+import com.sparta.finalproject.auth.dto.SignupDto;
+import com.sparta.finalproject.auth.dto.TokenDto;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.common.jwt.JwtUtil;
 import com.sparta.finalproject.common.redis.RedisUtil;
@@ -57,7 +60,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public void signup(AuthDto.SignupDto signupDto) {
+    public void signup(SignupDto signupDto) {
         String userId = signupDto.getUserId();
         String password = passwordEncoder.encode(signupDto.getPassword());
 
@@ -87,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public void login(AuthDto.LoginDto loginDto, HttpServletResponse response) {
+    public void login(LoginDto loginDto, HttpServletResponse response) {
         String userId = loginDto.getUserId();
         String password = loginDto.getPassword();
 
@@ -109,7 +112,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public void logout(AuthDto.TokenDto tokenDto) {
+    public void logout(TokenDto tokenDto) {
 
         String accessToken = tokenDto.getAccessToken().substring(7);
         if (!jwtUtil.validateToken(accessToken)) {
@@ -126,7 +129,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public void delete(AuthDto.DeleteRequestDto deleteRequestDto, User user) {
+    public void delete(DeleteRequestDto deleteRequestDto, User user) {
         user = userRepository.findByUserId(deleteRequestDto.getUserId()).orElseThrow(
             () -> new BadRequestException("해당하는 사용자가 없습니다")
         );
@@ -135,7 +138,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Transactional
-    public void reIssue(AuthDto.TokenDto tokenDto, HttpServletResponse response) {
+    public void reIssue(TokenDto tokenDto, HttpServletResponse response) {
         if (!jwtUtil.validateTokenExceptExpiration(tokenDto.getRefreshToken())) {
             throw new IllegalArgumentException("유효하지 않은 토큰입니다.");
         }
@@ -161,7 +164,7 @@ public class AuthServiceImpl implements AuthService {
         response.addHeader(JwtUtil.REFRESH_HEADER, refreshToken);
     }
 
-    private User findUserByToken(AuthDto.TokenDto tokenDto) {
+    private User findUserByToken(TokenDto tokenDto) {
         Claims claims = jwtUtil.getUserInfoFromToken(tokenDto.getAccessToken().substring(7));
         String userId = claims.getSubject();
         return userRepository.findByUserId(userId).orElseThrow(

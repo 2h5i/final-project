@@ -7,10 +7,11 @@ import com.sparta.finalproject.like.repository.LikeRepository;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.postcomment.repository.PostCommentRepository;
 import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentRepository;
-import com.sparta.finalproject.user.dto.UserDto;
-import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
-import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
-import com.sparta.finalproject.user.dto.UserDto.SearchUserAdmin;
+import com.sparta.finalproject.user.dto.RequestUpdateUser;
+import com.sparta.finalproject.user.dto.ResponseUser;
+import com.sparta.finalproject.user.dto.ResponseUserAdmin;
+import com.sparta.finalproject.user.dto.ResponseUserListAdmin;
+import com.sparta.finalproject.user.dto.SearchUserAdmin;
 import com.sparta.finalproject.user.entity.User;
 import com.sparta.finalproject.user.repository.UserRepository;
 import java.io.IOException;
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void updateUser(UserDto.RequestUpdateUser updateUser, User user) {
+    public void updateUser(RequestUpdateUser updateUser, User user) {
         User findUser = userRepository.findById(user.getId()).orElseThrow(
             () -> new BadRequestException("회원 정보가 존재하지 않습니다.")
         );
@@ -91,8 +92,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDto.ResponseUser selectMyPage(User user) {
-        UserDto.ResponseUser myPage = UserDto.ResponseUser.builder()
+    public ResponseUser selectMyPage(User user) {
+        ResponseUser myPage = ResponseUser.builder()
             .userId(user.getUserId())
             .email(user.getEmail())
             .profileImage(user.getProfileImage())
@@ -126,6 +127,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteUserAdmin(Long userId) throws IOException {
+
         User user = userRepository.findById(userId).orElseThrow(
             () -> new NotFoundException("사용자를 찾을 수 없습니다."));
         likeRepository.deleteByLike(userId);
@@ -137,18 +139,15 @@ public class UserServiceImpl implements UserService {
             s3Upload.deleteFile(user.getProfileImage());
         }
         userRepository.delete(user);
-
     }
 
     private boolean isEmptyImage(String image) {
         return image == null || image.isEmpty();
-
     }
 
     @Override
     public boolean checkUserIdDuplicate(String userId) {
         return userRepository.existsByUserId(userId); // 중복이면 true, 중복되지 않으면 false
     }
-
 
 }
