@@ -1,8 +1,8 @@
 package com.sparta.finalproject.post.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
-import com.sparta.finalproject.post.dto.PostDto.ResponsePost;
-import com.sparta.finalproject.post.dto.PostDto.SearchPostAdmin;
+import com.sparta.finalproject.post.dto.ResponsePost;
+import com.sparta.finalproject.post.dto.SearchPostAdmin;
 import com.sparta.finalproject.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

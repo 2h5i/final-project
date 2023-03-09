@@ -1,7 +1,7 @@
 package com.sparta.finalproject.recruitmentcomment.repository;
 
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.ResponseRecruitmentCommentList;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitmentcomment.dto.ResponseRecruitmentCommentList;
+import com.sparta.finalproject.recruitmentcomment.dto.SearchRecruitment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

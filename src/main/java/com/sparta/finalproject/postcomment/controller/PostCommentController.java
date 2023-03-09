@@ -2,8 +2,9 @@ package com.sparta.finalproject.postcomment.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
-import com.sparta.finalproject.postcomment.dto.PostCommentDto;
+import com.sparta.finalproject.postcomment.dto.CreatePostComment;
 import com.sparta.finalproject.postcomment.dto.PostCommentsDto;
+import com.sparta.finalproject.postcomment.dto.UpdatePostComment;
 import com.sparta.finalproject.postcomment.service.PostCommentService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class PostCommentController {
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Long createPostComment(@PathVariable Long postId,
-        @RequestBody @Valid PostCommentDto.CreatePostComment createPostComment,
+        @RequestBody @Valid CreatePostComment createPostComment,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         return postCommentService.createPostComment(postId, createPostComment,
@@ -52,7 +53,7 @@ public class PostCommentController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public void updatePostByPostCommentId(@PathVariable Long postCommentId,
-        @RequestBody @Valid PostCommentDto.UpdatePostComment updatePostComment,
+        @RequestBody @Valid UpdatePostComment updatePostComment,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         postCommentService.updatePostByPostCommentId(postCommentId, updatePostComment,

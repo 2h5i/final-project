@@ -5,8 +5,8 @@ import static com.sparta.finalproject.recruitmentcomment.entity.QRecruitmentComm
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.ResponseRecruitmentCommentList;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentDto.SearchRecruitment;
+import com.sparta.finalproject.recruitmentcomment.dto.ResponseRecruitmentCommentList;
+import com.sparta.finalproject.recruitmentcomment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitmentcomment.entity.RecruitmentComment;
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +51,7 @@ public class RecruitmentCommentCustomRepositoryImpl extends QuerydslRepositorySu
             )
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
+            .orderBy(recruitmentComment.createdAt.asc())
             .fetch();
 
         Long recruitmentCommentsCount = jpaQueryFactory.select(Wildcard.count)

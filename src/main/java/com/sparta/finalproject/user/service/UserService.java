@@ -1,9 +1,10 @@
 package com.sparta.finalproject.user.service;
 
-import com.sparta.finalproject.user.dto.UserDto;
-import com.sparta.finalproject.user.dto.UserDto.ResponseUserAdmin;
-import com.sparta.finalproject.user.dto.UserDto.ResponseUserListAdmin;
-import com.sparta.finalproject.user.dto.UserDto.SearchUserAdmin;
+import com.sparta.finalproject.user.dto.RequestUpdateUser;
+import com.sparta.finalproject.user.dto.ResponseUser;
+import com.sparta.finalproject.user.dto.ResponseUserAdmin;
+import com.sparta.finalproject.user.dto.ResponseUserListAdmin;
+import com.sparta.finalproject.user.dto.SearchUserAdmin;
 import com.sparta.finalproject.user.entity.User;
 import java.io.IOException;
 import org.springframework.data.domain.Page;
@@ -15,11 +16,11 @@ public interface UserService {
     String updateProfileImage(MultipartFile multipartFile, User user)
         throws IOException;
 
-    void updateUser(UserDto.RequestUpdateUser updateUser, User user);
+    void updateUser(RequestUpdateUser updateUser, User user);
 
     void deleteProfileImage(User user) throws IOException;
 
-    UserDto.ResponseUser selectMyPage(User user);
+    ResponseUser selectMyPage(User user);
 
     ResponseUserAdmin selectUserAdmin(Long userId);
 

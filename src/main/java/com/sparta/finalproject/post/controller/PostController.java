@@ -2,9 +2,11 @@ package com.sparta.finalproject.post.controller;
 
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
-import com.sparta.finalproject.post.dto.PostDto;
-import com.sparta.finalproject.post.dto.PostDto.SearchPost;
+import com.sparta.finalproject.post.dto.CreatePost;
 import com.sparta.finalproject.post.dto.PostsDto;
+import com.sparta.finalproject.post.dto.ResponsePost;
+import com.sparta.finalproject.post.dto.SearchPost;
+import com.sparta.finalproject.post.dto.UpdatePost;
 import com.sparta.finalproject.post.service.PostService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +35,14 @@ public class PostController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public Long createPost(@RequestBody @Valid PostDto.CreatePost createPost,
+    public Long createPost(@RequestBody @Valid CreatePost createPost,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.createPost(createPost, userDetails.getUser());
     }
 
     @GetMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
-    public PostDto.ResponsePost getPostById(@PathVariable Long postId) {
+    public ResponsePost getPostById(@PathVariable Long postId) {
 
         return postService.getPostById(postId);
     }
@@ -56,7 +58,7 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Long updatePost(@PathVariable Long postId,
-        @RequestBody @Valid PostDto.UpdatePost updatePost,
+        @RequestBody @Valid UpdatePost updatePost,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
 
         return postService.updatePost(postId, updatePost, userDetails.getUser());
