@@ -40,7 +40,7 @@ public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
 
-    @Scheduled(cron = "0 50 5 * * ?")
+    @Scheduled(cron = "0 35 8 * * ?")
     public void createRecruitment() throws IOException {
         ChromeOptions options = new ChromeOptions();
 
@@ -57,7 +57,7 @@ public class RecruitmentController {
 
         WebDriver driver = new ChromeDriver(options);
 
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < 3; i++) {
             String url = "https://www.rocketpunch.com/jobs?page=" + i;
             driver.get(url);
             new WebDriverWait(driver, Duration.ofSeconds(10)).until(
