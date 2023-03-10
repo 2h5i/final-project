@@ -85,6 +85,7 @@ public class RecruitmentController {
                     String info = infoData.text();
 
                     if (recruitmentService.checkRecruitment(hrefText)) {
+
                         continue;
                     }
                     recruitmentService.createRecruitment(title, info, contentData.toString(),

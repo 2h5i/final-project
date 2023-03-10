@@ -269,7 +269,8 @@ public class AuthServiceImpl implements AuthService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "b8054d0d502a7f824aa2ca329d139607");
-        body.add("redirect_uri", "http://localhost:5500/login.html");
+        body.add("redirect_uri",
+            "http://grasp-client.s3-website.ap-northeast-2.amazonaws.com/login.html");
         body.add("code", code);
 
         // HTTP 요청 보내기
