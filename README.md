@@ -6,7 +6,7 @@
 
 <p align="middle">
     <a>
-        <img width="110px;" height="110px;" src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb02dKG%2Fbtr0WdZEbZV%2FK5ryMZwbkMiKh6w0jyuwNk%2Fimg.png">
+        <img width="160px;" height="110px;" src="https://user-images.githubusercontent.com/101814294/223086348-a7a47dcb-e9e1-4946-921e-83760ff32a1d.PNG?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb02dKG%2Fbtr0WdZEbZV%2FK5ryMZwbkMiKh6w0jyuwNk%2Fimg.png">
 </p>
 
 <h1 align="middle"> Grasp </h1>
