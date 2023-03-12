@@ -40,7 +40,7 @@ public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
 
-    @Scheduled(cron = "0 35 7 * * ?")
+    @Scheduled(cron = "0 55 9 * * ?")
     public void createRecruitment() throws IOException {
         ChromeOptions options = new ChromeOptions();
 
@@ -58,6 +58,7 @@ public class RecruitmentController {
         WebDriver driver = new ChromeDriver(options);
 
         for (int i = 1; i < 3; i++) {
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
             String url = "https://www.rocketpunch.com/jobs?page=" + i;
             driver.get(url);
             new WebDriverWait(driver, Duration.ofSeconds(10)).until(
@@ -70,7 +71,6 @@ public class RecruitmentController {
                 if (recruitmentService.checkRecruitment(hrefText)) {
                     continue;
                 }
-
                 if (hrefText != null && hrefText.contains("www.rocketpunch.com/jobs/")
                     && !hrefText.contains(
                     "/collections") && !hrefText.contains("/tags")) {
@@ -86,7 +86,7 @@ public class RecruitmentController {
 
                     String title = titleData.text();
                     String info = infoData.text();
-
+                    
                     recruitmentService.createRecruitment(title, info, contentData.toString(),
                         hrefText);
                 }
