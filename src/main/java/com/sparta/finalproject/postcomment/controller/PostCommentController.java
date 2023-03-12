@@ -3,7 +3,7 @@ package com.sparta.finalproject.postcomment.controller;
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.postcomment.dto.CreatePostComment;
-import com.sparta.finalproject.postcomment.dto.PostCommentsDto;
+import com.sparta.finalproject.postcomment.dto.MyPagePostComments;
 import com.sparta.finalproject.postcomment.dto.UpdatePostComment;
 import com.sparta.finalproject.postcomment.service.PostCommentService;
 import javax.validation.Valid;
@@ -71,7 +71,8 @@ public class PostCommentController {
     @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public PageWrapper<PostCommentsDto> selectMyCommentLists(@PageableDefault() Pageable pageable,
+    public PageWrapper<MyPagePostComments> selectMyCommentLists(
+        @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return PageWrapper.of(
             postCommentService.selectMyCommentLists(pageable, userDetails.getUser().getId()));

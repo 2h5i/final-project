@@ -1,5 +1,6 @@
 package com.sparta.finalproject.post.repository;
 
+import com.sparta.finalproject.post.dto.MyPagePost;
 import com.sparta.finalproject.post.dto.ResponsePost;
 import com.sparta.finalproject.post.dto.ResponsePostList;
 import com.sparta.finalproject.post.dto.SearchPost;
@@ -13,4 +14,6 @@ public interface PostCustomRepository {
 
     Page<ResponsePost> selectPostsBySearchConditionAdmin(SearchPostAdmin searchPostAdmin,
         Pageable pageable);
+
+    Page<MyPagePost> findByMyPagePosts(Pageable pageable, Long userId);
 }
