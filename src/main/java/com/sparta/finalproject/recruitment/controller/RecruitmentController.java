@@ -40,7 +40,7 @@ public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
 
-    @Scheduled(cron = "0 10 8 * * ?")
+    @Scheduled(cron = "0 20 9 * * ?")
     public void createRecruitment() throws IOException {
         ChromeOptions options = new ChromeOptions();
 
@@ -93,6 +93,7 @@ public class RecruitmentController {
             }
         }
         log.info("크롤링 완료");
+        driver.quit();
     }
 
     @GetMapping("/{recruitmentId}")
