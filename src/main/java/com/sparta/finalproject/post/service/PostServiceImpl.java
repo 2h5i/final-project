@@ -3,7 +3,7 @@ package com.sparta.finalproject.post.service;
 import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.like.repository.LikeRepository;
 import com.sparta.finalproject.post.dto.CreatePost;
-import com.sparta.finalproject.post.dto.PostsDto;
+import com.sparta.finalproject.post.dto.MyPagePost;
 import com.sparta.finalproject.post.dto.ResponsePost;
 import com.sparta.finalproject.post.dto.ResponsePostList;
 import com.sparta.finalproject.post.dto.SearchPost;
@@ -103,7 +103,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<PostsDto> selectMyPostLists(Pageable pageable, Long userId) {
-        return postRepository.findMyPagePosts(pageable, userId);
+    public Page<MyPagePost> selectMyPostLists(Pageable pageable, Long userId) {
+        return postRepository.findByMyPagePosts(pageable, userId);
     }
 }

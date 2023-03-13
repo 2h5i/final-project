@@ -1,7 +1,7 @@
 package com.sparta.finalproject.post.service;
 
 import com.sparta.finalproject.post.dto.CreatePost;
-import com.sparta.finalproject.post.dto.PostsDto;
+import com.sparta.finalproject.post.dto.MyPagePost;
 import com.sparta.finalproject.post.dto.ResponsePost;
 import com.sparta.finalproject.post.dto.ResponsePostList;
 import com.sparta.finalproject.post.dto.SearchPost;
@@ -28,5 +28,5 @@ public interface PostService {
     Page<ResponsePost> selectPostsAdmin(SearchPostAdmin searchPostAdmin,
         Pageable pageable);
 
-    Page<PostsDto> selectMyPostLists(Pageable pageable, Long userId);
+    Page<MyPagePost> selectMyPostLists(Pageable pageable, Long userId);
 }

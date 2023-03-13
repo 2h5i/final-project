@@ -1,6 +1,6 @@
 package com.sparta.finalproject.bookmark.controller;
 
-import com.sparta.finalproject.bookmark.dto.BookmarkDto;
+import com.sparta.finalproject.bookmark.dto.BookmarkMyPage;
 import com.sparta.finalproject.bookmark.service.BookmarkService;
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
@@ -44,7 +44,7 @@ public class BookmarkController {
     @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public PageWrapper<BookmarkDto> selectMyBookmarks(@PageableDefault() Pageable pageable,
+    public PageWrapper<BookmarkMyPage> selectMyBookmarks(@PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return PageWrapper.of(
             bookmarkService.selectMyBookmarks(pageable, userDetails.getUser().getId()));

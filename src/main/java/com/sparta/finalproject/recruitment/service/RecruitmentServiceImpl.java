@@ -2,13 +2,13 @@ package com.sparta.finalproject.recruitment.service;
 
 import com.sparta.finalproject.bookmark.repository.BookmarkRepository;
 import com.sparta.finalproject.common.exception.BadRequestException;
+import com.sparta.finalproject.recruitment.dto.FindNewRecruitment;
 import com.sparta.finalproject.recruitment.dto.ResponseRecruitment;
 import com.sparta.finalproject.recruitment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.repository.RecruitmentCommentRepository;
 import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -57,7 +57,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Map<String, Object>> mainRecruitments() {
+    public List<FindNewRecruitment> mainRecruitments() {
         return recruitmentRepository.findTop5ByOrderByIdDesc();
     }
 

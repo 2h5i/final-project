@@ -2,9 +2,13 @@ package com.sparta.finalproject.postcomment.repository;
 
 import static com.sparta.finalproject.postcomment.entity.QPostComment.postComment;
 
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sparta.finalproject.postcomment.dto.MyPagePostComments;
 import com.sparta.finalproject.postcomment.dto.ResponsePostCommentList;
 import com.sparta.finalproject.postcomment.entity.PostComment;
 import java.util.List;
@@ -30,6 +34,10 @@ public class PostCommentCustomRepositoryImpl extends QuerydslRepositorySupport i
         return Objects.nonNull(postId) ? postComment.post.id.eq(postId) : null;
     }
 
+    private BooleanExpression eqUserId(Long userId) {
+        return Objects.nonNull(userId) ? postComment.user.id.eq(userId) : null;
+    }
+
     @Override
     public Page<ResponsePostCommentList> selectPostCommentListByPostId(Long postId,
         Pageable pageable) {
@@ -51,5 +59,27 @@ public class PostCommentCustomRepositoryImpl extends QuerydslRepositorySupport i
 
         return new PageImpl<>(ResponsePostCommentList.of(postComments), pageable,
             postCommentsCount);
+    }
+
+    @Override
+    public Page<MyPagePostComments> findByMyPageComment(Pageable pageable, Long userId) {
+        List<MyPagePostComments> myPagePostComments = myPagePostCommentsQuery(Projections
+            .constructor(MyPagePostComments.class,
+                postComment.post.id,
+                postComment.content), userId)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long count = myPagePostCommentsQuery(Wildcard.count, userId)
+            .fetch().get(0);
+        return new PageImpl<>(myPagePostComments, pageable, count);
+    }
+
+    private <T> JPAQuery<T> myPagePostCommentsQuery(Expression<T> expr, Long userId) {
+        return jpaQueryFactory
+            .select(expr)
+            .from(postComment)
+            .where(eqUserId(userId));
     }
 }

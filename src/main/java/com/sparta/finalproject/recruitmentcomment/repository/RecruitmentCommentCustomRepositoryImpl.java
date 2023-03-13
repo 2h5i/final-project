@@ -2,9 +2,13 @@ package com.sparta.finalproject.recruitmentcomment.repository;
 
 import static com.sparta.finalproject.recruitmentcomment.entity.QRecruitmentComment.recruitmentComment;
 
+import com.querydsl.core.types.Expression;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sparta.finalproject.recruitmentcomment.dto.MyPageRecruitmentComments;
 import com.sparta.finalproject.recruitmentcomment.dto.ResponseRecruitmentCommentList;
 import com.sparta.finalproject.recruitmentcomment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitmentcomment.entity.RecruitmentComment;
@@ -39,6 +43,10 @@ public class RecruitmentCommentCustomRepositoryImpl extends QuerydslRepositorySu
     private BooleanExpression searchByUserId(String userId) {
         return Objects.nonNull(userId) ? recruitmentComment.user.userId.contains(userId)
             : null;
+    }
+
+    private BooleanExpression eqUserId(Long userId) {
+        return Objects.nonNull(userId) ? recruitmentComment.user.id.eq(userId) : null;
     }
 
     @Override
@@ -88,4 +96,29 @@ public class RecruitmentCommentCustomRepositoryImpl extends QuerydslRepositorySu
         return new PageImpl<>(ResponseRecruitmentCommentList.of(recruitmentComments), pageable,
             recruitmentCommentsCount);
     }
+
+    @Override
+    public Page<MyPageRecruitmentComments> findMyPageRecruitmentComments(Pageable pageable,
+        Long userId) {
+        List<MyPageRecruitmentComments> myPageRecruitmentComments = myPageRecruitmentCommentsQuery(
+            Projections.constructor(MyPageRecruitmentComments.class,
+                recruitmentComment.id,
+                recruitmentComment.content), userId)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long count = myPageRecruitmentCommentsQuery(Wildcard.count, userId)
+            .fetch().get(0);
+
+        return new PageImpl<>(myPageRecruitmentComments, pageable, count);
+    }
+
+    private <T> JPAQuery<T> myPageRecruitmentCommentsQuery(Expression<T> expr, Long userId) {
+        return jpaQueryFactory
+            .select(expr)
+            .from(recruitmentComment)
+            .where(eqUserId(userId));
+    }
+
 }
