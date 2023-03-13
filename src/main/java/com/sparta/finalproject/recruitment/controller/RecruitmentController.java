@@ -40,7 +40,7 @@ public class RecruitmentController {
 
     private final RecruitmentService recruitmentService;
 
-    @Scheduled(cron = "0 55 9 * * ?")
+    @Scheduled(cron = "0 10 8 * * ?")
     public void createRecruitment() throws IOException {
         ChromeOptions options = new ChromeOptions();
 
@@ -86,7 +86,7 @@ public class RecruitmentController {
 
                     String title = titleData.text();
                     String info = infoData.text();
-                    
+
                     recruitmentService.createRecruitment(title, info, contentData.toString(),
                         hrefText);
                 }
