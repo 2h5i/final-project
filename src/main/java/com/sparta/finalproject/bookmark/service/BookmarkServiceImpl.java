@@ -1,6 +1,6 @@
 package com.sparta.finalproject.bookmark.service;
 
-import com.sparta.finalproject.bookmark.dto.BookmarkDto;
+import com.sparta.finalproject.bookmark.dto.BookmarkMyPage;
 import com.sparta.finalproject.bookmark.entity.Bookmark;
 import com.sparta.finalproject.bookmark.repository.BookmarkRepository;
 import com.sparta.finalproject.common.exception.BadRequestException;
@@ -48,7 +48,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<BookmarkDto> selectMyBookmarks(Pageable pageable, Long userId) {
+    public Page<BookmarkMyPage> selectMyBookmarks(Pageable pageable, Long userId) {
         return bookmarkRepository.findByMyPageBookmark(pageable, userId);
     }
 

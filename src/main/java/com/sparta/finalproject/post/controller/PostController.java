@@ -3,7 +3,7 @@ package com.sparta.finalproject.post.controller;
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.post.dto.CreatePost;
-import com.sparta.finalproject.post.dto.PostsDto;
+import com.sparta.finalproject.post.dto.MyPagePost;
 import com.sparta.finalproject.post.dto.ResponsePost;
 import com.sparta.finalproject.post.dto.SearchPost;
 import com.sparta.finalproject.post.dto.UpdatePost;
@@ -76,7 +76,7 @@ public class PostController {
     @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public PageWrapper<PostsDto> selectMyPostLists(@PageableDefault() Pageable pageable,
+    public PageWrapper<MyPagePost> selectMyPostLists(@PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return PageWrapper.of(
             postService.selectMyPostLists(pageable, userDetails.getUser().getId()));

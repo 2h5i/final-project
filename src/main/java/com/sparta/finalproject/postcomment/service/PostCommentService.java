@@ -1,7 +1,7 @@
 package com.sparta.finalproject.postcomment.service;
 
 import com.sparta.finalproject.postcomment.dto.CreatePostComment;
-import com.sparta.finalproject.postcomment.dto.PostCommentsDto;
+import com.sparta.finalproject.postcomment.dto.MyPagePostComments;
 import com.sparta.finalproject.postcomment.dto.ResponsePostCommentList;
 import com.sparta.finalproject.postcomment.dto.UpdatePostComment;
 import com.sparta.finalproject.user.entity.User;
@@ -19,5 +19,5 @@ public interface PostCommentService {
 
     Page<ResponsePostCommentList> selectPostCommentListByPostId(Long postId, Pageable pageable);
 
-    Page<PostCommentsDto> selectMyCommentLists(Pageable pageable, Long userId);
+    Page<MyPagePostComments> selectMyCommentLists(Pageable pageable, Long userId);
 }

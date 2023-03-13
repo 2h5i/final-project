@@ -3,7 +3,7 @@ package com.sparta.finalproject.recruitmentcomment.controller;
 import com.sparta.finalproject.common.core.PageWrapper;
 import com.sparta.finalproject.common.security.UserDetailsImpl;
 import com.sparta.finalproject.recruitmentcomment.dto.CreateRecruitmentComment;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentsDto;
+import com.sparta.finalproject.recruitmentcomment.dto.MyPageRecruitmentComments;
 import com.sparta.finalproject.recruitmentcomment.service.RecruitmentCommentService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +70,7 @@ public class RecruitmentCommentController {
     @GetMapping("/my-page")
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public PageWrapper<RecruitmentCommentsDto> selectMyCommentLists(
+    public PageWrapper<MyPageRecruitmentComments> selectMyCommentLists(
         @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return PageWrapper.of(

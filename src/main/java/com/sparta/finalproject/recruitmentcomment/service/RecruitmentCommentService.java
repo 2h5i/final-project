@@ -1,7 +1,7 @@
 package com.sparta.finalproject.recruitmentcomment.service;
 
 import com.sparta.finalproject.recruitmentcomment.dto.CreateRecruitmentComment;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentsDto;
+import com.sparta.finalproject.recruitmentcomment.dto.MyPageRecruitmentComments;
 import com.sparta.finalproject.recruitmentcomment.dto.ResponseRecruitmentCommentList;
 import com.sparta.finalproject.recruitmentcomment.dto.SearchRecruitment;
 import com.sparta.finalproject.user.entity.User;
@@ -27,5 +27,5 @@ public interface RecruitmentCommentService {
 
     void deleteRecruitmentCommentAdmin(Long recruitmentId);
 
-    Page<RecruitmentCommentsDto> selectMyCommentLists(Pageable pageable, Long userId);
+    Page<MyPageRecruitmentComments> selectMyCommentLists(Pageable pageable, Long userId);
 }

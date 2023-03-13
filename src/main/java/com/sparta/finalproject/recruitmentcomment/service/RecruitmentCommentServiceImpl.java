@@ -4,7 +4,7 @@ import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.recruitment.entity.Recruitment;
 import com.sparta.finalproject.recruitment.repository.RecruitmentRepository;
 import com.sparta.finalproject.recruitmentcomment.dto.CreateRecruitmentComment;
-import com.sparta.finalproject.recruitmentcomment.dto.RecruitmentCommentsDto;
+import com.sparta.finalproject.recruitmentcomment.dto.MyPageRecruitmentComments;
 import com.sparta.finalproject.recruitmentcomment.dto.ResponseRecruitmentCommentList;
 import com.sparta.finalproject.recruitmentcomment.dto.SearchRecruitment;
 import com.sparta.finalproject.recruitmentcomment.entity.RecruitmentComment;
@@ -100,7 +100,7 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
     }
 
     @Override
-    public Page<RecruitmentCommentsDto> selectMyCommentLists(Pageable pageable, Long userId) {
+    public Page<MyPageRecruitmentComments> selectMyCommentLists(Pageable pageable, Long userId) {
         return recruitmentCommentRepository.findMyPageRecruitmentComments(pageable, userId);
     }
 }

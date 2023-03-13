@@ -10,6 +10,7 @@ import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sparta.finalproject.post.dto.MyPagePost;
 import com.sparta.finalproject.post.dto.ResponsePost;
 import com.sparta.finalproject.post.dto.ResponsePostList;
 import com.sparta.finalproject.post.dto.SearchPost;
@@ -45,6 +46,10 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
 
     private BooleanExpression containsUserId(String userId) {
         return Objects.nonNull(userId) ? post.user.userId.contains(userId) : null;
+    }
+
+    private BooleanExpression eqUserId(Long userId) {
+        return Objects.nonNull(userId) ? post.user.id.eq(userId) : null;
     }
 
     private BooleanExpression betweenCreated(LocalDateTime createdStarted,
@@ -101,6 +106,30 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
             .fetch().get(0);
 
         return new PageImpl<>(ResponsePost.of(posts), pageable, postCounts);
+    }
+
+    @Override
+    public Page<MyPagePost> findByMyPagePosts(Pageable pageable, Long userId) {
+        List<MyPagePost> myPagePosts = myPagePostsQuery(Projections
+            .constructor(MyPagePost.class,
+                post.id,
+                post.title), userId)
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .fetch();
+
+        Long count = myPagePostsQuery(Wildcard.count, userId)
+            .fetch().get(0);
+
+        return new PageImpl<>(myPagePosts, pageable, count);
+    }
+
+
+    private <T> JPAQuery<T> myPagePostsQuery(Expression<T> expr, Long userId) {
+        return jpaQueryFactory
+            .select(expr)
+            .from(post)
+            .where(eqUserId(userId));
     }
 
     private <T> JPAQuery<T> postsQueryAdmin(Expression<T> expr, SearchPostAdmin cond) {

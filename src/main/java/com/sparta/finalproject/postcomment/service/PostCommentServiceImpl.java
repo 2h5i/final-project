@@ -4,7 +4,7 @@ import com.sparta.finalproject.common.exception.BadRequestException;
 import com.sparta.finalproject.post.entity.Post;
 import com.sparta.finalproject.post.repository.PostRepository;
 import com.sparta.finalproject.postcomment.dto.CreatePostComment;
-import com.sparta.finalproject.postcomment.dto.PostCommentsDto;
+import com.sparta.finalproject.postcomment.dto.MyPagePostComments;
 import com.sparta.finalproject.postcomment.dto.ResponsePostCommentList;
 import com.sparta.finalproject.postcomment.dto.UpdatePostComment;
 import com.sparta.finalproject.postcomment.entity.PostComment;
@@ -75,7 +75,7 @@ public class PostCommentServiceImpl implements PostCommentService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PostCommentsDto> selectMyCommentLists(Pageable pageable, Long userId) {
+    public Page<MyPagePostComments> selectMyCommentLists(Pageable pageable, Long userId) {
         return postCommentRepository.findByMyPageComment(pageable, userId);
     }
 }
