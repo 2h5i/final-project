@@ -29,6 +29,7 @@ public class UserAdminController {
     @GetMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseUserAdmin selectUserAdmin(@PathVariable Long userId) {
+
         return userservice.selectUserAdmin(userId);
     }
 

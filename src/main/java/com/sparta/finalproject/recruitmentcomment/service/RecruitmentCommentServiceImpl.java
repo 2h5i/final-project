@@ -101,6 +101,7 @@ public class RecruitmentCommentServiceImpl implements RecruitmentCommentService 
 
     @Override
     public Page<MyPageRecruitmentComments> selectMyCommentLists(Pageable pageable, Long userId) {
+
         return recruitmentCommentRepository.findMyPageRecruitmentComments(pageable, userId);
     }
 }

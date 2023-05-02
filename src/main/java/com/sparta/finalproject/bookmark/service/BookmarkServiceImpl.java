@@ -49,16 +49,19 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     @Transactional(readOnly = true)
     public Page<BookmarkMyPage> selectMyBookmarks(Pageable pageable, Long userId) {
+
         return bookmarkRepository.findByMyPageBookmark(pageable, userId);
     }
 
     private void validateBookmark(Long recruitmentId, Long userId) {
+
         if (bookmarkRepository.existsByRecruitmentIdAndUserId(recruitmentId, userId)) {
             throw new BadRequestException("이미 북마크 하였습니다.");
         }
     }
 
     private Recruitment validateRecruitment(Long recruitmentId) {
+
         return recruitmentRepository.findById(recruitmentId).orElseThrow(
             () -> new BadRequestException("해당 채용공고가 존재하지 않습니다.")
         );
@@ -67,6 +70,7 @@ public class BookmarkServiceImpl implements BookmarkService {
     @Override
     @Transactional(readOnly = true)
     public boolean selectCheckBookmark(Long recruitmentId, Long userId) {
+
         return bookmarkRepository.existsByRecruitmentIdAndUserId(recruitmentId, userId);
     }
 }

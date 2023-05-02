@@ -31,6 +31,7 @@ public class ResponseUserListAdmin {
     }
 
     public static List<ResponseUserListAdmin> of(List<User> users) {
+
         return users.stream().map(ResponseUserListAdmin::of).collect(Collectors.toList());
     }
 }

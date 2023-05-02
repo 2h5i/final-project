@@ -31,10 +31,12 @@ public class RecruitmentCustomRepositoryImpl extends QuerydslRepositorySupport i
     }
 
     private BooleanExpression searchByTitle(String title) {
+
         return Objects.nonNull(title) ? recruitment.title.contains(title) : null;
     }
 
     private BooleanExpression searchByContent(String content) {
+
         return Objects.nonNull(content) ? recruitment.content.contains(content) : null;
     }
 
@@ -74,6 +76,7 @@ public class RecruitmentCustomRepositoryImpl extends QuerydslRepositorySupport i
             .limit(5)
             .from(r)
             .fetch();
+
         return results;
     }
 }

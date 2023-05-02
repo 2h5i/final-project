@@ -28,14 +28,17 @@ public class UserCustomRepositoryImpl extends QuerydslRepositorySupport implemen
     }
 
     private BooleanExpression searchByUserId(String userId) {
+
         return Objects.nonNull(userId) ? user.userId.contains(userId) : null;
     }
 
     private BooleanExpression searchByKakaoId(Long kakaoId) {
+
         return Objects.nonNull(kakaoId) ? user.kakaoId.eq(kakaoId) : null;
     }
 
     private BooleanExpression searchByEmail(String email) {
+
         return Objects.nonNull(email) ? user.email.contains(email) : null;
     }
 

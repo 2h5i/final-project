@@ -15,6 +15,7 @@ public class ResponseUserWithRecruitmentComment {
     }
 
     public static ResponseUserWithRecruitmentComment of(User user) {
+
         return new ResponseUserWithRecruitmentComment(user);
     }
 }

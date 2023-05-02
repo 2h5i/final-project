@@ -15,6 +15,7 @@ public class ResponseUserWithPostComment {
     }
 
     public static ResponseUserWithPostComment of(User user) {
+
         return new ResponseUserWithPostComment(user);
     }
 }
