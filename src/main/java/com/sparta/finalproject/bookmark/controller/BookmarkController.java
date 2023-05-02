@@ -46,6 +46,7 @@ public class BookmarkController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public PageWrapper<BookmarkMyPage> selectMyBookmarks(@PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return PageWrapper.of(
             bookmarkService.selectMyBookmarks(pageable, userDetails.getUser().getId()));
     }
@@ -54,6 +55,7 @@ public class BookmarkController {
     @ResponseStatus(HttpStatus.OK)
     public boolean selectCheckBookmark(@PathVariable Long recruitmentId,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return bookmarkService.selectCheckBookmark(recruitmentId, userDetails.getUser().getId());
     }
 

@@ -32,20 +32,24 @@ public class RecruitmentCommentCustomRepositoryImpl extends QuerydslRepositorySu
     }
 
     private BooleanExpression searchByRecruitmentId(Long recruitmentId) {
+
         return Objects.nonNull(recruitmentId) ? recruitmentComment.recruitment.id.eq(recruitmentId)
             : null;
     }
 
     private BooleanExpression searchByContent(String content) {
+
         return Objects.nonNull(content) ? recruitmentComment.content.contains(content) : null;
     }
 
     private BooleanExpression searchByUserId(String userId) {
+
         return Objects.nonNull(userId) ? recruitmentComment.user.userId.contains(userId)
             : null;
     }
 
     private BooleanExpression eqUserId(Long userId) {
+
         return Objects.nonNull(userId) ? recruitmentComment.user.id.eq(userId) : null;
     }
 

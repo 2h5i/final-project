@@ -31,6 +31,7 @@ public class BookmarkCustomRepositoryImpl extends QuerydslRepositorySupport impl
     }
 
     private BooleanExpression eqUserId(Long userId) {
+
         return Objects.nonNull(userId) ? bookmark.user.id.eq(userId) : null;
     }
 
@@ -52,6 +53,7 @@ public class BookmarkCustomRepositoryImpl extends QuerydslRepositorySupport impl
     }
 
     private <T> JPAQuery<T> myPageBookmarkQuery(Expression<T> expr, Long userId) {
+
         return jpaQueryFactory
             .select(expr)
             .from(bookmark)

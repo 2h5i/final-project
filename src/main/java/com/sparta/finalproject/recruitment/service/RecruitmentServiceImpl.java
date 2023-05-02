@@ -51,6 +51,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Transactional(readOnly = true)
     public Page<ResponseRecruitment> selectRecruitments(Pageable pageable,
         SearchRecruitment searchRecruitment) {
+
         return recruitmentRepository.selectRecruitmentsBySearchCondition(pageable,
             searchRecruitment);
     }
@@ -58,6 +59,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
     @Override
     @Transactional(readOnly = true)
     public List<FindNewRecruitment> mainRecruitments() {
+
         return recruitmentRepository.findTop5ByOrderByIdDesc();
     }
 
@@ -75,6 +77,7 @@ public class RecruitmentServiceImpl implements RecruitmentService {
 
     @Override
     public boolean checkRecruitment(String href) {
+
         return recruitmentRepository.existsByHref(href);
     }
 }
