@@ -74,6 +74,7 @@ public class PostCommentController {
     public PageWrapper<MyPagePostComments> selectMyCommentLists(
         @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        
         return PageWrapper.of(
             postCommentService.selectMyCommentLists(pageable, userDetails.getUser().getId()));
     }

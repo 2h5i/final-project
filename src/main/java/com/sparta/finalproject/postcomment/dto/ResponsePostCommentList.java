@@ -25,10 +25,12 @@ public class ResponsePostCommentList {
     }
 
     public static ResponsePostCommentList of(PostComment postComment) {
+
         return new ResponsePostCommentList(postComment);
     }
 
     public static List<ResponsePostCommentList> of(List<PostComment> postComments) {
+        
         return postComments.stream().map(ResponsePostCommentList::of).collect(Collectors.toList());
     }
 }

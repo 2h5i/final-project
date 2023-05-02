@@ -2,7 +2,6 @@ package com.sparta.finalproject.common.redis;
 
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -17,6 +16,7 @@ public class RedisUtil {
 
     public String getData(String key) {
         ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+
         return valueOperations.get(key);
     }
 
@@ -36,6 +36,7 @@ public class RedisUtil {
     }
 
     public boolean hasKey(String key) {
+
         return stringRedisTemplate.hasKey(key);
     }
 }

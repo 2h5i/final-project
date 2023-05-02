@@ -81,6 +81,7 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public Page<ResponsePostList> getPosts(Pageable pageable, SearchPost searchPost) {
+
         return postRepository.getPostsBySearchCondition(pageable, searchPost);
     }
 
@@ -99,11 +100,13 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public Page<ResponsePost> selectPostsAdmin(SearchPostAdmin searchPostAdmin, Pageable pageable) {
+
         return postRepository.selectPostsBySearchConditionAdmin(searchPostAdmin, pageable);
     }
 
     @Override
     public Page<MyPagePost> selectMyPostLists(Pageable pageable, Long userId) {
+
         return postRepository.findByMyPagePosts(pageable, userId);
     }
 }

@@ -28,10 +28,12 @@ public class ResponsePost {
     }
 
     public static ResponsePost of(Post post) {
+        
         return new ResponsePost(post);
     }
 
     public static List<ResponsePost> of(List<Post> posts) {
+
         return posts.stream().map(ResponsePost::of).collect(Collectors.toList());
     }
 }

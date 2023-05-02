@@ -28,8 +28,7 @@ public class HTMLCharacterEscapes extends CharacterEscapes {
 
     @Override
     public SerializableString getEscapeSequence(int ch) {
+        
         return new SerializedString(StringEscapeUtils.escapeHtml4(Character.toString((char) ch)));
     }
-
-
 }

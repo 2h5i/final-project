@@ -46,12 +46,13 @@ public class LikeServiceImpl implements LikeService {
 
     @Transactional(readOnly = true)
     public Long selectLikeCount(Long postId) {
-        return likeRepository.countByPostId(postId);
 
+        return likeRepository.countByPostId(postId);
     }
 
     @Override
     public boolean selectLikeCheck(Long postId, User user) {
+        
         return likeRepository.existsByPostIdAndUser(postId, user);
     }
 

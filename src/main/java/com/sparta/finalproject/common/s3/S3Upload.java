@@ -59,7 +59,6 @@ public class S3Upload {
         } catch (SdkClientException e) {
             e.printStackTrace();
         }
-
     }
 
     private void checkFile(MultipartFile file) {
@@ -73,5 +72,4 @@ public class S3Upload {
             throw new BadRequestException("올바른 파일 형식이 아닙니다. jpg/jpeg/png/svg 파일만 지원합니다.");
         }
     }
-
 }
