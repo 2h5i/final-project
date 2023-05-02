@@ -75,7 +75,9 @@ public class AuthServiceImpl implements AuthService {
 
         //사용자 Role 확인
         UserRole role = UserRole.USER;
+
         if (signupDto.isAdmin()) {
+
             if (!signupDto.getAdminKey().equals(ADMIN_KEY)) {
                 throw new IllegalArgumentException("관리자 키가 틀려 등록이 불가능 합니다.");
             }
@@ -167,6 +169,7 @@ public class AuthServiceImpl implements AuthService {
     private User findUserByToken(TokenDto tokenDto) {
         Claims claims = jwtUtil.getUserInfoFromToken(tokenDto.getAccessToken().substring(7));
         String userId = claims.getSubject();
+
         return userRepository.findByUserId(userId).orElseThrow(
             () -> new IllegalArgumentException("존재하지 않는 사용자입니다.")
         );
@@ -223,6 +226,7 @@ public class AuthServiceImpl implements AuthService {
                     break;
             }
         }
+
         return key.toString();
     }
 
@@ -288,6 +292,7 @@ public class AuthServiceImpl implements AuthService {
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
+
         return jsonNode.get("access_token").asText();
     }
 
@@ -317,6 +322,7 @@ public class AuthServiceImpl implements AuthService {
         String email = jsonNode.get("kakao_account")
             .get("email").asText();
         log.info("카카오 사용자 정보: " + id + ", " + nickname + ", " + email);
+
         return new KakaoUserInfoDto(id, nickname, email);
     }
 
@@ -326,10 +332,12 @@ public class AuthServiceImpl implements AuthService {
         Long kakaoId = kakaoUserInfo.getId();
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
             .orElse(null);
+
         if (kakaoUser == null) {
             // 카카오 사용자 email 동일한 email 가진 회원이 있는지 확인
             String kakaoEmail = kakaoUserInfo.getEmail();
             User sameEmailUser = userRepository.findByEmail(kakaoEmail).orElse(null);
+
             if (sameEmailUser != null) {
                 kakaoUser = sameEmailUser;
                 // 기존 회원정보에 카카오 Id 추가
@@ -362,6 +370,7 @@ public class AuthServiceImpl implements AuthService {
 
             userRepository.save(kakaoUser);
         }
+
         return kakaoUser;
     }
 }

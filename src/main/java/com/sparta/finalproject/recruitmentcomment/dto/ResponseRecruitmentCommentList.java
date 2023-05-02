@@ -25,11 +25,13 @@ public class ResponseRecruitmentCommentList {
     }
 
     public static ResponseRecruitmentCommentList of(RecruitmentComment recruitmentComment) {
+
         return new ResponseRecruitmentCommentList(recruitmentComment);
     }
 
     public static List<ResponseRecruitmentCommentList> of(
         List<RecruitmentComment> recruitmentComments) {
+
         return recruitmentComments.stream().map(ResponseRecruitmentCommentList::of)
             .collect(Collectors.toList());
     }

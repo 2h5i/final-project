@@ -59,12 +59,14 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseUser selectMyPage(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return userService.selectMyPage(userDetails.getUser());
     }
 
     //아이디 중복체크
     @GetMapping("/{userId}/exists")
     public ResponseEntity<Boolean> checkUserIdDuplicate(@PathVariable String userId) {
+
         return ResponseEntity.ok(userService.checkUserIdDuplicate(userId));
     }
 

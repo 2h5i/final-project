@@ -114,6 +114,7 @@ public class UserServiceImpl implements UserService {
             .email(findUser.getEmail())
             .profileImage(findUser.getProfileImage())
             .build();
+
         return myPage;
     }
 
@@ -147,6 +148,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkUserIdDuplicate(String userId) {
+
         return userRepository.existsByUserId(userId); // 중복이면 true, 중복되지 않으면 false
     }
 

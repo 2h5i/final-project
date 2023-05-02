@@ -32,12 +32,14 @@ public class LikeController {
     @GetMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
     public Long selectLikeCount(@PathVariable Long postId) {
+
         return likeService.selectLikeCount(postId);
     }
 
     @GetMapping("/{postId}/check")
     public boolean selectLikeCheck(@PathVariable Long postId,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return likeService.selectLikeCheck(postId, userDetails.getUser());
     }
 

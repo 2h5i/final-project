@@ -37,18 +37,22 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
     }
 
     private BooleanExpression containsTitle(String title) {
+
         return Objects.nonNull(title) ? post.title.contains(title) : null;
     }
 
     private BooleanExpression containsContent(String content) {
+
         return Objects.nonNull(content) ? post.content.contains(content) : null;
     }
 
     private BooleanExpression containsUserId(String userId) {
+
         return Objects.nonNull(userId) ? post.user.userId.contains(userId) : null;
     }
 
     private BooleanExpression eqUserId(Long userId) {
+
         return Objects.nonNull(userId) ? post.user.id.eq(userId) : null;
     }
 
@@ -57,6 +61,7 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
         if (Objects.nonNull(createdStarted) && Objects.nonNull(createdEnded)) {
             return post.createdAt.between(createdStarted, createdEnded);
         }
+
         return null;
     }
 
@@ -85,6 +90,7 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
     }
 
     private <T> JPAQuery<T> postsQuery(Expression<T> expr, SearchPost cond) {
+
         return jpaQueryFactory.select(expr)
             .from(post)
             .where(
@@ -142,5 +148,4 @@ public class PostCustomRepositoryImpl extends QuerydslRepositorySupport implemen
                 betweenCreated(cond.getCreatedStarted(), cond.getCreatedEnded())
             );
     }
-
 }

@@ -23,6 +23,7 @@ public class XssConfig implements WebMvcConfigurer {
         filterRegistration.setFilter(new XssEscapeServletFilter());
         filterRegistration.setOrder(1);
         filterRegistration.addUrlPatterns("/*");
+
         return filterRegistration;
     }
 
@@ -30,6 +31,7 @@ public class XssConfig implements WebMvcConfigurer {
     public MappingJackson2HttpMessageConverter jsonEscapeConverter() {
         ObjectMapper copy = objectMapper.copy();
         copy.getFactory().setCharacterEscapes(new HTMLCharacterEscapes());
+        
         return new MappingJackson2HttpMessageConverter(copy);
     }
 }

@@ -14,6 +14,7 @@ public class ResponseUserWithPost {
     }
 
     public static ResponseUserWithPost of(Long id, String userId) {
+
         return new ResponseUserWithPost(id, userId);
     }
 }

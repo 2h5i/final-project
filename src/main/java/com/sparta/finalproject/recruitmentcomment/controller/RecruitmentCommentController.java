@@ -35,6 +35,7 @@ public class RecruitmentCommentController {
     public Long createRecruitmentComment(@PathVariable Long recruitmentId,
         @RequestBody @Valid CreateRecruitmentComment createComment,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return recruitmentCommentService.createRecruitmentComment(recruitmentId, createComment,
             userDetails.getUser());
     }
@@ -73,6 +74,7 @@ public class RecruitmentCommentController {
     public PageWrapper<MyPageRecruitmentComments> selectMyCommentLists(
         @PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return PageWrapper.of(
             recruitmentCommentService.selectMyCommentLists(pageable, userDetails.getUser()
                 .getId()));
