@@ -57,8 +57,8 @@ public class JwtUtil {
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_PREFIX)) {
             return bearerToken.substring(7);
         }
-        return null;
 
+        return null;
     }
 
     // 토큰 생성
@@ -92,6 +92,7 @@ public class JwtUtil {
             if (redisUtil.hasKey("JWT:BLACK_LIST:" + token)) {
                 return false;
             }
+
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
@@ -102,15 +103,18 @@ public class JwtUtil {
         } catch (IllegalArgumentException e) {
             log.info("JWT claims is empty, 잘못된 JWT 토큰 입니다.");
         }
+
         return false;
     }
 
     public Claims getUserInfoFromToken(String token) {
+
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
     public Authentication createAuthentication(String userId) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
+
         return new UsernamePasswordAuthenticationToken(userDetails, null,
             userDetails.getAuthorities());
     }
@@ -119,6 +123,7 @@ public class JwtUtil {
         try {
             Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build()
                 .parseClaimsJws(token);
+
             return !claims.getBody().getExpiration().before(new Date());
         } catch (Exception e) {
             return false;

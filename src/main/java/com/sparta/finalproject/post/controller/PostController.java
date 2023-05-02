@@ -37,6 +37,7 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Long createPost(@RequestBody @Valid CreatePost createPost,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
         return postService.createPost(createPost, userDetails.getUser());
     }
 
@@ -51,6 +52,7 @@ public class PostController {
     @ResponseStatus(HttpStatus.OK)
     public PageWrapper getPosts(SearchPost searchPost,
         @PageableDefault() Pageable pageable) {
+
         return PageWrapper.of(postService.getPosts(pageable, searchPost));
     }
 
@@ -78,6 +80,7 @@ public class PostController {
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public PageWrapper<MyPagePost> selectMyPostLists(@PageableDefault() Pageable pageable,
         @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        
         return PageWrapper.of(
             postService.selectMyPostLists(pageable, userDetails.getUser().getId()));
     }

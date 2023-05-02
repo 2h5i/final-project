@@ -27,6 +27,7 @@ public class PostAdminController {
     @GetMapping("/{postId}")
     @ResponseStatus(HttpStatus.OK)
     public ResponsePost selectPostAdmin(@PathVariable Long postId) {
+
         return postService.getPostById(postId);
     }
 
@@ -34,6 +35,7 @@ public class PostAdminController {
     @ResponseStatus(HttpStatus.OK)
     public PageWrapper selectPostsAdmin(SearchPostAdmin searchPostAdmin,
         @PageableDefault Pageable pageable) {
+
         return PageWrapper.of(postService.selectPostsAdmin(searchPostAdmin, pageable));
     }
 

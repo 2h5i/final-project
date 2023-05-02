@@ -39,6 +39,7 @@ public class EmailConfig {
         javaMailSender.setPort(port);
         javaMailSender.setJavaMailProperties(getMailProperties());
         javaMailSender.setDefaultEncoding("UTF-8");
+
         return javaMailSender;
     }
 
@@ -50,6 +51,7 @@ public class EmailConfig {
         pt.put("mail.smtp.starttls.required", startlls_required);
         pt.put("mail.smtp.socketFactory.fallback", fallback);
         pt.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        
         return pt;
     }
 }

@@ -24,5 +24,4 @@ public class CorsFilterConfig {
 
         return urlBasedCorsConfigurationSource;
     }
-
 }

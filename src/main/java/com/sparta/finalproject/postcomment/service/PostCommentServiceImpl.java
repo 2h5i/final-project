@@ -76,6 +76,7 @@ public class PostCommentServiceImpl implements PostCommentService {
     @Override
     @Transactional(readOnly = true)
     public Page<MyPagePostComments> selectMyCommentLists(Pageable pageable, Long userId) {
+        
         return postCommentRepository.findByMyPageComment(pageable, userId);
     }
 }

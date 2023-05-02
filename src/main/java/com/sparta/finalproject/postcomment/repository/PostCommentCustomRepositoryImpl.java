@@ -31,10 +31,12 @@ public class PostCommentCustomRepositoryImpl extends QuerydslRepositorySupport i
     }
 
     private BooleanExpression searchByPostId(Long postId) {
+
         return Objects.nonNull(postId) ? postComment.post.id.eq(postId) : null;
     }
 
     private BooleanExpression eqUserId(Long userId) {
+
         return Objects.nonNull(userId) ? postComment.user.id.eq(userId) : null;
     }
 
@@ -73,10 +75,12 @@ public class PostCommentCustomRepositoryImpl extends QuerydslRepositorySupport i
 
         Long count = myPagePostCommentsQuery(Wildcard.count, userId)
             .fetch().get(0);
+
         return new PageImpl<>(myPagePostComments, pageable, count);
     }
 
     private <T> JPAQuery<T> myPagePostCommentsQuery(Expression<T> expr, Long userId) {
+        
         return jpaQueryFactory
             .select(expr)
             .from(postComment)
